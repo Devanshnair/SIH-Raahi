@@ -1,0 +1,197 @@
+import {
+  add,
+  eachDayOfInterval,
+  endOfISOWeek,
+  endOfMonth,
+  format,
+  getDay,
+  isEqual,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  parse,
+  parseISO,
+  startOfISOWeek,
+} from "date-fns";
+import { useState } from "react";
+import { meetings } from "./modifyEvents";
+
+const colStartClasses = [
+  "",
+  "col-start-2",
+  "col-start-3",
+  "col-start-4",
+  "col-start-5",
+  "col-start-6",
+  "col-start-7",
+];
+
+function classNames(...classes: (string | boolean)[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
+type CalendarProps = {
+  selectedDay: Date;
+  setSelectedDay?: React.Dispatch<React.SetStateAction<Date>>;
+  setCurrentWeek?: React.Dispatch<React.SetStateAction<Date[]>>;
+};
+
+export default function Calendar({
+  selectedDay,
+  setSelectedDay,
+  setCurrentWeek,
+}: CalendarProps) {
+  const [currentMonth, setCurrentMonth] = useState(
+    format(selectedDay, "MMM-yyyy"),
+  );
+  const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+
+  const days = eachDayOfInterval({
+    start: startOfISOWeek(firstDayCurrentMonth),
+    end: endOfISOWeek(endOfMonth(firstDayCurrentMonth)),
+  });
+
+  function previousMonth() {
+    console.log("previousMonth");
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  }
+
+  function nextMonth() {
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  }
+
+  return (
+    <div className="absolute top-8 z-50 rounded-lg border bg-white p-5 pb-3 shadow-2xl">
+      <div className="mx-auto max-w-md md:max-w-4xl">
+        <div className="md:grid">
+          <div className="min-w-[330px]">
+            <div className="flex items-center justify-between pb-2">
+              <h2 className="text-xl font-semibold text-slate-900">
+                {format(firstDayCurrentMonth, "MMMM yyyy")}
+              </h2>
+              <div className="flex">
+                <button
+                  type="button"
+                  onClick={previousMonth}
+                  className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-gray-900"
+                >
+                  <span className="sr-only">Previous month</span>
+                  <div className="h-5 w-5" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      role="img"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M13.4806 15.9941C13.8398 15.6529 13.8398 15.0998 13.4806 14.7586L8.47062 10L13.4806 5.24142C13.8398 4.90024 13.8398 4.34707 13.4806 4.00589C13.1214 3.66471 12.539 3.66471 12.1798 4.00589L6.51941 9.38223C6.1602 9.72342 6.1602 10.2766 6.51941 10.6178L12.1798 15.9941C12.539 16.3353 13.1214 16.3353 13.4806 15.9941Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+                <button
+                  onClick={nextMonth}
+                  type="button"
+                  className="-my-1.5 -mr-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-gray-900"
+                >
+                  <span className="sr-only">Next month</span>
+                  <div className="h-5 w-5" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      role="img"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M6.51941 15.9941C6.1602 15.6529 6.1602 15.0998 6.51941 14.7586L11.5294 10L6.51941 5.24142C6.1602 4.90024 6.1602 4.34707 6.51941 4.00589C6.87862 3.66471 7.46101 3.66471 7.82022 4.00589L13.4806 9.38223C13.8398 9.72342 13.8398 10.2766 13.4806 10.6178L7.82022 15.9941C7.46101 16.3353 6.87862 16.3353 6.51941 15.9941Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="mt-5 grid grid-cols-7 text-center text-base font-semibold leading-6 text-slate-500">
+              <div>M</div>
+              <div>T</div>
+              <div>W</div>
+              <div>T</div>
+              <div>F</div>
+              <div>S</div>
+              <div>S</div>
+            </div>
+            <div className="mt-2 grid grid-cols-7 text-sm">
+              {days.map((day, dayIdx) => (
+                <div
+                  key={day.toString()}
+                  className={classNames(
+                    dayIdx === 0 && colStartClasses[getDay(day) - 1],
+                    "py-1.5",
+                  )}
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (setSelectedDay && setCurrentWeek) {
+                        setSelectedDay(day);
+                        setCurrentWeek(
+                          eachDayOfInterval({
+                            start: startOfISOWeek(day),
+                            end: endOfISOWeek(day),
+                          }),
+                        );
+                      }
+                    }}
+                    className={classNames(
+                      isEqual(day, selectedDay) && "text-white",
+                      !isEqual(day, selectedDay) &&
+                        isToday(day) &&
+                        "text-blue-500",
+                      !isEqual(day, selectedDay) &&
+                        !isToday(day) &&
+                        isSameMonth(day, firstDayCurrentMonth) &&
+                        "text-slate-900",
+                      !isEqual(day, selectedDay) &&
+                        !isToday(day) &&
+                        !isSameMonth(day, firstDayCurrentMonth) &&
+                        "text-slate-400",
+                      isEqual(day, selectedDay) &&
+                        isToday(day) &&
+                        "bg-blue-500",
+                      isEqual(day, selectedDay) &&
+                        !isToday(day) &&
+                        "bg-gray-900",
+                      !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                      (isEqual(day, selectedDay) || isToday(day)) &&
+                        "font-semibold",
+                      "mx-auto flex h-8 w-8 items-center justify-center rounded-full font-medium",
+                    )}
+                  >
+                    <time dateTime={format(day, "yyyy-MM-dd")}>
+                      {format(day, "d")}
+                    </time>
+                  </button>
+
+                  <div className="mx-auto mt-1 h-1 w-1">
+                    {meetings.some((meeting) =>
+                      isSameDay(parseISO(meeting.startDateTime), day),
+                    ) && (
+                      <div className="h-1 w-1 rounded-full bg-sky-500"></div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

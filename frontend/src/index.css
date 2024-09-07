@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .Personal {
+    @apply bg-green-100 text-green-400;
+
+    &.light {
+      @apply bg-green-50 text-green-400;
+
+      &:hover {
+        @apply bg-green-100 text-green-500;
+      }
+    }
+
+    .name {
+      @apply text-green-600;
+    }
+
+    &:hover {
+      @apply bg-green-100 text-green-500;
+
+      .menu > .dots {
+        @apply bg-green-400;
+      }
+    }
+    &:focus-within {
+      @apply bg-green-100 text-green-500;
+
+      .menu > .dots {
+        @apply bg-green-400;
+      }
+    }
+  }
+
+  .Meeting {
+    @apply bg-purple-100 text-purple-400;
+
+    &.light {
+      @apply bg-purple-50 text-purple-400;
+
+      &:hover {
+        @apply bg-purple-100 text-purple-500;
+      }
+    }
+
+    .name {
+      @apply text-purple-600;
+    }
+
+    &:hover {
+      @apply bg-purple-100 text-purple-500;
+
+      .menu > .dots {
+        @apply bg-purple-400;
+      }
+    }
+    &:focus-within {
+      @apply bg-purple-100 text-purple-500;
+      .menu > .dots {
+        @apply bg-purple-400;
+      }
+    }
+  }
+  .Work {
+    @apply bg-blue-100 text-blue-400;
+
+    &.light {
+      @apply bg-blue-50 text-blue-400;
+
+      &:hover {
+        @apply bg-blue-100 text-blue-500;
+      }
+    }
+
+    .name {
+      @apply text-blue-600;
+    }
+
+    &:hover {
+      @apply bg-blue-100 text-blue-500;
+
+      .menu > .dots {
+        @apply bg-blue-400;
+      }
+    }
+    &:focus-within {
+      @apply bg-blue-100 text-blue-500;
+
+      .menu > .dots {
+        @apply bg-blue-400;
+      }
+    }
+  }
+  .Reminders {
+    @apply bg-yellow-100 text-yellow-400;
+
+    &.light {
+      @apply bg-yellow-50 text-yellow-400;
+
+      &:hover {
+        @apply bg-yellow-100 text-yellow-500;
+      }
+    }
+
+    .name {
+      @apply text-yellow-600;
+    }
+
+    &:hover {
+      @apply bg-yellow-100 text-yellow-500;
+
+      .menu > .dots {
+        @apply bg-yellow-400;
+      }
+    }
+    &:focus-within {
+      @apply bg-yellow-100 text-yellow-500;
+
+      .menu > .dots {
+        @apply bg-yellow-400;
+      }
+    }
+  }
+}
+
+@layer base {
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  button {
+    outline-offset: 4px;
+  }
+  input {
+    accent-color: #4f46e5;
+  }
+}
+
+.Homenav {
+  &::after {
+    content: "";
+    height: 2.5px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #000;
+    position: absolute;
+    bottom: -2px;
+    left: 0px;
+    opacity: 0;
+    transform-origin: left center;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.46, 0.94) 0s;
+    transform: scaleX(0);
+  }
+  &:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+.Explorenav {
+  &::after {
+    content: "";
+    height: 2.5px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #000;
+    position: absolute;
+    bottom: -2px;
+    left: 0px;
+    opacity: 0;
+    transform-origin: left center;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.46, 0.94) 0s;
+    transform: scaleX(0);
+  }
+  &:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+.Insightsnav {
+  &::after {
+    content: "";
+    height: 2.5px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #000;
+    position: absolute;
+    bottom: -2px;
+    left: 0px;
+    opacity: 0;
+    transform-origin: left center;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.46, 0.94) 0s;
+    transform: scaleX(0);
+  }
+  &:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.Loginnav {
+  &::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: #020617;
+    position: absolute;
+    bottom: -100%;
+    transition: all ease 300ms;
+  }
+  &:hover::after {
+    bottom: 0;
+    border-radius: 0;
+  }
+  &:hover {
+    color: aliceblue;
+  }
+}
