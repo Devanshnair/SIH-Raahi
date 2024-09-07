@@ -1,4 +1,4 @@
-import MentorCard from "./MentorCard";
+import MentorCard from "../../components/MentorCard";
 import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { FaArrowCircleRight } from "react-icons/fa";
