@@ -21,7 +21,7 @@ import Register from "./Pages/Register/Register";
 import Insights from "./Pages/Insights/Insights";
 import AddPost from "./Pages/AddPost/AddPost";
 import EditProfile from "./Pages/EditProfile/EditProfile";
-import RoomPage from "./Pages/Videocalling/Room";
+import RoomPage from "./Pages/Videocalling/RoomPage";
 import DashboardLayout from "./layout/DashboardLayout";
 
 const queryClient = new QueryClient();
