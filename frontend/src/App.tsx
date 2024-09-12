@@ -1,6 +1,6 @@
 import "./index.css";
 
-import Dashboard from "./Pages/MentorDashboard/Dashboard";
+import Dashboard from "./Pages/AdminPanel/Dashboard/Dashboard";
 import Chatbot from "./Pages/Chatbot";
 import {
   createBrowserRouter,
@@ -20,8 +20,9 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import Register from "./Pages/Register/Register";
 import Insights from "./Pages/Insights/Insights";
 import AddPost from "./Pages/AddPost/AddPost";
-import EditProfile from "./Pages/EditProfile.tsx/EditProfile";
+import EditProfile from "./Pages/EditProfile/EditProfile";
 import RoomPage from "./Pages/Videocalling/RoomPage";
+import DashboardLayout from "./layout/DashboardLayout";
 
 const queryClient = new QueryClient();
 
@@ -31,18 +32,17 @@ export const TOKEN =
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
+      <>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/room/:roomId" element={<RoomPage />} />
         <Route path="/add-post" element={<AddPost />} />
-        <Route path="/editprofile" element={<EditProfile />} />
         <Route path="user">
           <Route path="/user/my-calendar" element={<CalendarView />} />
           <Route path="/user/my-availability" element={<SetAvailability />} />
           <Route path="/user/chatbot" element={<Chatbot />} />
-          <Route path="user/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="mentors">
           <Route path="/mentors/explore" element={<MentorExPg />} />
@@ -50,6 +50,11 @@ function App() {
           <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
         </Route>
       </Route>,
+      <Route path="admin" element={<DashboardLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="/admin/editprofile" element={<EditProfile />} />
+      </Route>
+      </>
     ),
   );
   return (

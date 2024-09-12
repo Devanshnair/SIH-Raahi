@@ -1,4 +1,6 @@
 import React from 'react'
+import { BiRightArrow } from 'react-icons/bi'
+import { HiOutlineArrowNarrowRight } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
@@ -15,7 +17,10 @@ const Navbar = () => {
             </ul>
         </div>
         <Link to={"/register"}>
-          <button className='px-6 py-1 border-[1.5px] border-slate-900 text-xl rounded-full flex justify-center items-center shadow-md overflow-hidden relative Loginnav'><p className='z-20'>Login</p></button>
+          <button className='px-4 py-[5px] border-[1.5px] border-slate-900 font-medium rounded-full flex justify-center items-center gap-2 shadow-md overflow-hidden relative Loginnav'>
+            <p className='z-20'>Sign Up</p>
+            <HiOutlineArrowNarrowRight className='iconarrowright z-20 h-[1.4rem] w-[1.4rem]'/>
+          </button>
         </Link>
     </div>
   )

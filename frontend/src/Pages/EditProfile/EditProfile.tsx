@@ -49,18 +49,9 @@ const EditProfile = () => {
     };
   return (
     <>
-      <div className="main grid grid-cols-[30vw_70vw]">
-        <div className="bg-slate-700 h-screen flex justify-center items-center">
-          <div className="img w-72 px-6  rounded-3xl overflow-hidden">
-            <img
-              className="rounded-3xl"
-              src="https://img.freepik.com/free-vector/account-concept-illustration_114360-409.jpg?t=st=1725323235~exp=1725323835~hmac=bac913f08032a80f499d14346b9df721040e3d04e54e87dc5033430942de4321"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="bg-white flex flex-col justify-center items-center min-h-screen p-4">
-          <form onSubmit={handleSubmit} className="w-full max-w-md">
+      <div className="main grid grid-cols-[1fr,3fr] justify-center items-center bg-slate-50 px-10 py-10 m-4 shadow rounded-lg">
+        <div className="flex flex-col justify-center items-center min-h-screen">
+          <form onSubmit={handleSubmit} className="">
             <div className="mb-3">
               <label
                 htmlFor="title"
@@ -141,6 +132,15 @@ const EditProfile = () => {
               </button>
             </div>
           </form>
+        </div>
+        <div className="flex justify-center items-center">
+          <div className="img w-72 rounded-3xl overflow-hidden">
+            <img
+              className="rounded-3xl"
+              src="https://img.freepik.com/free-vector/account-concept-illustration_114360-409.jpg?t=st=1725323235~exp=1725323835~hmac=bac913f08032a80f499d14346b9df721040e3d04e54e87dc5033430942de4321"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </>

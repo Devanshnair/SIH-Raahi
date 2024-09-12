@@ -11,6 +11,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 @layer utilities {
@@ -237,6 +238,6 @@
     border-radius: 0;
   }
   &:hover {
-    color: aliceblue;
+    color: #f1f5f9;
   }
 }
