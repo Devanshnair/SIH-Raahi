@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { TOKEN } from "../../../App";
+import { fetchEvents } from "../methods/fetchEvents";
 
 const UploadModal = ({
   isOpen,
@@ -38,7 +39,7 @@ const UploadModal = ({
     setIsOpen(false);
     const fileData = new FormData();
     fileData.append("file", file);
-    console.log([...fileData.entries()]);
+    // console.log([...fileData.entries()]);
 
     const headers = {
       Authorization: `Bearer ${TOKEN}`,
@@ -49,7 +50,9 @@ const UploadModal = ({
       method: "POST",
       body: fileData,
       headers: headers,
-    });
+    }).then(() => fetchEvents());
+
+    setFileName("");
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {

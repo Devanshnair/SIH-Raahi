@@ -33,13 +33,11 @@ function classNames(...classes: (string | boolean)[]) {
 type CalendarProps = {
   selectedDay: Date;
   setSelectedDay?: React.Dispatch<React.SetStateAction<Date>>;
-  setCurrentWeek?: React.Dispatch<React.SetStateAction<Date[]>>;
 };
 
 export default function Calendar({
   selectedDay,
   setSelectedDay,
-  setCurrentWeek,
 }: CalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(
     format(selectedDay, "MMM-yyyy"),
@@ -139,14 +137,8 @@ export default function Calendar({
                   <button
                     type="button"
                     onClick={() => {
-                      if (setSelectedDay && setCurrentWeek) {
+                      if (setSelectedDay) {
                         setSelectedDay(day);
-                        setCurrentWeek(
-                          eachDayOfInterval({
-                            start: startOfISOWeek(day),
-                            end: endOfISOWeek(day),
-                          }),
-                        );
                       }
                     }}
                     className={classNames(

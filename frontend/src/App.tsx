@@ -26,7 +26,7 @@ import RoomPage from "./Pages/Videocalling/RoomPage";
 const queryClient = new QueryClient();
 
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MzI2ODQ3LCJpYXQiOjE3MjUzMjMyNDcsImp0aSI6ImM3NjVhNGNmZTI4ODQ5MTY5ZDRkYTg4MGE0YTlhZjIxIiwidXNlcl9pZCI6MX0.cnKGCMfV-xM6NkvHpgzgDh-2fzEZA1kgMFNrko7H9XE";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2MTg0NzU1LCJpYXQiOjE3MjYxNDE1NTUsImp0aSI6IjgwNGJhN2E2MjA3MzQzNDQ5ZGE3NTQ0YmJjMmM5NmY0IiwidXNlcl9pZCI6MX0.oNv_29IY8uPA6VL6sW6oo8tmQ6aLi3NQ18KL03_VJoE";
 
 function App() {
   const router = createBrowserRouter(

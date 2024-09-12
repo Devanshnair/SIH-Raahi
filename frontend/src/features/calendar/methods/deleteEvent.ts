@@ -1,5 +1,6 @@
 import { TOKEN } from "../../../App";
 import { Events } from "../modifyEvents";
+import { baseURL } from "./fetchEvents";
 
 export async function deleteEvent({ id }: { id: string }): Promise<Events[0]> {
   const header = {
@@ -7,13 +8,10 @@ export async function deleteEvent({ id }: { id: string }): Promise<Events[0]> {
     Authorization: `Bearer ${TOKEN}`,
     "ngrok-skip-browser-warning": "true",
   };
-  const send = await fetch(
-    `https://live-merely-drum.ngrok-free.app/api/events/${id}/delete`,
-    {
-      method: "DELETE",
-      headers: header,
-    },
-  );
+  const send = await fetch(`${baseURL}/api/events/${id}/delete`, {
+    method: "DELETE",
+    headers: header,
+  });
 
   const response = await send.json();
 

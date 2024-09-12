@@ -22,7 +22,6 @@ type EventStickersProps = {
 const EventSticker = ({
   days,
   event,
-  events,
   setEvents,
   setUpdateModalIsOpen,
 }: EventStickersProps) => {
@@ -52,16 +51,30 @@ const EventSticker = ({
   const scheduledTime = `${format(event.startDateTime, "h:mm")} to ${format(event.endDateTime, "h:mm")}`;
 
   function handleClick() {
-    (document.querySelector("#update-name")! as HTMLInputElement).value =
-      event?.name ?? "";
+    (document.querySelector("#update-modal-name")! as HTMLInputElement).value =
+      event?.name;
     (
-      document.querySelector("#update-startDateTime")! as HTMLInputElement
-    ).value = format(event?.startDateTime ?? "", "yyyy-MM-dd'T'HH:mm");
-    (document.querySelector("#update-endDateTime")! as HTMLInputElement).value =
-      format(event?.endDateTime ?? "", "yyyy-MM-dd'T'HH:mm");
+      document.querySelector("#update-modal-startDateTime")! as HTMLInputElement
+    ).value = format(event?.startDateTime, "yyyy-MM-dd'T'HH:mm");
 
     (
-      document.querySelector("#update-description")! as HTMLTextAreaElement
+      document.querySelector("#update-modal-endDateTime")! as HTMLInputElement
+    ).value = format(event?.endDateTime, "yyyy-MM-dd'T'HH:mm");
+
+    console.log(event?.theme);
+
+    (
+      document.querySelector("#update-modal-theme")! as HTMLSelectElement
+    ).value = event?.theme;
+
+    // (
+    //   document.querySelector("#update-modal-theme")! as HTMLSelectElement
+    // ).textContent = event?.theme;
+
+    (
+      document.querySelector(
+        "#update-modal-description",
+      )! as HTMLTextAreaElement
     ).value = event?.description ?? "";
     (
       document.querySelector("[data-eventid]") as HTMLDialogElement
@@ -108,7 +121,9 @@ const EventSticker = ({
         key={event.startDateTime}
         data-time={event.startDateTime}
         className={`absolute w-full bg-transparent p-[0.15rem]`}
-        onClick={() => handleClick()}
+        onClick={
+          new Date(event.endDateTime) > new Date() ? handleClick : undefined
+        }
         onContextMenu={async (e) => {
           const deleted = await handleDelete(e);
           if (!deleted) return;
@@ -125,11 +140,13 @@ const EventSticker = ({
             `${height > 45 && "p-2"}`,
           )}
         >
-          <p className={`name ${height < 60 ? "text-sm" : "truncate"}`}>
+          <p
+            className={`name ${height < 60 ? "truncate text-sm" : "truncate"}`}
+          >
             {event.name}
           </p>
           <time
-            className={`${height < 60 && "hidden"} truncate text-sm`}
+            className={`${height < 60 && "hidden"} mt-auto py-1 text-sm`}
             dateTime={scheduledTime}
           >
             {scheduledTime}

@@ -1,10 +1,10 @@
 import { TOKEN } from "../../../App";
 import { Events } from "../modifyEvents";
 
-const URL = "https://live-merely-drum.ngrok-free.app/api/get/";
+export const baseURL = "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app";
 
 export async function fetchEvents(): Promise<Events> {
-  const response = await fetch(URL, {
+  const response = await fetch(`${baseURL}/api/get`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

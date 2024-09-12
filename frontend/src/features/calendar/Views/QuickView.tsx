@@ -1,10 +1,4 @@
-import {
-  eachDayOfInterval,
-  endOfISOWeek,
-  format,
-  parseISO,
-  startOfISOWeek,
-} from "date-fns";
+import { format, parseISO } from "date-fns";
 import { useMemo, useState } from "react";
 import { Events } from "../modifyEvents";
 import { motion } from "framer-motion";
@@ -14,20 +8,23 @@ import { fetchEvents } from "../methods/fetchEvents";
 type QuickViewProps = {
   events: Events;
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>;
-  setCurrentWeek: React.Dispatch<React.SetStateAction<Date[]>>;
 
   setUpdateModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   sideViewIsOpen: boolean;
 };
 
+function onDelete({ id }: { id: string }) {
+  if (confirm("Are you sure you want to delete this event?")) {
+    deleteEvent({ id: id }).then(() => fetchEvents());
+  }
+}
+
 const QuickView = ({
   events,
   setSelectedDay,
-  setCurrentWeek,
   setUpdateModalIsOpen,
   sideViewIsOpen,
 }: QuickViewProps) => {
-  console.log(events);
   const [searchTerm, setSearchTerm] = useState("");
   const filteredEvents = useMemo(
     () =>
@@ -148,7 +145,6 @@ const QuickView = ({
                 meeting={meeting}
                 setUpdateModalIsOpen={setUpdateModalIsOpen}
                 setSelectedDay={setSelectedDay}
-                setCurrentWeek={setCurrentWeek}
               />
             ))
           ) : (
@@ -164,12 +160,10 @@ function Meeting({
   meeting,
   setUpdateModalIsOpen,
   setSelectedDay,
-  setCurrentWeek,
 }: {
   meeting: Events[0];
   setUpdateModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>;
-  setCurrentWeek: React.Dispatch<React.SetStateAction<Date[]>>;
 }) {
   const [MenuIsOpen, setMenuIsOpen] = useState(false);
   return (
@@ -184,12 +178,6 @@ function Meeting({
         className={`block p-3 ${meeting.theme} light h-full w-full rounded-xl outline-offset-2`}
         onClick={() => {
           setSelectedDay(parseISO(meeting.startDateTime));
-          setCurrentWeek(
-            eachDayOfInterval({
-              start: startOfISOWeek(parseISO(meeting.startDateTime)),
-              end: endOfISOWeek(parseISO(meeting.startDateTime)),
-            }),
-          );
         }}
       >
         <div className="flex justify-between">
@@ -246,10 +234,7 @@ function Meeting({
               <li>
                 <button
                   className="w-full rounded-md px-1 text-left hover:bg-slate-100 focus:bg-slate-100"
-                  onClick={() => {
-                    deleteEvent({ id: meeting.id });
-                    fetchEvents();
-                  }}
+                  onClick={() => onDelete({ id: meeting.id })}
                   onBlur={() => setMenuIsOpen(false)}
                 >
                   Delete
