@@ -20,7 +20,6 @@ type DaysViewProps = {
   days: Date[];
   events: Events;
   setEvents: React.Dispatch<React.SetStateAction<Events>>;
-
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUpdateModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ScheduleModal from "./modals/ScheduleModal";
 import {
   add,
@@ -48,74 +48,47 @@ const CalendarView = () => {
 
   const [events, setEvents] = useState<Events>([]);
 
-  const [view, setView] = useState("Week");
+  const [view, setView] = useState<"Day" | "Week">("Week");
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [updateModalIsOpen, setUpdateModalIsOpen] = useState(false);
   const [uploadModalIsOpen, setUploadModalIsOpen] = useState(false);
-  console.log(uploadModalIsOpen);
 
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
-  const [currentWeek, setCurrentWeek] = useState(
-    eachDayOfInterval({
-      start: startOfISOWeek(today),
-      end: endOfISOWeek(today),
-    }),
+  const currentWeek = useMemo(
+    () =>
+      eachDayOfInterval({
+        start: startOfISOWeek(selectedDay),
+        end: endOfISOWeek(selectedDay),
+      }),
+    [selectedDay],
   );
 
-  const [currentMonth, setCurrentMonth] = useState(
-    getMonthsOfWeek(currentWeek[0], currentWeek[currentWeek.length - 1]),
+  const currentMonth = useMemo(
+    () => getMonthsOfWeek(currentWeek[0], currentWeek[6]),
+    [currentWeek],
   ); // currentMonth is a string
+
+  // console.log({ currentWeek, length: currentWeek.length, selectedDay });
 
   function previousweek() {
     const prevWeekStart = add(currentWeek[0], { weeks: -1 });
-    const prevWeekEnd = endOfISOWeek(prevWeekStart);
-    const month = getMonthsOfWeek(prevWeekStart, prevWeekEnd);
-    setCurrentMonth(month);
-    setCurrentWeek(
-      eachDayOfInterval({
-        start: prevWeekStart,
-        end: prevWeekEnd,
-      }),
-    );
+    setSelectedDay(prevWeekStart);
   }
 
   function nextWeek() {
     const nextWeekStart = add(currentWeek[0], { weeks: 1 });
-    const nextWeekEnd = endOfISOWeek(nextWeekStart);
-    const month = getMonthsOfWeek(nextWeekStart, nextWeekEnd);
-    setCurrentMonth(month);
-    setCurrentWeek(
-      eachDayOfInterval({
-        start: nextWeekStart,
-        end: nextWeekEnd,
-      }),
-    );
+    setSelectedDay(nextWeekStart);
   }
 
   function previousDay() {
     const day = add(selectedDay, { days: -1 });
-    const month = format(selectedDay, "MMMM-yyyy");
-    const week = eachDayOfInterval({
-      start: startOfISOWeek(selectedDay),
-      end: endOfISOWeek(selectedDay),
-    });
-
-    setCurrentMonth(month);
-    setCurrentWeek(week);
     setSelectedDay(day);
   }
 
   function nextDay() {
     const day = add(selectedDay, { days: 1 });
-    const month = format(selectedDay, "MMMM-yyyy");
-    const week = eachDayOfInterval({
-      start: startOfISOWeek(selectedDay),
-      end: endOfISOWeek(selectedDay),
-    });
-    setCurrentMonth(month);
-    setCurrentWeek(week);
     setSelectedDay(day);
   }
 
@@ -140,18 +113,6 @@ const CalendarView = () => {
               title="Jump back to today"
               className="text-md flex items-center gap-2 fill-slate-500 text-slate-500 hover:fill-slate-900 hover:text-slate-900"
               onClick={() => {
-                setCurrentWeek(
-                  eachDayOfInterval({
-                    start: startOfISOWeek(today),
-                    end: endOfISOWeek(today),
-                  }),
-                );
-                setCurrentMonth(
-                  getMonthsOfWeek(
-                    startOfISOWeek(today),
-                    endOfISOWeek(startOfISOWeek(today)),
-                  ),
-                );
                 setSelectedDay(today);
               }}
             >
@@ -229,7 +190,6 @@ const CalendarView = () => {
                 currentMonth={currentMonth}
                 selectedDay={selectedDay}
                 setSelectedDay={setSelectedDay}
-                setCurrentWeek={setCurrentWeek}
               />
             </div>
           </div>
@@ -241,7 +201,7 @@ const CalendarView = () => {
                 className={`${view == "Day" ? "bg-white" : "border-transparent"} basis-full rounded-lg border p-1 font-semibold text-slate-700`}
                 onClick={() => {
                   setView("Day");
-                  setSelectedDay(currentWeek[0]);
+                  setSelectedDay(today);
                 }}
               >
                 Day
@@ -250,12 +210,7 @@ const CalendarView = () => {
                 className={`${view == "Week" ? "bg-white" : "border-transparent"} basis-full rounded-lg border p-1 font-semibold text-slate-700`}
                 onClick={() => {
                   setView("Week");
-                  setCurrentWeek(
-                    eachDayOfInterval({
-                      start: startOfISOWeek(selectedDay),
-                      end: endOfISOWeek(selectedDay),
-                    }),
-                  );
+                  setSelectedDay(currentWeek[0]);
                 }}
               >
                 Week
@@ -264,7 +219,7 @@ const CalendarView = () => {
 
             <div className="flex items-center gap-4">
               <button
-                className="flex items-center gap-1 rounded-lg border bg-slate-900 p-2 py-1 text-white"
+                className="flex items-center gap-1 rounded-lg border bg-slate-900 px-2 py-1 pr-2.5 font-medium text-white"
                 onClick={() => setModalIsOpen(true)}
               >
                 <span>
@@ -284,7 +239,7 @@ const CalendarView = () => {
                     ></path>
                   </svg>
                 </span>
-                Meeting
+                Event
               </button>
               <div className="flex items-center gap-2">
                 <button
@@ -388,7 +343,6 @@ const CalendarView = () => {
       <QuickView
         events={events}
         setSelectedDay={setSelectedDay}
-        setCurrentWeek={setCurrentWeek}
         setUpdateModalIsOpen={setUpdateModalIsOpen}
         sideViewIsOpen={sideViewIsOpen}
       />
@@ -400,12 +354,10 @@ function CalendarButton({
   currentMonth,
   selectedDay,
   setSelectedDay,
-  setCurrentWeek,
 }: {
   currentMonth: string;
   selectedDay: Date;
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>;
-  setCurrentWeek: React.Dispatch<React.SetStateAction<Date[]>>;
 }) {
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
   return (
@@ -437,11 +389,7 @@ function CalendarButton({
         </div>
       </button>
       {calendarIsOpen && (
-        <Calendar
-          selectedDay={selectedDay}
-          setSelectedDay={setSelectedDay}
-          setCurrentWeek={setCurrentWeek}
-        />
+        <Calendar selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
       )}
     </div>
   );

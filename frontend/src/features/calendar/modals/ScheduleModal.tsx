@@ -60,17 +60,21 @@ const ScheduleModal = ({
       case !modalEndInputRef.current?.value:
         setError("End date is required");
         return;
-      case new Date(modalStartInputRef.current!.value).getTime() <
+
+      case new Date(modalEndInputRef.current!.value).getTime() -
+        new Date(modalStartInputRef.current!.value).getTime() <
+        15 * 60 * 1000:
+        setError("Event should be atleast 15 minutes long");
+        return;
+
+      case new Date(modalStartInputRef.current!.value).getTime() >
         new Date(modalEndInputRef.current!.value).getTime():
         setError("End date should be greater than start date");
         return;
+
       case new Date(modalStartInputRef.current!.value).getDay() !=
         new Date(modalEndInputRef.current!.value).getDay():
-        console.log(
-          new Date(modalStartInputRef.current!.value).getDay(),
-          new Date(modalEndInputRef.current!.value).getDay(),
-        );
-        setError("Start and end date should be on the same day");
+        setError("Start and end date has be on the same day for now :,)");
         return;
 
       default:
@@ -82,11 +86,14 @@ const ScheduleModal = ({
       startDateTime: modalStartInputRef.current?.value ?? "",
       endDateTime: modalEndInputRef.current?.value ?? "",
       description: modalDescriptionInputRef.current?.value ?? "",
-      theme: modalThemeInputRef.current?.value ?? "",
+      theme:
+        modalThemeInputRef.current?.value === ""
+          ? "Personal"
+          : (modalThemeInputRef.current?.value ?? ""),
     };
 
-    const addedEvent = await addEvent(eventData, setEvents, events);
-    const fetchedEvent = await fetchEvents();
+    await addEvent(eventData, setEvents, events);
+    await fetchEvents();
 
     setIsOpen(false);
 
@@ -101,7 +108,7 @@ const ScheduleModal = ({
   return (
     <dialog
       ref={dialogRef}
-      className="w-full max-w-md rounded-lg p-6 shadow-xl"
+      className="relative z-50 w-full max-w-md rounded-lg p-6 shadow-xl"
     >
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-800">Schedule Event</h2>
@@ -119,7 +126,7 @@ const ScheduleModal = ({
             htmlFor="name"
             className="mb-1 block text-sm font-medium text-gray-700"
           >
-            Event Name
+            Name
           </label>
           <input
             required
@@ -146,11 +153,7 @@ const ScheduleModal = ({
                 ref={modalStartInputRef}
                 type="datetime-local"
                 min={currentDate}
-                className="w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 shadow-sm focus:border-slate-500 focus:ring-slate-500"
-              />
-              <CalendarIcon
-                className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400"
-                size={20}
+                className="w-full rounded-md border border-gray-300 px-2 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500"
               />
             </div>
           </div>
@@ -168,11 +171,7 @@ const ScheduleModal = ({
                 ref={modalEndInputRef}
                 type="datetime-local"
                 min={currentDate}
-                className="w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 shadow-sm focus:border-slate-500 focus:ring-slate-500"
-              />
-              <ClockIcon
-                className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400"
-                size={20}
+                className="w-full rounded-md border border-gray-300 px-2 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500"
               />
             </div>
           </div>
@@ -183,7 +182,7 @@ const ScheduleModal = ({
             htmlFor="theme"
             className="mb-1 block text-sm font-medium text-gray-700"
           >
-            Event Theme
+            Theme
           </label>
           <select
             ref={modalThemeInputRef}
@@ -260,50 +259,6 @@ export const XIcon: React.FC<IconProps> = ({ size = 24, className = "" }) => (
   >
     <line x1="18" y1="6" x2="6" y2="18"></line>
     <line x1="6" y1="6" x2="18" y2="18"></line>
-  </svg>
-);
-
-export const CalendarIcon: React.FC<IconProps> = ({
-  size = 24,
-  className = "",
-}) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={`feather feather-calendar ${className}`}
-  >
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-    <line x1="16" y1="2" x2="16" y2="6"></line>
-    <line x1="8" y1="2" x2="8" y2="6"></line>
-    <line x1="3" y1="10" x2="21" y2="10"></line>
-  </svg>
-);
-
-export const ClockIcon: React.FC<IconProps> = ({
-  size = 24,
-  className = "",
-}) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={`feather feather-clock ${className}`}
-  >
-    <circle cx="12" cy="12" r="10"></circle>
-    <polyline points="12 6 12 12 16 14"></polyline>
   </svg>
 );
 

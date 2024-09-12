@@ -1,5 +1,6 @@
 import { TOKEN } from "../../../App";
 import { addCalendarEvent, Events } from "../modifyEvents";
+import { baseURL } from "./fetchEvents";
 
 export async function addEvent(
   event: {
@@ -20,20 +21,16 @@ export async function addEvent(
     description: event.description,
     theme: event.theme,
   };
-  console.log(data);
   const header = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${TOKEN}`,
     "ngrok-skip-browser-warning": "true",
   };
-  const send = await fetch(
-    "https://live-merely-drum.ngrok-free.app/api/create/",
-    {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: header,
-    },
-  );
+  const send = await fetch(`${baseURL}/api/create/`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: header,
+  });
   const response = await send.json();
   addCalendarEvent(response, setEvents, events);
   return response;
