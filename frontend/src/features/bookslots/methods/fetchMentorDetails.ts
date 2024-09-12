@@ -1,6 +1,8 @@
+import { baseURL } from "../../calendar/methods/fetchEvents";
+
 export async function fetchMentorDetails(id: string) {
   console.log(id);
-  const URL = `https://live-merely-drum.ngrok-free.app/api/mentor/${id}/`;
+  const URL = `${baseURL}/api/mentor/${id}/`;
   const response = await fetch(URL, {
     method: "GET",
     headers: {

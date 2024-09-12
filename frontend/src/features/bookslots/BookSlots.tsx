@@ -35,7 +35,7 @@ const BookSlots = () => {
   }
 
   if (isError) {
-    return <div>Error fetching mentor details: {error.message}</div>;
+    return <div>Error fetching mentor details: {(error as Error).message}</div>;
   }
 
   return (
@@ -50,15 +50,15 @@ const BookSlots = () => {
             />
           </picture>
         </div>
-        <div className="mt-2 max-w-xl text-center">
+        <div className="mt-4 max-w-lg text-center">
           <h2 className="text-lg font-medium text-slate-800">
             {mentorDetails.name}
           </h2>
           <p className="text-slate-500">{mentorDetails.profession}</p>
 
-          <p className="mt-4 text-slate-500">
+          <p className="mt-2 text-slate-500">
             {mentorDetails.name} is a professional {mentorDetails.profession}{" "}
-            {mentorDetails.bio}.
+            {mentorDetails.bio}
           </p>
         </div>
         <div className="mt-6 grid w-full max-w-lg gap-2">
