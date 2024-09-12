@@ -4,7 +4,7 @@ import { GoArrowUpRight } from 'react-icons/go'
 
 const RecentlyBooked = () => {
   return (
-    <div className='grid grid-rows-4 gap-3 border border-slate-300 p-4'>
+    <div className='grid grid-rows-4 gap-3 border border-slate-300 p-4 rounded-lg'>
         <div className='flex items-center justify-between px-4 py-3 border-b border-slate-300'>
             <div className='flex gap-3 items-center'>
                 <FaRegCalendarCheck className='h-5 w-5' />

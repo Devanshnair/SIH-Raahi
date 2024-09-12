@@ -7,7 +7,7 @@ const Overview = () => {
   return (
     <div className='flex flex-col gap-4'>
         <h2 className='text-xl pl-1'>Overview</h2>
-        <div className='grid grid-cols-[1fr,2.7fr] justify-center items-center w-fit h-fit px-10 py-6 border border-slate-300 shado rounded-2xl'>
+        <div className='grid grid-cols-[1fr,2.7fr] justify-center items-center w-fit h-fit px-10 py-6 border border-slate-300 shado rounded-lg'>
             <div className=' flex flex-col'>
                 <div className='h-20 w-20 rounded-full overflow-hidden'>
                     <img src='../../../src/assets/explore5.png' alt='userimage' className='h-[100%] object-cover'/>
