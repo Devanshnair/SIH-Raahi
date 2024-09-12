@@ -4,7 +4,7 @@ import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
 const StatCards = ({title, value, pillText, trend, period}: 
     {title: string; value: string; pillText: string; trend: "up" | "down"; period: string;}) => {
     return (
-      <div className=" flex flex-col justify-between p-4 rounded border border-slate-300 h-[10rem] w-full">
+      <div className=" flex flex-col justify-between p-4 rounded border border-slate-300 h-[10rem] w-full cursor-pointer">
         <div className="flex flex-col items-start justify-between gap-2">
           <div className='flex justify-between items-start w-full'>
             <h3 className="text-slate-500 text-sm h-[2.4rem] w-28">{title}</h3>
