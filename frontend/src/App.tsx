@@ -15,7 +15,7 @@ import SetAvailability from "./features/availability/SetAvailability";
 import CalendarView from "./features/calendar/CalendarView";
 import BookSlots from "./features/bookslots/BookSlots";
 import { QueryClient, QueryClientProvider } from "react-query";
-import MentorExPg from "./Pages/mentorExploratnPg/MentorExPg";
+import MentorExplorePage from "./Pages/mentorExplorationPage/MentorExplorePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Register from "./Pages/Register/Register";
 import Insights from "./Pages/Insights/Insights";
@@ -23,6 +23,7 @@ import AddPost from "./Pages/AddPost/AddPost";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import RoomPage from "./Pages/Videocalling/RoomPage";
 import DashboardLayout from "./layout/DashboardLayout";
+import Testimonials from "./Pages/myDashboard/Testimonials";
 
 const queryClient = new QueryClient();
 
@@ -33,28 +34,30 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/room/:roomId" element={<RoomPage />} />
-        <Route path="/add-post" element={<AddPost />} />
-        <Route path="user">
-          <Route path="/user/my-calendar" element={<CalendarView />} />
-          <Route path="/user/my-availability" element={<SetAvailability />} />
-          <Route path="/user/chatbot" element={<Chatbot />} />
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/room/:roomId" element={<RoomPage />} />
+          <Route path="/add-post" element={<AddPost />} />
+          <Route path="user">
+            <Route path="/user/my-calendar" element={<CalendarView />} />
+            <Route path="/user/my-availability" element={<SetAvailability />} />
+            <Route path="/user/chatbot" element={<Chatbot />} />
+          </Route>
+          <Route path="mentors">
+            <Route path="/mentors/explore" element={<MentorExplorePage />} />
+            <Route path="/mentors/reels" element={<Insights />} />
+            <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
+          </Route>
         </Route>
-        <Route path="mentors">
-          <Route path="/mentors/explore" element={<MentorExPg />} />
-          <Route path="/mentors/reels" element={<Insights />} />
-          <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
+        ,
+        <Route path="Dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="/Dashboard/edit-profile" element={<EditProfile />} />
+          <Route path="/Dashboard/testimonials" element={<Testimonials />} />
         </Route>
-      </Route>,
-      <Route path="admin" element={<DashboardLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="/admin/editprofile" element={<EditProfile />} />
-      </Route>
-      </>
+      </>,
     ),
   );
   return (

@@ -36,7 +36,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 //   },
 // ];
 
-const MentorExPg = () => {
+const MentorExplorePage = () => {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
@@ -118,8 +118,6 @@ const MentorExPg = () => {
         flag = true;
       }
     }
-
-    
 
     const response = await fetch(Url, {
       method: "GET",
@@ -264,4 +262,4 @@ const MentorExPg = () => {
   );
 };
 
-export default MentorExPg;
+export default MentorExplorePage;
