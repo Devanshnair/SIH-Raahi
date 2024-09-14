@@ -1,29 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 
-type Option = string;
-
-type CustomSelectProps = {
-  options: Option[];
-  value?: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-};
-
-export default function CustomSelect({
-  options,
-  value = "",
-  onChange,
-  placeholder = "Select an option",
-  className = "",
-}: CustomSelectProps) {
+export default function TimezoneSelect() {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedTimezone, setSelectedTimezone] = useState("");
   const [search, setSearch] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const filteredOptions = options.filter((option) =>
-    option.toLowerCase().includes(search.toLowerCase()),
+  const filteredTimezones = timezones.filter((tz) =>
+    tz.toLowerCase().includes(search.toLowerCase()),
   );
 
   useEffect(() => {
@@ -42,18 +27,16 @@ export default function CustomSelect({
     };
   }, []);
 
-  const handleSelectOption = (optionValue: string) => {
-    onChange(optionValue);
+  const handleSelectTimezone = (timezone: string) => {
+    setSelectedTimezone(timezone);
     setIsOpen(false);
   };
 
-  const selectedOption = options.find((option) => option === value);
-
   return (
-    <div className={`relative w-full ${className}`} ref={dropdownRef}>
+    <div className="relative w-full max-w-xs" ref={dropdownRef}>
       <button
         type="button"
-        className="flex w-full items-center justify-between rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+        className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
         onClick={() => {
           setIsOpen(!isOpen);
           if (!isOpen) {
@@ -63,7 +46,7 @@ export default function CustomSelect({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        {selectedOption ? selectedOption : placeholder}
+        {selectedTimezone || "Select timezone"}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -85,8 +68,8 @@ export default function CustomSelect({
           <input
             ref={inputRef}
             type="text"
-            className="w-full rounded-t-md border-b border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
-            placeholder="Search options..."
+            className="w-full rounded-t-md border-b border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
+            placeholder="Search timezones..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -94,19 +77,19 @@ export default function CustomSelect({
             className="max-h-60 overflow-auto py-1 text-base focus:outline-none sm:text-sm"
             role="listbox"
           >
-            {filteredOptions.map((option) => (
+            {filteredTimezones.map((timezone) => (
               <li
-                key={option}
-                className={`relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-slate-100 ${
-                  value === option ? "bg-slate-50" : ""
+                key={timezone}
+                className={`relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-slate-50 ${
+                  selectedTimezone === timezone ? "bg-slate-100" : ""
                 }`}
                 role="option"
-                aria-selected={value === option}
-                onClick={() => handleSelectOption(option)}
+                aria-selected={selectedTimezone === timezone}
+                onClick={() => handleSelectTimezone(timezone)}
               >
-                <span className="block truncate">{option}</span>
-                {value === option && (
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-600">
+                <span className="block truncate">{timezone}</span>
+                {selectedTimezone === timezone && (
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
                     {/* <Check className="h-5 w-5" aria-hidden="true" /> */}
                   </span>
                 )}

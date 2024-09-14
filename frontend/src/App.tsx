@@ -8,13 +8,13 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
 import MainLayout from "./layout/MainLayout";
-
 import LandingPage from "./Pages/LandingPage/LandingPage";
-
 import CalendarView from "./features/calendar/CalendarView";
 import BookSlots from "./features/bookslots/BookSlots";
-import { QueryClient, QueryClientProvider } from "react-query";
 import MentorExplorePage from "./Pages/mentorExplorationPage/MentorExplorePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Register from "./Pages/Register/Register";
@@ -32,7 +32,7 @@ const queryClient = new QueryClient();
 
 export const baseURL = "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app";
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2MzUyMDMwLCJpYXQiOjE3MjYzMDg4MzAsImp0aSI6Ijg2ZDNlOWMyZmJiNjQ5MTZiZjJhY2FlZGFlNTc5ZDMxIiwidXNlcl9pZCI6MX0.XE5EH4mIRdjWGe9D-kJH2XBBmm_JeXN7yXQuc7By2ws";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Mzk1MzE5LCJpYXQiOjE3MjYzNTIxMTksImp0aSI6IjMzYjI2Njg5NjQyNjRjZjNhN2ViZTNlMjYxN2NlOGMyIiwidXNlcl9pZCI6MX0.dGr6Q9DYtw2fLaJv1OJf1aUjR_E4bCA8h54IttBIxtI";
 
 function App() {
   const router = createBrowserRouter(
@@ -70,6 +70,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </>
   );

@@ -1,17 +1,7 @@
 import { baseURL, TOKEN } from "../../../App";
-import { addCalendarEvent, Events } from "../modifyEvents";
+import { Events } from "../modifyEvents";
 
-export async function addEvent(
-  event: {
-    name: string;
-    startDateTime: string;
-    endDateTime: string;
-    description: string;
-    theme: string;
-  },
-  setEvents: React.Dispatch<React.SetStateAction<Events>>,
-  events: Events,
-) {
+export async function addEvent(event: Omit<Events[0], "id">) {
   console.log(event);
   const data = {
     name: event.name,
@@ -30,7 +20,7 @@ export async function addEvent(
     body: JSON.stringify(data),
     headers: header,
   });
+
   const response = await send.json();
-  addCalendarEvent(response, setEvents, events);
   return response;
 }

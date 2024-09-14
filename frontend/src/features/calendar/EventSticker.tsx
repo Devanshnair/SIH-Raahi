@@ -8,21 +8,20 @@ import {
 import { Events } from "./modifyEvents";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import { deleteEvent } from "./methods/deleteEvent";
-import { fetchEvents } from "./methods/fetchEvents";
+import { useDeleteEvent } from "./methods/deleteEvent";
+
+import { setEventInUpadateModal } from "./modals/utils";
 
 type EventStickersProps = {
   days: Date[];
   event: Events[0];
   events: Events;
-  setEvents: React.Dispatch<React.SetStateAction<Events>>;
   setUpdateModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EventSticker = ({
   days,
   event,
-  setEvents,
   setUpdateModalIsOpen,
 }: EventStickersProps) => {
   const startColNo = days.findIndex((day) =>
@@ -49,49 +48,17 @@ const EventSticker = ({
   const scheduledTime = `${format(event.startDateTime, "h:mm")} to ${format(event.endDateTime, "h:mm")}`;
 
   function handleClick() {
-    (document.querySelector("#update-modal-name")! as HTMLInputElement).value =
-      event?.name;
-    (
-      document.querySelector("#update-modal-startDateTime")! as HTMLInputElement
-    ).value = format(event?.startDateTime, "yyyy-MM-dd'T'HH:mm");
-
-    (
-      document.querySelector("#update-modal-endDateTime")! as HTMLInputElement
-    ).value = format(event?.endDateTime, "yyyy-MM-dd'T'HH:mm");
-
-    console.log(event?.theme);
-
-    (
-      document.querySelector("#update-modal-theme")! as HTMLSelectElement
-    ).value = event?.theme;
-
-    // (
-    //   document.querySelector("#update-modal-theme")! as HTMLSelectElement
-    // ).textContent = event?.theme;
-
-    (
-      document.querySelector(
-        "#update-modal-description",
-      )! as HTMLTextAreaElement
-    ).value = event?.description ?? "";
-    (
-      document.querySelector("[data-eventid]") as HTMLDialogElement
-    ).dataset.eventid = event?.id ?? "";
-
+    setEventInUpadateModal(event);
     setUpdateModalIsOpen(true);
   }
 
-  async function handleDelete(e: React.MouseEvent<HTMLDivElement>) {
+  const { mutateAsync: deleteEvent } = useDeleteEvent();
+
+  function onDelete(e: React.MouseEvent) {
     e.preventDefault();
-
-    const cancel = confirm(
-      `Sure, you want to cancel your meeting with ${event?.name}?`,
-    );
-    if (!cancel) return;
-    const deleted = await deleteEvent({ id: event.id });
-    console.log(deleted);
-
-    return deleted;
+    if (confirm("Are you sure you want to delete this event?")) {
+      deleteEvent(event.id);
+    }
   }
 
   // const handleResize = (
@@ -123,14 +90,7 @@ const EventSticker = ({
         onClick={
           new Date(event.endDateTime) > new Date() ? handleClick : undefined
         }
-        onContextMenu={async (e) => {
-          const deleted = await handleDelete(e);
-          if (!deleted) return;
-          console.log(deleted);
-          const fetchedEvent = await fetchEvents();
-          console.log(fetchedEvent);
-          setEvents(fetchedEvent);
-        }}
+        onContextMenu={(e) => onDelete(e)}
         // onDrag={handleResize}
       >
         <div
@@ -145,7 +105,7 @@ const EventSticker = ({
             {event.name}
           </p>
           <time
-            className={`${height < 60 && "hidden"} mt-auto py-1 text-sm`}
+            className={`${height < 70 && "hidden"} mt-auto py-1 text-sm`}
             dateTime={scheduledTime}
           >
             {scheduledTime}

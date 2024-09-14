@@ -1,18 +1,8 @@
 import { baseURL, TOKEN } from "../../../App";
-import { Events, updateCalendarEvent } from "../modifyEvents";
+import { Events } from "../modifyEvents";
 
-export async function updateEvent(
-  event: {
-    id: string;
-    name: string;
-    startDateTime: string;
-    endDateTime: string;
-    description: string;
-    theme: string;
-  },
-  setEvents: React.Dispatch<React.SetStateAction<Events>>,
-  events: Events,
-) {
+export async function updateEvent(event: Events[0]) {
+  console.log(event);
   const putData = {
     id: event.id,
     name: event.name,
@@ -32,8 +22,7 @@ export async function updateEvent(
     body: JSON.stringify(putData),
     headers: header,
   });
-  const response = await send.json();
-  updateCalendarEvent(response, setEvents, events);
 
+  const response = await send.json();
   return response;
 }

@@ -1,23 +1,24 @@
 import { format, parseISO } from "date-fns";
-import { useMemo, useState } from "react";
+import {
+  memo,
+  MouseEvent,
+  MouseEventHandler,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Events } from "../modifyEvents";
 import { motion } from "framer-motion";
-import { deleteEvent } from "../methods/deleteEvent";
-import { fetchEvents } from "../methods/fetchEvents";
+import { useDeleteEvent } from "../methods/deleteEvent";
+import { setEventInUpadateModal } from "../modals/utils";
 
 type QuickViewProps = {
   events: Events;
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>;
-
   setUpdateModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   sideViewIsOpen: boolean;
 };
-
-function onDelete({ id }: { id: string }) {
-  if (confirm("Are you sure you want to delete this event?")) {
-    deleteEvent({ id: id }).then(() => fetchEvents());
-  }
-}
 
 const QuickView = ({
   events,
@@ -40,15 +41,14 @@ const QuickView = ({
 
   return (
     <motion.aside
-      initial={{
-        flexBasis: "400px",
-      }}
+      layout
       animate={{
-        flexBasis: `${sideViewIsOpen ? "400px" : "0px"}`,
+        width: sideViewIsOpen ? "400px" : "0px",
       }}
-      className={`mt-12s overflow-hidden md:mt-0`}
+      transition={{ layout: { duration: 0.3 }, ease: "easeInOut" }}
+      className={`mt-12 md:mt-0`}
     >
-      <div className="flex min-w-0 justify-start px-1 py-[1.39rem]">
+      <div className="flex min-w-0 justify-start px-1 py-[1.25rem]">
         {/* <button
           type="button"
           className="flex flex-none items-center text-gray-500 hover:text-gray-900"
@@ -94,7 +94,7 @@ const QuickView = ({
         </button> */}
       </div>
 
-      <div className={`pr-2 [&_>*:not(ol)]:min-w-max`}>
+      <div className={`pr-3 [&_>*:not(ol)]:min-w-max`}>
         <div className="px-1">
           <div className="flex overflow-hidden rounded-md border border-slate-200 bg-slate-50 p-1 outline-offset-4">
             <input
@@ -131,13 +131,13 @@ const QuickView = ({
           Upcoming events
         </h2>
         <ol
-          className={`mt-2 flex h-[calc(100vh-135px)] min-w-[calc(320px-2rem)] flex-col gap-1 overflow-x-auto px-1 pb-4 text-sm leading-6 text-gray-500`}
+          className={`mt-2 flex h-[calc(100vh-130px)] min-w-[calc(320px-2rem)] flex-col gap-1 overflow-x-auto px-1 pb-4 text-sm leading-6 text-gray-500`}
         >
           {filteredEvents.length > 0 ? (
             filteredEvents.map((meeting) => (
               <Meeting
                 key={meeting.id}
-                meeting={meeting}
+                event={meeting}
                 setUpdateModalIsOpen={setUpdateModalIsOpen}
                 setSelectedDay={setSelectedDay}
               />
@@ -152,32 +152,52 @@ const QuickView = ({
 };
 
 function Meeting({
-  meeting,
+  event,
   setUpdateModalIsOpen,
   setSelectedDay,
 }: {
-  meeting: Events[0];
+  event: Events[0];
   setUpdateModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedDay: React.Dispatch<React.SetStateAction<Date>>;
 }) {
   const [MenuIsOpen, setMenuIsOpen] = useState(false);
-  return (
-    <li
-      className="mt-1 h-max rounded"
-      onMouseLeave={() => {
+  const menuRef = useRef<HTMLOListElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuIsOpen(false);
-      }}
-    >
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  });
+
+  const { mutateAsync: deleteEvent } = useDeleteEvent();
+
+  async function onDelete(e: MouseEvent<HTMLButtonElement>, id: string) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (confirm("Are you sure you want to delete this event?")) {
+      await deleteEvent(id);
+      setMenuIsOpen(false);
+    }
+  }
+  return (
+    <li className="mt-1 h-max rounded">
       <a
-        href={`#${meeting.id.toString()}`}
-        className={`block p-3 ${meeting.theme} light h-full w-full rounded-xl outline-offset-2 transition-colors duration-200 ease-in-out`}
+        href={`#${event.id.toString()}`}
+        className={`block p-3 ${event.theme} light h-full w-full rounded-xl outline-offset-2 transition-colors duration-200 ease-in-out`}
         onClick={() => {
-          setSelectedDay(parseISO(meeting.startDateTime));
+          setSelectedDay(parseISO(event.startDateTime));
         }}
       >
         <div className="flex justify-between">
-          <time dateTime={format(meeting.startDateTime, "yyyy-mm-dd")}>
-            {format(meeting.startDateTime, "EEE, MMM dd")}
+          <time dateTime={format(event.startDateTime, "yyyy-mm-dd")}>
+            {format(event.startDateTime, "EEE, MMM dd")}
           </time>
           <div className="relative">
             <button
@@ -193,33 +213,17 @@ function Meeting({
               ))}
             </button>
             <ol
-              className={`${MenuIsOpen ? "absolute" : "hidden"} right-0 top-4 grid w-32 rounded-lg bg-white px-1 py-[0.3rem] text-slate-700 shadow-md`}
+              ref={menuRef}
+              className={`${MenuIsOpen ? "absolute" : "hidden"} -right-2 top-3 grid w-32 rounded-lg bg-white px-1 py-[0.3rem] text-slate-700 shadow-md`}
             >
               <li>
                 <button
                   className="w-full rounded-md px-1 text-left hover:bg-slate-100 focus:bg-slate-100 disabled:opacity-50"
-                  disabled={new Date(meeting.startDateTime) < new Date()}
-                  onClick={() => {
-                    (
-                      document.querySelector(
-                        "#update-name",
-                      )! as HTMLInputElement
-                    ).value = meeting.name;
-                    (
-                      document.querySelector(
-                        "#update-startDateTime",
-                      )! as HTMLInputElement
-                    ).value = meeting.startDateTime;
-                    (
-                      document.querySelector(
-                        "#update-endDateTime",
-                      )! as HTMLInputElement
-                    ).value = meeting.endDateTime;
-                    (
-                      document.querySelector(
-                        "#update-description",
-                      )! as HTMLTextAreaElement
-                    ).value = meeting.description ?? "";
+                  disabled={new Date(event.startDateTime) < new Date()}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setEventInUpadateModal(event);
                     setUpdateModalIsOpen(true);
                   }}
                 >
@@ -229,7 +233,7 @@ function Meeting({
               <li>
                 <button
                   className="w-full rounded-md px-1 text-left hover:bg-slate-100 focus:bg-slate-100"
-                  onClick={() => onDelete({ id: meeting.id })}
+                  onClick={(e) => onDelete(e, event.id)}
                   onBlur={() => setMenuIsOpen(false)}
                 >
                   Delete
@@ -238,14 +242,14 @@ function Meeting({
             </ol>
           </div>
         </div>
-        <p className="name">{meeting.name}</p>
+        <p className="name">{event.name}</p>
         <span className="mt-0.5">
-          <time dateTime={meeting.startDateTime}>
-            {format(meeting.startDateTime, "h:mm a")}
+          <time dateTime={event.startDateTime}>
+            {format(event.startDateTime, "h:mm a")}
           </time>{" "}
           -{" "}
-          <time dateTime={meeting.endDateTime}>
-            {format(meeting.endDateTime, "h:mm a")}
+          <time dateTime={event.endDateTime}>
+            {format(event.endDateTime, "h:mm a")}
           </time>
         </span>
       </a>
@@ -253,4 +257,4 @@ function Meeting({
   );
 }
 
-export default QuickView;
+export default memo(QuickView);

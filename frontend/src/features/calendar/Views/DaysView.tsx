@@ -19,7 +19,6 @@ const CellsHeight = "120px";
 type DaysViewProps = {
   days: Date[];
   events: Events;
-  setEvents: React.Dispatch<React.SetStateAction<Events>>;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUpdateModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -27,7 +26,6 @@ type DaysViewProps = {
 const DaysView = ({
   days,
   events,
-  setEvents,
   setModalIsOpen,
   setUpdateModalIsOpen,
 }: DaysViewProps) => {
@@ -75,7 +73,7 @@ const DaysView = ({
           {/* DayCells  */}
           {days.map((day) => (
             <div
-              key={format(day, "dd-mm-yy")}
+              key={format(day, "dd-mm-yyyy")}
               className="flex items-center justify-center p-2 text-slate-400"
             >
               {days.length == 1 ? format(day, "EEEE") : format(day, "EEE")}
@@ -240,7 +238,10 @@ const DaysView = ({
                   key={add(days[0], { hours: index }).toISOString()}
                   className="grid h-full grid-rows-2 border-b border-l border-slate-200"
                 >
-                  {isBefore(add(days[0], { hours: index }), new Date()) ? (
+                  {isBefore(
+                    add(days[0], { hours: index, minutes: 30 }),
+                    new Date(),
+                  ) ? (
                     <div className="relative grid grid-rows-2 bg-slate-100/90">
                       <span className="absolute h-full w-full">
                         <svg
@@ -369,7 +370,6 @@ const DaysView = ({
                   days={days}
                   event={event}
                   events={events}
-                  setEvents={setEvents}
                   setUpdateModalIsOpen={setUpdateModalIsOpen}
                 />
               );

@@ -3,22 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { Events } from "../modifyEvents";
 import { format } from "date-fns";
 import { addEvent } from "../methods/addEvent";
-import { fetchEvents } from "../methods/fetchEvents";
 
 type ScheduleModalProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-
-  events: Events;
-  setEvents: React.Dispatch<React.SetStateAction<Events>>;
 };
 
-const ScheduleModal = ({
-  isOpen,
-  setIsOpen,
-  events,
-  setEvents,
-}: ScheduleModalProps) => {
+const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const modalTitleInputRef = useRef<HTMLInputElement>(null);
   const modalDescriptionInputRef = useRef<HTMLTextAreaElement>(null);
@@ -27,6 +18,15 @@ const ScheduleModal = ({
   const modalThemeInputRef = useRef<HTMLSelectElement>(null);
   const [theme, setTheme] = useState("");
   const [error, setError] = useState("");
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: addCalendarEvent, isLoading } = useMutation({
+    mutationFn: (event: Omit<Events[0], "id">) => addEvent(event),
+    onSuccess: () => {
+      queryClient.invalidateQueries("calendarEvents");
+    },
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -92,9 +92,8 @@ const ScheduleModal = ({
           : (modalThemeInputRef.current?.value ?? ""),
     };
 
-    await addEvent(eventData, setEvents, events);
-    await fetchEvents();
-
+    await addCalendarEvent(eventData);
+    // await fetchEvents();
     setIsOpen(false);
 
     modalTitleInputRef.current.value = "";
@@ -227,9 +226,36 @@ const ScheduleModal = ({
           </button>
           <button
             type="submit"
+            disabled={isLoading}
             className="rounded-md bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-900 focus:outline-none focus:ring-2"
           >
-            Save Event
+            {isLoading ? (
+              <span className="flex items-center">
+                <svg
+                  className="-ml-1 mr-2 size-4 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Saving...
+              </span>
+            ) : (
+              "Save Event"
+            )}
           </button>
         </div>
       </form>
@@ -238,6 +264,7 @@ const ScheduleModal = ({
 };
 
 import React from "react";
+import { useMutation, useQueryClient } from "react-query";
 
 type IconProps = {
   size?: number;

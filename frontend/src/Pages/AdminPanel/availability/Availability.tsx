@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { postAvailability } from "./methods/postAvailability";
+import CustomSelect from "../../../components/custom-select/CustomSelect";
 
 export type Availability = {
   day: string;
@@ -7,6 +8,15 @@ export type Availability = {
   startTime: string;
   endTime: string;
 };
+
+const timezones = [
+  "UTC",
+  "America/New_York",
+  "America/Los_Angeles",
+  "Europe/London",
+  "Asia/Tokyo",
+  "Australia/Sydney",
+];
 
 const Availability = () => {
   const [availability, setAvailability] = useState<Availability[]>([
@@ -18,6 +28,8 @@ const Availability = () => {
     { day: "Saturday", checked: false, startTime: "", endTime: "" },
     { day: "Sunday", checked: false, startTime: "", endTime: "" },
   ]);
+
+  const [selectedTZ, setSelectedTZ] = useState("UTC");
 
   function handleSubmit() {
     const fields = document.querySelectorAll("input[type=time]");
@@ -44,33 +56,44 @@ const Availability = () => {
   }
 
   return (
-    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-lg bg-white pb-4">
+    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-xl bg-white pb-4">
       <h3 className="border-b p-6 px-8 text-3xl font-semibold text-slate-800">
         Availability
       </h3>
-      <section className="mx-8 mt-6 max-w-2xl rounded-lg border">
-        <div className="px-1">
-          <div className="rounded-xl border-slate-200 bg-white p-6">
-            <div className="flex w-full items-center justify-between">
-              <h4 className="text-lg font-semibold text-slate-800">Default</h4>
-              <button
-                className="rounded-lg bg-slate-800 p-2 px-4 font-medium text-white shadow-sm"
-                onClick={handleSubmit}
-              >
-                Save
-              </button>
-            </div>
-            <div className="mt-8">
-              {availability.map((dayAvailability) => (
-                <DayAvailability
-                  dayAvailability={dayAvailability}
-                  setAvailability={setAvailability}
-                />
-              ))}
+      <div className="grid grid-cols-[1.1fr_1fr]">
+        <section className="mx-8 mt-6 max-w-2xl rounded-lg border">
+          <div className="px-1">
+            <div className="rounded-xl border-slate-200 bg-white p-6">
+              <div className="flex w-full items-center justify-between">
+                <h4 className="text-lg font-semibold text-slate-800">
+                  Default
+                </h4>
+                <button
+                  className="rounded-lg bg-slate-800 p-2 px-4 font-medium text-white shadow-sm"
+                  onClick={handleSubmit}
+                >
+                  Save
+                </button>
+              </div>
+              <div className="mt-8">
+                {availability.map((dayAvailability) => (
+                  <DayAvailability
+                    dayAvailability={dayAvailability}
+                    setAvailability={setAvailability}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+        <section>
+          <CustomSelect
+            value={selectedTZ}
+            onChange={(value) => setSelectedTZ(value)}
+            options={timezones}
+          />
+        </section>
+      </div>
     </div>
   );
 };

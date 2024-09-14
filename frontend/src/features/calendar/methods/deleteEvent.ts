@@ -1,7 +1,8 @@
+import { useMutation, useQueryClient } from "react-query";
 import { baseURL, TOKEN } from "../../../App";
 import { Events } from "../modifyEvents";
 
-export async function deleteEvent({ id }: { id: string }): Promise<Events[0]> {
+async function deleteEvent(id: string): Promise<Events[0]> {
   const header = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${TOKEN}`,
@@ -15,4 +16,15 @@ export async function deleteEvent({ id }: { id: string }): Promise<Events[0]> {
   const response = await send.json();
 
   return response;
+}
+
+export function useDeleteEvent() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => deleteEvent(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries("calendarEvents");
+    },
+  });
 }

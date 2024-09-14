@@ -1,3 +1,4 @@
+import { useQuery } from "react-query";
 import { baseURL, TOKEN } from "../../../App";
 import { Events } from "../modifyEvents";
 
@@ -17,3 +18,10 @@ export async function fetchEvents(): Promise<Events> {
 
   return response.json();
 }
+
+export const useEvents = () => {
+  return useQuery({
+    queryFn: fetchEvents,
+    queryKey: ["calendarEvents"],
+  });
+};
