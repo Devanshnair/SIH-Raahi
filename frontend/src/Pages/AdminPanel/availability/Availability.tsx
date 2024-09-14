@@ -8,7 +8,7 @@ export type Availability = {
   endTime: string;
 };
 
-const SetAvailability = () => {
+const Availability = () => {
   const [availability, setAvailability] = useState<Availability[]>([
     { day: "Monday", checked: false, startTime: "", endTime: "" },
     { day: "Tuesday", checked: false, startTime: "", endTime: "" },
@@ -44,32 +44,34 @@ const SetAvailability = () => {
   }
 
   return (
-    <section className="min-h-screen bg-slate-100 p-16">
-      <div className="mx-auto max-w-2xl">
-        <h3 className="p-2 text-lg font-medium text-slate-800">
-          Set Availability
-        </h3>
-        <div className="rounded-xl border-slate-200 bg-white p-6">
-          <div className="flex w-full items-center justify-between">
-            <h4 className="font-semibold text-slate-800">Default</h4>
-            <button
-              className="rounded-lg bg-slate-800 p-2 px-4 font-medium text-white shadow-sm"
-              onClick={handleSubmit}
-            >
-              Save
-            </button>
-          </div>
-          <div className="mt-8">
-            {availability.map((dayAvailability) => (
-              <DayAvailability
-                dayAvailability={dayAvailability}
-                setAvailability={setAvailability}
-              />
-            ))}
+    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-lg bg-white pb-4">
+      <h3 className="border-b p-6 px-8 text-3xl font-semibold text-slate-800">
+        Availability
+      </h3>
+      <section className="mx-8 mt-6 max-w-2xl rounded-lg border">
+        <div className="px-1">
+          <div className="rounded-xl border-slate-200 bg-white p-6">
+            <div className="flex w-full items-center justify-between">
+              <h4 className="text-lg font-semibold text-slate-800">Default</h4>
+              <button
+                className="rounded-lg bg-slate-800 p-2 px-4 font-medium text-white shadow-sm"
+                onClick={handleSubmit}
+              >
+                Save
+              </button>
+            </div>
+            <div className="mt-8">
+              {availability.map((dayAvailability) => (
+                <DayAvailability
+                  dayAvailability={dayAvailability}
+                  setAvailability={setAvailability}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
@@ -204,4 +206,4 @@ function TimeRangeSelect({ day }: { day: string }) {
   );
 }
 
-export default SetAvailability;
+export default Availability;

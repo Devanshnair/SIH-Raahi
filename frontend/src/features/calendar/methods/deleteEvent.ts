@@ -1,6 +1,5 @@
-import { TOKEN } from "../../../App";
+import { baseURL, TOKEN } from "../../../App";
 import { Events } from "../modifyEvents";
-import { baseURL } from "./fetchEvents";
 
 export async function deleteEvent({ id }: { id: string }): Promise<Events[0]> {
   const header = {

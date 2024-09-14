@@ -1,4 +1,4 @@
-import { baseURL } from "../../calendar/methods/fetchEvents";
+import { baseURL } from "../../../App";
 
 export async function fetchWeeklySlots(mentorId: string) {
   const response = await fetch(`${baseURL}/api/${mentorId}/slots`, {

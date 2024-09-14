@@ -40,11 +40,11 @@ const QuickView = ({
 
   return (
     <motion.aside
-      style={{ minWidth: "320px" }}
-      initial={{ minWidth: "320px" }}
+      initial={{
+        flexBasis: "400px",
+      }}
       animate={{
-        minWidth: `${sideViewIsOpen ? "320px" : "0px"}`,
-        maxWidth: `${sideViewIsOpen ? "320px" : "0px"}`,
+        flexBasis: `${sideViewIsOpen ? "400px" : "0px"}`,
       }}
       className={`mt-12s overflow-hidden md:mt-0`}
     >
@@ -94,12 +94,7 @@ const QuickView = ({
         </button> */}
       </div>
 
-      <div
-        style={{
-          paddingInlineEnd: "1rem",
-        }}
-        className="[&_>*:not(ol)]:min-w-max"
-      >
+      <div className={`pr-2 [&_>*:not(ol)]:min-w-max`}>
         <div className="px-1">
           <div className="flex overflow-hidden rounded-md border border-slate-200 bg-slate-50 p-1 outline-offset-4">
             <input
@@ -110,7 +105,7 @@ const QuickView = ({
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <label htmlFor="search">
-              <span className="sr-only">Search</span>
+              <span className="sr-only h-0">Search</span>
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +131,7 @@ const QuickView = ({
           Upcoming events
         </h2>
         <ol
-          className={`l mt-2 flex h-[calc(100vh-135px)] min-w-[calc(320px-2rem)] flex-col gap-1 overflow-x-auto px-1 text-sm leading-6 text-gray-500`}
+          className={`mt-2 flex h-[calc(100vh-135px)] min-w-[calc(320px-2rem)] flex-col gap-1 overflow-x-auto px-1 pb-4 text-sm leading-6 text-gray-500`}
         >
           {filteredEvents.length > 0 ? (
             filteredEvents.map((meeting) => (
@@ -175,7 +170,7 @@ function Meeting({
     >
       <a
         href={`#${meeting.id.toString()}`}
-        className={`block p-3 ${meeting.theme} light h-full w-full rounded-xl outline-offset-2`}
+        className={`block p-3 ${meeting.theme} light h-full w-full rounded-xl outline-offset-2 transition-colors duration-200 ease-in-out`}
         onClick={() => {
           setSelectedDay(parseISO(meeting.startDateTime));
         }}

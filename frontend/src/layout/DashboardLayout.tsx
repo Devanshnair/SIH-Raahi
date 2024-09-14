@@ -11,9 +11,8 @@ const DashboardLayout = () => {
         <div className="mr-2">
           <Sidebar />
         </div>
-        <div>
-          <Outlet />
-        </div>
+
+        <Outlet />
       </div>
     </>
   );

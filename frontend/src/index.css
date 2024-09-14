@@ -11,7 +11,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 
 @layer utilities {
@@ -37,7 +36,7 @@
     }
 
     .name {
-      @apply text-green-600;
+      @apply text-green-500 hover:text-green-600;
     }
 
     &:hover {

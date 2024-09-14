@@ -81,7 +81,7 @@ const DaysView = ({
               {days.length == 1 ? format(day, "EEEE") : format(day, "EEE")}
               <time
                 dateTime={format(day, "yyyy-MM-dd")}
-                className={`${isSameDay(day, today) ? "ml-1 bg-blue-600 text-white" : "text-slate-700"} flex size-7 items-center justify-center rounded-[50%]`}
+                className={`${isSameDay(day, today) ? "ml-1 bg-slate-700 text-white" : "text-slate-700"} flex size-7 items-center justify-center rounded-[50%]`}
               >
                 {format(day, "dd")}
               </time>
@@ -103,6 +103,7 @@ const DaysView = ({
             scrollPadding: "2.5rem",
             height: "calc(100vh - 8.725rem)",
           }}
+          className="no-scrollbar"
         >
           <div
             style={{

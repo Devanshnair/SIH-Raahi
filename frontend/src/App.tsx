@@ -11,7 +11,7 @@ import {
 import MainLayout from "./layout/MainLayout";
 
 import LandingPage from "./Pages/LandingPage/LandingPage";
-import SetAvailability from "./features/availability/SetAvailability";
+
 import CalendarView from "./features/calendar/CalendarView";
 import BookSlots from "./features/bookslots/BookSlots";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -24,11 +24,15 @@ import EditProfile from "./Pages/EditProfile/EditProfile";
 import RoomPage from "./Pages/Videocalling/RoomPage";
 import DashboardLayout from "./layout/DashboardLayout";
 import Testimonials from "./Pages/AdminPanel/Testimonials/Testimonials";
+import Bookings from "./Pages/AdminPanel/Bookings/Bookings";
+import Availability from "./Pages/AdminPanel/availability/Availability";
+import Analytics from "./Pages/AdminPanel/Analytics/Analytics";
 
 const queryClient = new QueryClient();
 
+export const baseURL = "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app";
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2MTg0NzU1LCJpYXQiOjE3MjYxNDE1NTUsImp0aSI6IjgwNGJhN2E2MjA3MzQzNDQ5ZGE3NTQ0YmJjMmM5NmY0IiwidXNlcl9pZCI6MX0.oNv_29IY8uPA6VL6sW6oo8tmQ6aLi3NQ18KL03_VJoE";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2MzUyMDMwLCJpYXQiOjE3MjYzMDg4MzAsImp0aSI6Ijg2ZDNlOWMyZmJiNjQ5MTZiZjJhY2FlZGFlNTc5ZDMxIiwidXNlcl9pZCI6MX0.XE5EH4mIRdjWGe9D-kJH2XBBmm_JeXN7yXQuc7By2ws";
 
 function App() {
   const router = createBrowserRouter(
@@ -41,8 +45,6 @@ function App() {
           <Route path="/room/:roomId" element={<RoomPage />} />
           <Route path="/add-post" element={<AddPost />} />
           <Route path="user">
-            <Route path="/user/my-calendar" element={<CalendarView />} />
-            <Route path="/user/my-availability" element={<SetAvailability />} />
             <Route path="/user/chatbot" element={<Chatbot />} />
           </Route>
           <Route path="mentors">
@@ -54,8 +56,12 @@ function App() {
         ,
         <Route path="dashboard" element={<DashboardLayout />}>
           <Route path="/dashboard/home" element={<Dashboard />} />
+          <Route path="/dashboard/bookings" element={<Bookings />} />
           <Route path="/dashboard/edit-profile" element={<EditProfile />} />
           <Route path="/dashboard/testimonials" element={<Testimonials />} />
+          <Route path="/dashboard/availability" element={<Availability />} />
+          <Route path="/dashboard/calendar" element={<CalendarView />} />
+          <Route path="/dashboard/analytics" element={<Analytics />} />
         </Route>
       </>,
     ),

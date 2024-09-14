@@ -1,5 +1,5 @@
-import { TOKEN } from "../../../App";
-import { Availability } from "../SetAvailability";
+import { TOKEN } from "../../../../App";
+import { Availability } from "../Availability";
 
 export const URL = "https://live-merely-drum.ngrok-free.app/api/slots/";
 

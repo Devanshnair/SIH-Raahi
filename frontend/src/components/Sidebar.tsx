@@ -1,4 +1,3 @@
-import React, { HTMLAttributeAnchorTarget, useState } from "react";
 import { IconBaseProps } from "react-icons";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
@@ -11,13 +10,28 @@ const navItems = [
     icon: (props: IconBaseProps) => <TbBrandGoogleAnalytics {...props} />,
   },
   {
-    path: "/dashboard/calendar",
-    label: "Calendar",
+    path: "/dashboard/bookings",
+    label: "Bookings",
     icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
   },
   {
     path: "/dashboard/testimonials",
     label: "Testimonials",
+    icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
+  },
+  {
+    path: "/dashboard/availability",
+    label: "Availability",
+    icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
+  },
+  {
+    path: "/dashboard/calendar",
+    label: "Calendar",
+    icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
+  },
+  {
+    path: "/dashboard/analytics",
+    label: "Analytics",
     icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
   },
 ];
@@ -43,7 +57,7 @@ const Sidebar = () => {
         <div className="absolute -left-[22px] top-6 -rotate-90 border-[.7rem] border-transparent border-b-white drop-shadow-[0px_-1px_1px_rgba(0,0,0,0.08)]"></div>
       </div>
       <div className="sticky top-4 h-[calc(100vh-32px)] overflow-y-auto px-4">
-        <div className="mb-4 mt-2 border-b border-stone-300 pb-4">
+        <div className="mb-4 mt-2 border-b border-slate-300 pb-4">
           <Link to={"/dashboard/edit-profile"}>
             <button className="relative flex w-full items-center gap-2 rounded p-0.5 transition-colors hover:bg-slate-200">
               <img

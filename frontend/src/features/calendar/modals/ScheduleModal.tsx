@@ -189,7 +189,7 @@ const ScheduleModal = ({
             id="theme"
             value={theme}
             onChange={(e) => setTheme(e.target.value)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500"
+            className="w-full rounded-md border border-gray-300 px-2 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500"
           >
             <option value="">Select a theme</option>
             <option value="Work">Work</option>

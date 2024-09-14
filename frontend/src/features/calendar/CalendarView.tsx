@@ -98,16 +98,15 @@ const CalendarView = () => {
   if (isError) return <div>Error: {(error as Error).message}</div>;
 
   return (
-    <div className="max-w-screen flex max-h-screen overflow-hidden">
+    <div className="max-w-screen mr-2 mt-2 flex max-h-[calc(100vh-0.5rem)] overflow-hidden rounded-t-lg bg-white">
       <div
         style={{
           width: "100%",
-          paddingInlineStart: "1rem",
-          paddingInlineEnd: "1rem",
+          paddingInline: "1rem",
           flexBasis: "100%",
         }}
       >
-        <div className="flex items-center justify-between py-5 pl-6 pr-1">
+        <div className="flex items-center justify-between pb-5 pl-6 pr-1 pt-4">
           <div className="flex items-center gap-6">
             <button
               title="Jump back to today"

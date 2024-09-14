@@ -1,6 +1,5 @@
-import { TOKEN } from "../../../App";
+import { baseURL, TOKEN } from "../../../App";
 import { addCalendarEvent, Events } from "../modifyEvents";
-import { baseURL } from "./fetchEvents";
 
 export async function addEvent(
   event: {

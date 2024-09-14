@@ -25,8 +25,6 @@ const EventSticker = ({
   setEvents,
   setUpdateModalIsOpen,
 }: EventStickersProps) => {
-  // const [endTime, setEndTime] = useState(new Date(event.startDateTime));
-
   const startColNo = days.findIndex((day) =>
     isWithinInterval(
       event.endDateTime,
@@ -78,7 +76,7 @@ const EventSticker = ({
     ).value = event?.description ?? "";
     (
       document.querySelector("[data-eventid]") as HTMLDialogElement
-    ).dataset.eventid = event?.id.toString() ?? "";
+    ).dataset.eventid = event?.id ?? "";
 
     setUpdateModalIsOpen(true);
   }
@@ -110,7 +108,8 @@ const EventSticker = ({
 
   return (
     <>
-      <motion.div
+      <motion.a
+        href="#"
         id={event.id}
         style={{
           top: `${top}px`,
@@ -152,7 +151,7 @@ const EventSticker = ({
             {scheduledTime}
           </time>
         </div>
-      </motion.div>
+      </motion.a>
     </>
   );
 };

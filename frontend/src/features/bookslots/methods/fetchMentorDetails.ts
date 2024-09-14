@@ -1,4 +1,4 @@
-import { baseURL } from "../../calendar/methods/fetchEvents";
+import { baseURL } from "../../../App";
 
 export async function fetchMentorDetails(id: string) {
   console.log(id);
