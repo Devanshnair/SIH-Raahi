@@ -1,28 +1,5 @@
-import React from "react";
-import { BsCalendar4Week } from "react-icons/bs";
-import { HiOutlineComputerDesktop } from "react-icons/hi2";
-import { IoEyeOutline, IoStarOutline } from "react-icons/io5";
-import { LiaCertificateSolid } from "react-icons/lia";
-import { LuUser } from "react-icons/lu";
-import { RiComputerLine } from "react-icons/ri";
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  PolarAngleAxis,
-  PolarGrid,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import StatCards from "../../../components/StatCards";
-import { FaRegCalendarCheck } from "react-icons/fa";
-import { GoArrowUpRight } from "react-icons/go";
+
 import Overview from "./sections/Overview";
 import Activity from "./sections/Activity";
 import Domain from "./sections/Domain";

@@ -6,7 +6,7 @@ const DashboardLayout = () => {
   return (
     <>
       <div
-        className={`grid grid-cols-[240px,1fr] overflow-clip rounded-md bg-slate-100`}
+        className={`grid min-h-screen grid-cols-[240px,1fr] overflow-clip rounded-md bg-slate-100`}
       >
         <div className="mr-2">
           <Sidebar />

@@ -23,7 +23,7 @@ import AddPost from "./Pages/AddPost/AddPost";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import RoomPage from "./Pages/Videocalling/RoomPage";
 import DashboardLayout from "./layout/DashboardLayout";
-import Testimonials from "./Pages/myDashboard/Testimonials";
+import Testimonials from "./Pages/AdminPanel/Testimonials/Testimonials";
 
 const queryClient = new QueryClient();
 
@@ -52,10 +52,10 @@ function App() {
           </Route>
         </Route>
         ,
-        <Route path="Dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/Dashboard/edit-profile" element={<EditProfile />} />
-          <Route path="/Dashboard/testimonials" element={<Testimonials />} />
+        <Route path="dashboard" element={<DashboardLayout />}>
+          <Route path="/dashboard/home" element={<Dashboard />} />
+          <Route path="/dashboard/edit-profile" element={<EditProfile />} />
+          <Route path="/dashboard/testimonials" element={<Testimonials />} />
         </Route>
       </>,
     ),
