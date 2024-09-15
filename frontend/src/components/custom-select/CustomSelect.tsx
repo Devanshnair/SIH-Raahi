@@ -53,7 +53,7 @@ export default function CustomSelect({
     <div className={`relative w-full ${className}`} ref={dropdownRef}>
       <button
         type="button"
-        className="flex w-full items-center justify-between rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+        className="flex w-full items-center justify-between rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2"
         onClick={() => {
           setIsOpen(!isOpen);
           if (!isOpen) {
@@ -85,7 +85,7 @@ export default function CustomSelect({
           <input
             ref={inputRef}
             type="text"
-            className="w-full rounded-t-md border-b border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
+            className="w-full rounded-t-md border-b border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800"
             placeholder="Search options..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}

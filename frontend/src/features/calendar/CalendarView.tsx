@@ -17,7 +17,7 @@ import UploadModal from "./modals/UploadModal";
 import { useEvents } from "./methods/fetchEvents";
 
 const CalendarView = () => {
-  const { data, isLoading, error, isError, isRefetching } = useEvents();
+  const { data, isLoading, error, isError } = useEvents();
 
   const [events, setEvents] = useState<Events>([]);
 
@@ -86,35 +86,34 @@ const CalendarView = () => {
 
   return (
     <>
-      <div className="max-w-screen relative mr-2 mt-2 flex max-h-[calc(100vh-0.5rem)] overflow-hidden rounded-t-xl bg-white shadow-sm">
-        {isLoading ||
-          (isRefetching && (
-            <div className="absolute z-[999] grid h-full w-full place-items-center bg-slate-50/60 text-3xl font-medium text-slate-700 backdrop-blur-[1.5px]">
-              <span className="flex items-center gap-0.5">
-                <svg
-                  className="-ml-1 mr-3 size-8 animate-spin text-slate-700"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Loading...
-              </span>
-            </div>
-          ))}
+      <div className="max-w-screen relative mr-2 mt-2 flex max-h-[calc(100vh-0.5rem)] overflow-hidden rounded-t-lg bg-white shadow-sm">
+        {isLoading && (
+          <div className="absolute z-[999] grid h-full w-full place-items-center bg-slate-50/60 text-3xl font-medium text-slate-700 backdrop-blur-[1.5px]">
+            <span className="flex items-center gap-0.5">
+              <svg
+                className="-ml-1 mr-3 size-8 animate-spin text-slate-700"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Loading...
+            </span>
+          </div>
+        )}
         <div
           style={{
             width: "100%",

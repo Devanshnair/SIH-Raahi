@@ -58,7 +58,7 @@ const data = {
 const Testimonials = () => {
   console.log(data);
   return (
-    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-lg bg-white pb-4">
+    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-lg bg-white pb-4 shadow-sm">
       <h3 className="border-b p-6 px-8 text-3xl font-semibold text-slate-800">
         Testimonials
       </h3>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { postAvailability } from "./methods/postAvailability";
 import CustomSelect from "../../../components/custom-select/CustomSelect";
+import NoticePeriodSelect from "../../../components/custom-select/NoticePeriodSelect";
 
 export type Availability = {
   day: string;
@@ -9,13 +10,19 @@ export type Availability = {
   endTime: string;
 };
 
-const timezones = [
-  "UTC",
-  "America/New_York",
-  "America/Los_Angeles",
-  "Europe/London",
-  "Asia/Tokyo",
-  "Australia/Sydney",
+const bookingPeriodOptions = [
+  "1 Week",
+  "2 Weeks",
+  "3 Weeks",
+  "4 Weeks",
+  "1 Month",
+  "2 Months",
+];
+
+const unitOptions = [
+  { value: "minutes", label: "Minutes" },
+  { value: "hours", label: "Hours" },
+  { value: "days", label: "Days" },
 ];
 
 const Availability = () => {
@@ -29,7 +36,11 @@ const Availability = () => {
     { day: "Sunday", checked: false, startTime: "", endTime: "" },
   ]);
 
-  const [selectedTZ, setSelectedTZ] = useState("UTC");
+  const [bookingPeriod, setBookingPeriod] = useState("1 Week");
+  const [noticePeriod, setNoticePeriod] = useState({
+    value: 1,
+    unit: "hours",
+  });
 
   function handleSubmit() {
     const fields = document.querySelectorAll("input[type=time]");
@@ -56,42 +67,60 @@ const Availability = () => {
   }
 
   return (
-    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-xl bg-white pb-4">
+    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-lg bg-white pb-4 shadow-sm">
       <h3 className="border-b p-6 px-8 text-3xl font-semibold text-slate-800">
         Availability
       </h3>
-      <div className="grid grid-cols-[1.1fr_1fr]">
-        <section className="mx-8 mt-6 max-w-2xl rounded-lg border">
-          <div className="px-1">
-            <div className="rounded-xl border-slate-200 bg-white p-6">
-              <div className="flex w-full items-center justify-between">
-                <h4 className="text-lg font-semibold text-slate-800">
-                  Default
-                </h4>
-                <button
-                  className="rounded-lg bg-slate-800 p-2 px-4 font-medium text-white shadow-sm"
-                  onClick={handleSubmit}
-                >
-                  Save
-                </button>
-              </div>
-              <div className="mt-8">
-                {availability.map((dayAvailability) => (
-                  <DayAvailability
-                    dayAvailability={dayAvailability}
-                    setAvailability={setAvailability}
-                  />
-                ))}
-              </div>
+      <div className="mx-8 grid gap-8">
+        <section className="mt-8 grid place-content-start space-y-5 divide-y px-1">
+          <div className="flex items-center justify-between gap-6">
+            <div className="grid gap-0.5">
+              <h4 className="font-semibold text-slate-800">Booking Period</h4>
+              <p className="text-sm text-slate-500">
+                How far in the future can attendees book
+              </p>
             </div>
+            <CustomSelect
+              className="w-[13.5rem]"
+              value={bookingPeriod}
+              onChange={(value) => setBookingPeriod(value)}
+              options={bookingPeriodOptions}
+            />
+          </div>
+          <div className="flex items-center justify-between gap-6 pt-5">
+            <div className="grid gap-0.5">
+              <h4 className="font-semibold text-slate-800">Notice Period</h4>
+              <p className="text-sm text-slate-500">
+                Set the minimum amount of notice that is required
+              </p>
+            </div>
+            <NoticePeriodSelect
+              options={unitOptions}
+              initialValue={noticePeriod.value}
+              initialUnit={noticePeriod.unit}
+              onChange={(value, unit) => setNoticePeriod({ value, unit })}
+            />
           </div>
         </section>
-        <section>
-          <CustomSelect
-            value={selectedTZ}
-            onChange={(value) => setSelectedTZ(value)}
-            options={timezones}
-          />
+        <section className="max-w-2xl overflow-hidden rounded-lg border">
+          <div className="rounded-xl border-slate-200 bg-white p-7">
+            <div className="space-y-4">
+              {availability.map((dayAvailability) => (
+                <DayAvailability
+                  dayAvailability={dayAvailability}
+                  setAvailability={setAvailability}
+                />
+              ))}
+            </div>
+            <div className="mt-8">
+              <button
+                className="ml-auto block w-28 rounded-lg bg-slate-800 p-2 px-4 font-medium text-white shadow-sm"
+                onClick={handleSubmit}
+              >
+                Save
+              </button>
+            </div>
+          </div>
         </section>
       </div>
     </div>
@@ -108,7 +137,7 @@ function DayAvailability({
   return (
     <div
       key={dayAvailability.day}
-      className="mt-4 flex min-h-10 items-start justify-between pb-2"
+      className="flex h-10 min-h-10 items-start justify-between pb-2"
     >
       <div className="flex items-start gap-2">
         <input
