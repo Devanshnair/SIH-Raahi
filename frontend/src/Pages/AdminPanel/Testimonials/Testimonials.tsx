@@ -63,15 +63,15 @@ const Testimonials = () => {
         Testimonials
       </h3>
 
-      <div className="px-8">
+      <div className="mx-8">
         <div className="mb-2 mt-6 flex gap-4">
-          <div className="rounded-xl bg-slate-100 p-6 pb-2 text-center">
+          <div className="rounded-xl bg-slate-100 p-6 pb-2 text-center shadow shadow-slate-200">
             <p className="text-4xl font-semibold text-slate-800">
               {data.overAllRating}/5
             </p>
             <p className="my-2.5 font-medium text-slate-500">Over All Rating</p>
           </div>
-          <div className="rounded-xl bg-slate-100 p-6 pb-2 text-center">
+          <div className="rounded-xl bg-slate-100 p-6 pb-2 text-center shadow shadow-slate-200">
             <p className="text-4xl font-semibold text-slate-800">
               {data.testimonialsCount}
             </p>
@@ -102,7 +102,7 @@ type TestimonialCardProps = {
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
   const { rating, author, date, text } = testimonial;
   return (
-    <div className="mt-4 inline-block w-full rounded-xl bg-slate-100 p-4">
+    <div className="mt-4 inline-block w-full rounded-xl bg-slate-100 p-4 shadow shadow-slate-200">
       <div className="flex items-center gap-2 text-lg font-semibold text-slate-700">
         <span className="-mt-[2px]">
           <svg

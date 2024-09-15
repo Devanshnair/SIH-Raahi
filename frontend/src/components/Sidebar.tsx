@@ -19,6 +19,7 @@ const navItems = [
     label: "Testimonials",
     icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
   },
+
   {
     path: "/dashboard/availability",
     label: "Availability",
