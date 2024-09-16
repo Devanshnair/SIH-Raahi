@@ -106,8 +106,8 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
       className="relative z-50 w-full max-w-md rounded-lg"
     >
       <div className="bg-white p-5">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Schedule</h2>
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-800">Update Event</h2>
           <button
             className="-mr-2 -mt-2 rounded-full p-1 hover:bg-gray-100"
             onClick={() => setIsOpen(false)}

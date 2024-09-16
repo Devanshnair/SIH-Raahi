@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Events } from "../modifyEvents";
 import { format } from "date-fns";
 import { addEvent } from "../methods/addEvent";
+import { useMutation, useQueryClient } from "react-query";
 
 type ScheduleModalProps = {
   isOpen: boolean;
@@ -262,9 +263,6 @@ const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
     </dialog>
   );
 };
-
-import React from "react";
-import { useMutation, useQueryClient } from "react-query";
 
 type IconProps = {
   size?: number;

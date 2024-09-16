@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ScheduleModal from "./modals/ScheduleModal";
 import {
   add,
@@ -42,7 +42,6 @@ const CalendarView = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [updateModalIsOpen, setUpdateModalIsOpen] = useState(false);
-  const [uploadModalIsOpen, setUploadModalIsOpen] = useState(false);
 
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -82,13 +81,15 @@ const CalendarView = () => {
 
   const [sideViewIsOpen, setSideViewIsOpen] = useState(true);
 
+  const uploadDialogRef = useRef<HTMLDialogElement>(null);
+
   if (isError) return <div>Error: {(error as Error).message}</div>;
 
   return (
     <>
       <div className="max-w-screen relative mr-2 mt-2 flex max-h-[calc(100vh-0.5rem)] overflow-hidden rounded-t-lg bg-white shadow-sm">
         {isLoading && (
-          <div className="absolute z-[999] grid h-full w-full place-items-center bg-slate-50/60 text-3xl font-medium text-slate-700 backdrop-blur-[1.5px]">
+          <div className="absolute z-[999] grid h-full w-full place-items-center bg-slate-50/50 text-3xl font-medium text-slate-700 backdrop-blur-[1.5px]">
             <span className="flex items-center gap-0.5">
               <svg
                 className="-ml-1 mr-3 size-8 animate-spin text-slate-700"
@@ -260,7 +261,7 @@ const CalendarView = () => {
                     className="stroke-slate-400"
                     title="import from ics"
                     onClick={() => {
-                      setUploadModalIsOpen(true);
+                      uploadDialogRef.current?.showModal();
                     }}
                   >
                     <span className="sr-only">import</span>
@@ -334,10 +335,7 @@ const CalendarView = () => {
             isOpen={updateModalIsOpen}
             setIsOpen={setUpdateModalIsOpen}
           />
-          <UploadModal
-            isOpen={uploadModalIsOpen}
-            setIsOpen={setUploadModalIsOpen}
-          />
+          <UploadModal dialogRef={uploadDialogRef} />
 
           <DaysView
             days={view == "Week" ? currentWeek : [selectedDay]}

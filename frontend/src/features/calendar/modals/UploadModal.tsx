@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { TOKEN } from "../../../App";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -20,13 +20,10 @@ function uploadEvents(fileData: FormData) {
 }
 
 const UploadModal = ({
-  isOpen,
-  setIsOpen,
+  dialogRef,
 }: {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  dialogRef: React.RefObject<HTMLDialogElement>;
 }) => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const modalFileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const [fileName, setFileName] = useState("");
@@ -39,14 +36,6 @@ const UploadModal = ({
       queryClient.invalidateQueries("calendarEvents");
     },
   });
-
-  useEffect(() => {
-    if (isOpen) {
-      dialogRef.current?.showModal();
-    } else {
-      dialogRef.current?.close();
-    }
-  }, [isOpen]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -62,7 +51,7 @@ const UploadModal = ({
       return;
     }
 
-    setIsOpen(false);
+    dialogRef.current?.close();
     const fileData = new FormData();
     fileData.append("file", file);
     // console.log([...fileData.entries()]);
@@ -130,7 +119,7 @@ const UploadModal = ({
         <div className="flex justify-end space-x-2">
           <button
             type="button"
-            onClick={() => setIsOpen(false)}
+            onClick={() => dialogRef.current?.close()}
             className="rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
             Cancel

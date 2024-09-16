@@ -27,7 +27,7 @@ const colStartClasses = [
 ];
 
 function classNames(...classes: (string | boolean)[]) {
-  return classes.filter(Boolean).join("");
+  return classes.filter(Boolean).join(" ");
 }
 
 type CalendarProps = {
