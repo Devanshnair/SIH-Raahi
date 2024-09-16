@@ -1,37 +1,25 @@
-import { useEffect, useState } from "react";
 import BookSlotsCalendar from "./BookSlotsCalendar";
-import { useQuery } from "react-query";
-import { fetchMentorDetails } from "./methods/fetchMentorDetails";
 import { useParams } from "react-router-dom";
-
-const useMentorDetails = (id: string) => {
-  return useQuery({
-    queryKey: ["mentorDetails"],
-    queryFn: () => fetchMentorDetails(id),
-  });
-};
+import { useMentorDetails } from "./methods/fetchMentorDetails";
+import { useWeeklySlots } from "./methods/fetchWeeklySlots";
 
 const BookSlots = () => {
-  const { mentorId } = useParams<{ mentorId: string }>();
-  const { data, isLoading, error, isError } = useMentorDetails(mentorId ?? "1");
-  const [mentorDetails, setMentorDetails] = useState({
-    id: 1,
-    name: "Mr. Monty",
-    profession: "Masochist",
-    experience: 5,
-    rating: "5.0",
-    price: 200,
-    bio: "masochist",
-  });
+  const { mentorId } = useParams();
+  const {
+    data: mentorDetails,
+    isLoading,
+    error,
+    isError,
+  } = useMentorDetails(mentorId ?? "1");
 
-  useEffect(() => {
-    if (data) {
-      setMentorDetails(data);
-    }
-  }, [data]);
+  const { data: weekSlots } = useWeeklySlots(mentorId ?? "1");
 
   if (isLoading) {
-    return <div>Loading mentor details...</div>;
+    return (
+      <div className="grid h-screen w-full animate-pulse place-items-center bg-slate-100 text-xl">
+        Loading mentor details...
+      </div>
+    );
   }
 
   if (isError) {
@@ -52,17 +40,17 @@ const BookSlots = () => {
         </div>
         <div className="mt-4 max-w-lg text-center">
           <h2 className="text-lg font-medium text-slate-800">
-            {mentorDetails.name}
+            {mentorDetails?.name}
           </h2>
-          <p className="text-slate-500">{mentorDetails.profession}</p>
+          <p className="text-slate-500">{mentorDetails?.profession}</p>
 
           <p className="mt-2 text-slate-500">
-            {mentorDetails.name} is a professional {mentorDetails.profession}{" "}
-            {mentorDetails.bio}
+            {mentorDetails?.name} is a professional {mentorDetails?.profession}{" "}
+            {mentorDetails?.bio}
           </p>
         </div>
         <div className="mt-6 grid w-full max-w-lg gap-2">
-          <div className="flex items-center justify-between rounded-xl bg-white px-5 py-4">
+          <div className="flex items-center justify-between rounded-xl bg-white px-5 py-4 shadow-sm">
             <div className="flex items-center gap-2">
               <div className="grid size-12 place-items-center rounded-full bg-slate-100">
                 <svg
@@ -85,7 +73,7 @@ const BookSlots = () => {
                   Total Experience
                 </p>
                 <p className="text-lg font-semibold text-slate-700">
-                  {mentorDetails.experience} Years
+                  {mentorDetails?.experience} Years
                 </p>
               </div>
             </div>
@@ -114,7 +102,7 @@ const BookSlots = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-between rounded-xl bg-white px-5 py-4">
+          <div className="flex items-center justify-between rounded-xl bg-white px-5 py-4 shadow-sm">
             <div className="flex items-center gap-2">
               <div className="grid size-12 place-items-center rounded-full bg-slate-100">
                 <svg
@@ -134,7 +122,7 @@ const BookSlots = () => {
               </div>
               <div>
                 <p className="text-lg font-semibold text-slate-700">
-                  ${mentorDetails.price}
+                  ${mentorDetails?.price}
                 </p>
                 <p className="text-sm font-medium text-slate-500">
                   Consultation fee
@@ -144,13 +132,9 @@ const BookSlots = () => {
           </div>
         </div>
       </div>
-      <div className="w-full rounded-xl max-md:mt-10 max-md:px-4">
-        <div className="mx-auto w-full max-w-2xl">
-          <h3 className="px-3 py-2 font-medium text-slate-800">
-            Available Time
-          </h3>
-          <BookSlotsCalendar mentorId={mentorId ?? ""} />
-        </div>
+      <div className="max-xs:px-0 w-full max-w-xl rounded-xl max-md:mt-10 max-md:px-4 md:justify-self-start">
+        <h3 className="px-3 py-2 font-medium text-slate-800">Available Time</h3>
+        {weekSlots && <BookSlotsCalendar weekSlots={weekSlots} />}
       </div>
     </div>
   );

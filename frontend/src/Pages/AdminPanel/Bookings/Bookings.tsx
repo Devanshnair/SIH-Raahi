@@ -10,16 +10,37 @@ const Bookings = () => {
 
   type d = { [key: string]: (typeof meetings)[0][] };
 
-  const meetingsReimagined = meetings.reduce((acc: d[], meeting) => {
+  console.table(meetings);
+
+  const fileredMeetings = (() => {
+    if (selected === "Upcoming") {
+      return meetings.filter(
+        (meeting) =>
+          meeting.startDateTime >
+          new Date(meetings[0].startDateTime).toISOString(),
+      );
+    }
+    if (selected === "Past") {
+      return meetings.filter(
+        (meeting) =>
+          meeting.startDateTime <
+          new Date(meetings[0].startDateTime).toISOString(),
+      );
+    }
+    return meetings;
+  })();
+
+  const meetingsReimagined = fileredMeetings.reduce((acc: d[], meeting) => {
     const date = format(meeting.startDateTime, "yyyy-MM-dd");
     if (!acc.find((d: d) => Object.hasOwn(d, date))) {
       const obj = {
         [date]: [meeting],
       };
       acc.push(obj);
+    } else {
+      const index = acc.findIndex((d: d) => Object.hasOwn(d, date));
+      acc[index][date].push(meeting);
     }
-    const index = acc.findIndex((d: d) => Object.hasOwn(d, date));
-    acc[index][date].push(meeting);
     return acc;
   }, []);
 

@@ -11,7 +11,6 @@ export type Events = {
 export const meetings = [
   {
     id: 1,
-
     name: "Leslie Alexander",
     startDateTime: "2024-08-11T13:00",
     endDateTime: "2024-08-11T14:30",
@@ -21,7 +20,6 @@ export const meetings = [
   {
     id: 2,
     name: "Michael Foster",
-
     startDateTime: "2024-08-20T09:00",
     endDateTime: "2024-08-20T11:30",
     description: "Meeting with Michael Foster",
@@ -45,6 +43,14 @@ export const meetings = [
   },
   {
     id: 5,
+    name: "Dries Vincent",
+    startDateTime: "2024-08-09T15:00",
+    endDateTime: "2024-08-09T16:30",
+    description: "Meeting with Dries Vincent",
+    theme: "theme2",
+  },
+  {
+    id: 6,
     name: "Michael Foster",
     startDateTime: "2024-08-13T14:00",
     endDateTime: "2024-08-13T14:30",

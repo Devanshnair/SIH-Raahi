@@ -1,6 +1,22 @@
+import { useQuery } from "react-query";
 import { baseURL } from "../../../App";
 
-export async function fetchWeeklySlots(mentorId: string) {
+type slot = {
+  start: string;
+  end: string;
+};
+
+export type weekSlotsType = {
+  startTime: string;
+  endTime: string;
+  day: string;
+  slots: slot[];
+  date: string;
+};
+
+export async function fetchWeeklySlots(
+  mentorId: string,
+): Promise<weekSlotsType[]> {
   const response = await fetch(`${baseURL}/api/${mentorId}/slots`, {
     method: "GET",
     headers: {
@@ -15,3 +31,10 @@ export async function fetchWeeklySlots(mentorId: string) {
 
   return response.json();
 }
+
+export const useWeeklySlots = (id: string) => {
+  return useQuery({
+    queryKey: ["weeklySlots", id],
+    queryFn: () => fetchWeeklySlots(id),
+  });
+};
