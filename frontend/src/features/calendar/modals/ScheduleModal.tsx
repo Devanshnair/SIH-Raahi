@@ -12,6 +12,7 @@ type ScheduleModalProps = {
 
 const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const modalTitleInputRef = useRef<HTMLInputElement>(null);
   const modalDescriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const modalStartInputRef = useRef<HTMLInputElement>(null);
@@ -50,7 +51,8 @@ const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
+    // const formData = new FormData(formRef.current!);
+    // console.log([...formData.entries()]);
     switch (true) {
       case !modalTitleInputRef.current?.value:
         setError("Name is required");
@@ -94,7 +96,7 @@ const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
     };
 
     await addCalendarEvent(eventData);
-    // await fetchEvents();
+
     setIsOpen(false);
 
     modalTitleInputRef.current.value = "";
@@ -120,7 +122,7 @@ const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6" ref={formRef}>
         <div>
           <label
             htmlFor="name"
@@ -131,6 +133,7 @@ const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
           <input
             required
             id="name"
+            name="name"
             ref={modalTitleInputRef}
             type="text"
             className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500"

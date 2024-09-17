@@ -23,5 +23,6 @@ export const useEvents = () => {
   return useQuery({
     queryFn: fetchEvents,
     queryKey: ["calendarEvents"],
+    refetchOnWindowFocus: false,
   });
 };

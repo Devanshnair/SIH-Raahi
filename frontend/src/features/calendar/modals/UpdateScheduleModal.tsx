@@ -18,7 +18,7 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   const modalEndInputRef = useRef<HTMLInputElement>(null);
   const modalThemeInputRef = useRef<HTMLSelectElement>(null);
 
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState();
   const [error, setError] = useState("");
 
   const queryClient = useQueryClient();

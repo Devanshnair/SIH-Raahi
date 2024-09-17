@@ -23,7 +23,6 @@ const CalendarView = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       data.map((event) => {
         event.startDateTime = format(
           new Date(event.startDateTime).toLocaleString(),
