@@ -1,0 +1,222 @@
+import React, { useState } from "react";
+import {
+  MessageSquare,
+  Eye,
+  Clock,
+  User,
+  Share2,
+  ChevronUp,
+  ChevronDown,
+  ArrowLeft,
+  Send,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { ThreadType, threads } from "./data";
+
+type Comment = {
+  id: string;
+  content: string;
+  author: string;
+  upvotes: number;
+  downvotes: number;
+  createdAt: string;
+};
+
+const comments: Comment[] = [
+  {
+    id: "1",
+    content:
+      "Always use functional components and hooks. They're more efficient and easier to read. For state management, I recommend using Redux Toolkit if you need a global state, or React Query for managing server state.",
+    author: "hooksfan",
+    upvotes: 45,
+    downvotes: 2,
+    createdAt: "2023-06-10T15:00:00Z",
+  },
+  {
+    id: "2",
+    content:
+      "Don't forget to optimize your builds for production! Use code splitting and lazy loading for better performance. Also, consider using React.memo() for preventing unnecessary re-renders of functional components.",
+    author: "perfmatters",
+    upvotes: 38,
+    downvotes: 1,
+    createdAt: "2023-06-10T15:15:00Z",
+  },
+];
+
+const ThreadContent: React.FC<{ thread: ThreadType }> = ({ thread }) => {
+  const [votes, setVotes] = useState(thread.upvotes - thread.downvotes);
+
+  const handleUpvote = () => setVotes(votes + 1);
+  const handleDownvote = () => setVotes(votes - 1);
+
+  return (
+    <div className="overflow-hidden rounded-lg bg-white shadow-md">
+      <div className="p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">
+            {thread.category}
+          </span>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleUpvote}
+              className="text-gray-500 transition-colors duration-200 hover:text-green-600"
+            >
+              <ChevronUp className="h-6 w-6" />
+            </button>
+            <span className="text-lg font-semibold text-gray-700">{votes}</span>
+            <button
+              onClick={handleDownvote}
+              className="text-gray-500 transition-colors duration-200 hover:text-red-600"
+            >
+              <ChevronDown className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+        <h1 className="mb-4 text-3xl font-bold text-gray-800">
+          {thread.title}
+        </h1>
+        <p className="mb-6 text-gray-600">{thread.content}</p>
+        <div className="mb-6 flex flex-wrap gap-2">
+          {thread.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-800"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="mt-5 flex items-center justify-between border-t pt-5 text-sm text-slate-500">
+          <div className="flex items-center space-x-4">
+            <span className="flex items-center">
+              <User className="-mt-px mr-1.5 h-4 w-4" />
+              {thread.author}
+            </span>
+            <span className="flex items-center">
+              <Clock className="mr-1.5 h-4 w-4" />
+              {new Date(thread.createdAt).toLocaleDateString()}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <span className="flex items-center">
+              <MessageSquare className="mr-1 h-4 w-4" />
+              {thread.replies} replies
+            </span>
+            <span className="flex items-center">
+              <Eye className="mr-1 h-4 w-4" />
+              {thread.views} views
+            </span>
+            <button className="flex items-center transition-colors duration-200 hover:text-indigo-600">
+              <Share2 className="mr-1 h-4 w-4" />
+              Share
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Comment: React.FC<{ comment: Comment }> = ({ comment }) => {
+  const [votes, setVotes] = useState(comment.upvotes - comment.downvotes);
+
+  const handleUpvote = () => setVotes(votes + 1);
+  const handleDownvote = () => setVotes(votes - 1);
+
+  return (
+    <div className="rounded-lg bg-white p-6 shadow-md">
+      <div className="flex items-start">
+        <div className="mr-4 flex flex-col items-center">
+          <button
+            onClick={handleUpvote}
+            className="text-gray-500 transition-colors duration-200 hover:text-indigo-600"
+          >
+            <ChevronUp className="h-5 w-5" />
+          </button>
+          <span className="my-1 font-semibold text-gray-700">{votes}</span>
+          <button
+            onClick={handleDownvote}
+            className="text-gray-500 transition-colors duration-200 hover:text-indigo-600"
+          >
+            <ChevronDown className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="flex-grow">
+          <div className="mb-2 flex items-center">
+            <div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 font-semibold text-indigo-600">
+              {comment.author[0].toUpperCase()}
+            </div>
+            <span className="font-medium text-gray-800">{comment.author}</span>
+            <span className="ml-2 text-sm text-gray-500">
+              {new Date(comment.createdAt).toLocaleDateString()}
+            </span>
+          </div>
+          <p className="text-gray-600">{comment.content}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CommentForm: React.FC = () => {
+  const [comment, setComment] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the comment to your backend
+    console.log("Submitting comment:", comment);
+    setComment("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="rounded-lg bg-white p-6 shadow-md">
+      <h3 className="mb-4 text-xl font-semibold text-slate-800">
+        Add a Comment
+      </h3>
+      <div className="mb-4">
+        <textarea
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          className="w-full rounded-lg border border-slate-300 p-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          rows={4}
+          placeholder="Write your comment..."
+        />
+      </div>
+      <button
+        type="submit"
+        className="flex items-center rounded-lg bg-slate-800 px-4 py-2 text-white transition-colors duration-200 hover:bg-slate-900"
+      >
+        <Send className="mr-2 h-4 w-4" />
+        Post Comment
+      </button>
+    </form>
+  );
+};
+
+export default function ThreadPage() {
+  return (
+    <div className="min-h-screen bg-slate-100">
+      <div className="container mx-auto px-4 py-8">
+        <Link
+          to="/forum"
+          className="mb-6 inline-flex items-center text-indigo-600 hover:underline"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Forum
+        </Link>
+        <div className="space-y-6">
+          <ThreadContent thread={threads[0]} />
+          <h2 className="text-2xl font-bold text-slate-800">
+            Comments ({comments.length})
+          </h2>
+          <CommentForm />
+          <div className="space-y-4">
+            {comments.map((comment) => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
