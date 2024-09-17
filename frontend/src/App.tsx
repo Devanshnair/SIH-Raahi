@@ -27,6 +27,8 @@ import Testimonials from "./Pages/AdminPanel/Testimonials/Testimonials";
 import Bookings from "./Pages/AdminPanel/Bookings/Bookings";
 import Availability from "./Pages/AdminPanel/availability/Availability";
 import Analytics from "./Pages/AdminPanel/Analytics/Analytics";
+import Forum from "./features/forums/Forums";
+import ThreadPage from "./features/forums/ThreadPage";
 
 const queryClient = new QueryClient();
 
@@ -44,9 +46,13 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/room/:roomId" element={<RoomPage />} />
           <Route path="/add-post" element={<AddPost />} />
-          <Route path="user">
-            <Route path="/user/chatbot" element={<Chatbot />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+
+          <Route path="forum">
+            <Route index element={<Forum />} />
+            <Route path="/forum/thread/:threadId" element={<ThreadPage />} />
           </Route>
+
           <Route path="mentors">
             <Route path="/mentors/explore" element={<MentorExplorePage />} />
             <Route path="/mentors/reels" element={<Insights />} />

@@ -5,50 +5,25 @@ import {
   startOfDay,
   startOfToday,
 } from "date-fns";
-import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
-import { fetchWeeklySlots } from "./methods/fetchWeeklySlots";
+import { useRef, useState } from "react";
+import { weekSlotsType } from "./methods/fetchWeeklySlots";
 
 type slot = {
   start: string;
   end: string;
 };
 
-type weekSlotsType = {
-  startTime: string;
-  endTime: string;
-  day: string;
-  slots: slot[];
-  date: string;
-};
-
 type selectedSlotsType = {
   day: string;
-  slot: slot | null;
+  slot: slot;
 };
 
-const useWeeklySlots = (id: string) => {
-  return useQuery({
-    queryKey: ["weeklySlots"],
-    queryFn: () => fetchWeeklySlots(id),
-  });
-};
-
-export default function BookSlotsCalendar({ mentorId }: { mentorId: string }) {
-  const [weekSlots, setWeekSlots] = useState<weekSlotsType[]>();
-
-  console.log(weekSlots);
-
-  const { data, isLoading, error } = useWeeklySlots(mentorId);
-
-  useEffect(() => {
-    if (data) {
-      setWeekSlots(data);
-    }
-  }, [data]);
-
+export default function BookSlotsCalendar({
+  weekSlots,
+}: {
+  weekSlots: weekSlotsType[];
+}) {
   const [selectedSlots, setSelectedSlots] = useState<selectedSlotsType>();
-
   const today = startOfToday();
 
   const [selectedDay, setSelectedDay] = useState(today);
@@ -80,18 +55,12 @@ export default function BookSlotsCalendar({ mentorId }: { mentorId: string }) {
     setCurrentWeek(nextWeek);
   }
 
-  console.log(selectedDay);
-
-  const clickedPrevCount = useRef(0);
-  const clickedNextCount = useRef(0);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {(error as Error).message}</div>;
+  const clickedCount = useRef(0);
 
   return (
     <>
-      <div className="h-full w-full max-w-xl rounded-3xl bg-white p-1">
-        <div className="flex items-center justify-between p-6 pb-4">
+      <div className="mx-auto h-full w-full max-w-xl self-center rounded-3xl bg-white p-1 shadow-sm">
+        <div className="max-xs:px-3 flex items-center justify-between p-6 pb-4">
           <h2 className="text-xl font-semibold text-slate-900">
             {format(currentWeek[0], "MMMM yyyy")}
           </h2>
@@ -99,12 +68,11 @@ export default function BookSlotsCalendar({ mentorId }: { mentorId: string }) {
             <button
               type="button"
               onClick={() => {
-                if (clickedPrevCount.current < 0) return;
+                if (clickedCount.current <= 0) return;
                 previousWeek();
-                clickedPrevCount.current = clickedPrevCount.current - 1;
-                clickedNextCount.current = clickedNextCount.current - 1;
+                clickedCount.current = clickedCount.current - 1;
               }}
-              disabled={clickedPrevCount.current == 0}
+              disabled={clickedCount.current == 0}
               className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-gray-900 disabled:opacity-50 disabled:hover:text-gray-500"
             >
               <span className="sr-only">Previous month</span>
@@ -127,12 +95,11 @@ export default function BookSlotsCalendar({ mentorId }: { mentorId: string }) {
             <button
               type="button"
               onClick={() => {
-                if (clickedNextCount.current >= 1) return;
+                if (clickedCount.current >= 7) return;
                 nextWeek();
-                clickedNextCount.current = clickedNextCount.current + 1;
-                clickedPrevCount.current = clickedPrevCount.current + 1;
+                clickedCount.current = clickedCount.current + 1;
               }}
-              disabled={clickedNextCount.current == 7}
+              disabled={clickedCount.current == 7}
               className="-my-1.5 -mr-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-gray-900 disabled:opacity-50 disabled:hover:text-gray-500"
             >
               <span className="sr-only">Next month</span>
@@ -154,7 +121,7 @@ export default function BookSlotsCalendar({ mentorId }: { mentorId: string }) {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-7 border-b border-slate-200 pb-5 pt-1">
+        <div className="grid grid-cols-7 border-b border-slate-200 pb-5 pt-3">
           {currentWeek.map((day) => (
             <div
               key={format(day, "yyyy-mm-dd")}
@@ -164,13 +131,13 @@ export default function BookSlotsCalendar({ mentorId }: { mentorId: string }) {
                 {format(day, "EEE")}
               </p>
               <button
-                className="pt-2 font-semibold text-slate-700"
+                className="pt-1 font-semibold text-slate-700"
                 onClick={() => {
                   setSelectedDay(currentWeek.find((d) => d === day) ?? today);
                 }}
               >
                 <span
-                  className={`${day.toDateString() == new Date(selectedDay).toDateString() && "rounded-[50%] bg-slate-800 text-white"} size-7 p-[7px]`}
+                  className={`${day.toDateString() == new Date(selectedDay).toDateString() && "bg-slate-800 text-white"} grid size-8 place-items-center rounded-[50%]`}
                 >
                   {format(day, "dd")}
                 </span>
@@ -178,41 +145,42 @@ export default function BookSlotsCalendar({ mentorId }: { mentorId: string }) {
             </div>
           ))}
         </div>
-        <div className="mx-auto grid max-h-[370px] max-w-full grid-cols-3 place-items-center justify-center gap-3 overflow-y-auto px-6 py-8">
-          {(weekSlots?.find((d) => d.day == format(selectedDay, "EEEE"))
-            ?.slots ?? false) ? (
-            weekSlots
-              ?.find((d) => d.day == format(selectedDay, "EEEE"))
-              ?.slots.map((slot) => {
-                return (
-                  <button
-                    onClick={() =>
-                      setSelectedSlots({
-                        day: format(selectedDay, "EEEE"),
-                        slot: slot,
-                      })
-                    }
-                    key={slot.start + slot.end}
-                    className={`flex w-full min-w-max place-content-center items-center gap-2 rounded-xl border p-1 py-4 leading-6 ${selectedSlots?.slot == slot ? "border-slate-700 text-slate-700" : "border-slate-200 text-slate-400"} `}
-                  >
-                    <time dateTime={slot.start} className="font-medium">
-                      {format(slot.start, "hh:mm")}
-                    </time>
-                    <span>-</span>
-
-                    <time dateTime={slot.end} className="font-medium">
-                      {format(slot.end, "hh:mm")}
-                    </time>
-                  </button>
-                );
-              })
-          ) : (
-            <div className="place col-span-3 grid items-center text-center text-slate-400">
-              No slots available
-            </div>
-          )}
+        <div className="@container">
+          <div className="@md:grid-cols-3 mx-auto grid h-[270px] max-w-full grid-cols-2 place-content-start justify-center gap-3 overflow-y-auto px-6 py-8">
+            {(weekSlots?.find((d) => d.day == format(selectedDay, "EEEE"))
+              ?.slots ?? false) ? (
+              weekSlots
+                ?.find((d) => d.day == format(selectedDay, "EEEE"))
+                ?.slots.map((slot) => {
+                  return (
+                    <button
+                      onClick={() =>
+                        setSelectedSlots({
+                          day: format(selectedDay, "EEEE"),
+                          slot: slot,
+                        })
+                      }
+                      key={slot.start + slot.end}
+                      className={`flex w-full min-w-max place-content-center items-center gap-2 rounded-xl border p-1 py-4 leading-6 ${selectedSlots?.slot == slot ? "border-slate-700 text-slate-700" : "border-slate-200 text-slate-400"} `}
+                    >
+                      <time dateTime={slot.start} className="font-medium">
+                        {format(slot.start, "hh:mm")}
+                      </time>
+                      <span>-</span>
+                      <time dateTime={slot.end} className="font-medium">
+                        {format(slot.end, "hh:mm")}
+                      </time>
+                    </button>
+                  );
+                })
+            ) : (
+              <div className="place col-span-3 grid items-center text-center text-slate-400">
+                No slots available
+              </div>
+            )}
+          </div>
         </div>
-        <div className="mx-auto flex max-w-[530px] justify-center pb-6 max-md:mx-6">
+        <div className="mx-6 flex max-w-[530px] justify-center pb-6 max-md:mx-6">
           <button className="w-full rounded-full bg-slate-900 p-2 font-medium text-white">
             Book
           </button>

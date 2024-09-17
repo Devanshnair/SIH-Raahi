@@ -1,6 +1,17 @@
+import { useQuery } from "react-query";
 import { baseURL } from "../../../App";
 
-export async function fetchMentorDetails(id: string) {
+type MentorDetails = {
+  id: number;
+  name: string;
+  profession: string;
+  experience: number;
+  rating: string;
+  price: number;
+  bio: string;
+};
+
+async function fetchMentorDetails(id: string): Promise<MentorDetails> {
   console.log(id);
   const URL = `${baseURL}/api/mentor/${id}/`;
   const response = await fetch(URL, {
@@ -17,3 +28,10 @@ export async function fetchMentorDetails(id: string) {
 
   return response.json();
 }
+
+export const useMentorDetails = (id: string) => {
+  return useQuery({
+    queryKey: ["mentorDetails"],
+    queryFn: () => fetchMentorDetails(id),
+  });
+};
