@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import imgSrc from "../../assets/freelancer-working-laptop-her-house.png";
 import { useState, useTransition } from "react";
+import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
 
 const Register = () => {
 
@@ -9,10 +10,13 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  
   const navigate = useNavigate();
 
   const handleForm = async (e: any) => {
     e.preventDefault();
+    setLoading(!loading);
 
     const formData = {
       name,
@@ -39,11 +43,14 @@ const Register = () => {
         const errorData = await response.json();
       } else {
         const errorData = await response.json();
+        setLoading(!loading);
         setError(errorData.message || "Registration failed. Please try again.");
       }
     } catch (error) {
+      setLoading(!loading);
       setError(
         "An error occurred. Please check your connection and try again.",
+        
       );
     }
   };
@@ -108,10 +115,15 @@ const Register = () => {
               </div>
 
               <button
-                className="mb-2 w-96 rounded-lg bg-black py-2 text-center text-white"
+                className="mb-2 w-96 rounded-lg bg-black h-10  text-center text-white"
                 type="submit"
               >
-                Register
+                {/* Register */}
+                {loading? (<video src={loadingAnimation}
+                autoPlay
+                loop
+                className="h-10 mx-auto "></video>): "Register"}
+                
               </button>
               <p>
                 Not a member?
