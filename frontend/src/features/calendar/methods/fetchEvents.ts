@@ -3,7 +3,7 @@ import { baseURL, TOKEN } from "../../../App";
 import { Events } from "../modifyEvents";
 
 export async function fetchEvents(): Promise<Events> {
-  const response = await fetch(`${baseURL}/api/get`, {
+  const response = await fetch(`${baseURL}/api/get/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
