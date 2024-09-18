@@ -2,6 +2,7 @@ import { IconBaseProps } from "react-icons";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const navItems = [
   {
@@ -39,6 +40,16 @@ const navItems = [
 
 const Sidebar = () => {
   const location = useLocation();
+  const accessToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    ?.split("=")[1];
+    
+  const decoded = jwtDecode(accessToken);
+
+  console.log(decoded);
+  
+    
   return (
     <>
       {/* useless div below*/}
@@ -67,9 +78,9 @@ const Sidebar = () => {
                 className="size-8 shrink-0 rounded bg-blue-400 shadow"
               />
               <div className="text-start">
-                <span className="block text-sm font-bold">Raunita</span>
+                <span className="block text-sm font-bold">{decoded.name}</span>
                 <span className="block text-xs text-slate-500">
-                  raunita313@gmail.com
+                  {decoded.email}
                 </span>
               </div>
             </button>

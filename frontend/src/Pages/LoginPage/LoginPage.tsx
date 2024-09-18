@@ -15,7 +15,6 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const handleForm = async (e: any) => {
     e.preventDefault();
-    setLoading(!loading);
 
     const formData = {
       password,
