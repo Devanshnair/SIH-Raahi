@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import imgSrc from '../../assets/freelancer-working-laptop-her-house.png'
 import { Link, useNavigate } from 'react-router-dom';
+import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
 
 
 
@@ -9,9 +10,12 @@ const LoginPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  
   const navigate = useNavigate();
   const handleForm = async (e: any) => {
     e.preventDefault();
+    setLoading(!loading);
 
     const formData = {
       password,
@@ -90,9 +94,13 @@ const LoginPage = () => {
 
               <button
                 type="submit"
-                className="text-center w-96 bg-black text-white py-2 mb-5 rounded-lg"
+                className="text-center w-96 bg-black text-white h-10 mb-5 rounded-lg"
               >
-                Sign-In
+                {loading? (<video src={loadingAnimation}
+                autoPlay
+                loop
+                className='h-10 mx-auto'
+                ></video>): "Sign-In"}
               </button>
               <p>
                 Not a member? 

@@ -40,7 +40,7 @@ const InsightsComponent = ({ videoSrc , name }) => {
     };
 
     const observer = new IntersectionObserver(handleIntersection, {
-      threshold: [0.5, 0.99], // Observe at 50% and 99% visibility
+      threshold: [0.5, 0.99], 
     });
 
     if (videoRef.current) {
@@ -55,14 +55,14 @@ const InsightsComponent = ({ videoSrc , name }) => {
   }, []);
 
   return (
-    <div className="video-container flex flex-col justify-center items-center relative w-[30vw] h-[97vh] mx-auto">
+    <div className="video-container flex flex-col justify-center items-center relative min-w-[30vw] h-[97vh] mx-auto">
       <div
-        className="video w-full h-full relative rounded-3xl bg-black overflow-hidden cursor-pointer"
+        className="video w-[30vw] h-full relative rounded-3xl bg-black overflow-hidden cursor-pointer"
         onClick={togglePlayPause}
       >
         <video
           ref={videoRef}
-          className="absolute top-0 left-0 w-full h-full object-cover"
+          className="w-[30vw]  h-auto object-cover"
           src={videoSrc}
           muted={isMuted}
           loop
