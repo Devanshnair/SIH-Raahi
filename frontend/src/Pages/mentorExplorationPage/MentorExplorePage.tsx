@@ -1,7 +1,9 @@
 import MentorCard from "../../components/MentorCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { FaArrowCircleRight } from "react-icons/fa";
+
+import CustomSelect from "../../components/custom-select/CustomSelect";
 
 // const details = [
 //   {
@@ -134,9 +136,9 @@ const MentorExPg = () => {
 
   return (
     <>
-      <div className="flex w-screen flex-col items-center justify-center gap-4 bg-slate-100">
-        <div className="main">
-          <div className="search mt-4 flex items-center justify-center overflow-hidden rounded-full border-[1px] border-solid border-gray-500 bg-white pl-4">
+      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-slate-100">
+        <div className="main sticky top-0 w-full bg-slate-100 pb-8">
+          <div className="search mx-auto mt-4 flex max-w-3xl items-center justify-center overflow-hidden rounded-full border border-gray-300 bg-white pl-4 pr-2">
             <IoIosSearch className="text-2xl" />
 
             <form
@@ -148,29 +150,27 @@ const MentorExPg = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search for any Skills , domain or name"
-                className="h-11 w-[40vw] pl-2 text-lg focus:outline-none"
+                className="h-11 w-[720px] pl-4 text-lg focus:outline-none"
               />
 
               <button type="submit">
-                <FaArrowCircleRight className="cursor-pointer text-4xl" />
+                {/* <FaArrowCircleRight className="cursor-pointer text-4xl" /> */}
+                {/* <ArrowRightCircle className="size-7 cursor-pointer" /> */}
               </button>
             </form>
           </div>
         </div>
 
-        <div className="container grid grid-cols-[2fr_7fr] gap-20 px-9">
-          <div className="sticky top-0 mt-5 flex h-[430px] flex-col items-center gap-5 rounded-3xl bg-[#fefefe] pt-5 filter">
-            <p className="text-center text-3xl font-bold text-[#222222]">
+        <div className="flex gap-20 px-4">
+          <div className="sticky top-[5.85rem] flex max-h-[520px] flex-col gap-5 rounded-2xl bg-white pt-5 shadow-md shadow-slate-200 filter">
+            <p className="text-center text-2xl font-bold text-slate-800">
               Filters
             </p>
 
-            <form
-              onSubmit={handleForm}
-              className="flex flex-col items-center justify-center gap-5"
-            >
-              <div>
-                <label className="mr-3 text-xl font-semibold">Sort By</label>
-                <select
+            <form onSubmit={handleForm} className="grid gap-5 px-5">
+              <div className="grid gap-0.5">
+                <label className="px-px font-medium">Sort by</label>
+                {/*<select
                   id="sort"
                   className="rounded-md border-[1px] border-solid border-gray-500 bg-white py-2 pl-2 focus:outline-none"
                   value={sortBy}
@@ -180,12 +180,21 @@ const MentorExPg = () => {
                   <option value="order_by=price">Price: Low to High</option>
                   <option value="order_by=-price">Price: High to Low</option>
                   <option value="rating">Rating</option>
-                </select>
+                </select> */}
+                <CustomSelect
+                  options={[
+                    "Price: Low to High",
+                    "Price: High to Low",
+                    "Rating",
+                  ]}
+                  onChange={(val) => setSortBy(val)}
+                  value={sortBy}
+                />
               </div>
 
-              <div>
-                <label className="mr-3 text-xl font-semibold">Roles:</label>
-                <select
+              <div className="grid">
+                <label className="px-px font-medium">Roles</label>
+                {/* <select
                   id="sort"
                   className="rounded-md border-[1px] border-solid border-gray-500 bg-white py-2 pl-2 focus:outline-none"
                   value={roles}
@@ -195,22 +204,27 @@ const MentorExPg = () => {
                   <option value="categories=1">Software Developer</option>
                   <option value="categories=2">Civil Servent</option>
                   <option value="categories=3">Toppers</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="mr-3 text-xl font-semibold">Language:</label>
-                <input
-                  type="text"
-                  placeholder="Hindi , English "
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  className="max-w-[120px] rounded-md border-[1px] border-solid border-gray-500 py-2 pl-2 focus:outline-none"
+                </select> */}
+                <CustomSelect
+                  options={["Software Developer", "Civil Servent", "Toppers"]}
+                  onChange={(val) => setRoles(val)}
+                  value={roles}
                 />
               </div>
 
-              <div>
-                <label className="mr-3 text-xl font-semibold">
+              <div className="grid">
+                <label className="px-px font-medium">Language</label>
+                <input
+                  type="text"
+                  placeholder="Hindi, English"
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="rounded-md border-[1px] border-gray-300 py-2 pl-2 focus:outline-none"
+                />
+              </div>
+
+              {/* <div className="grid">
+                <label className="mr-3 text-xl font-medium">
                   Minimum Price:
                 </label>
                 <input
@@ -220,10 +234,10 @@ const MentorExPg = () => {
                   placeholder=" "
                   className="w-24 rounded-md border-[1px] border-solid border-gray-500 py-2 pl-2 focus:outline-none"
                 />
-              </div>
+              </div> */}
 
               <div>
-                <label className="mr-3 text-xl font-semibold">
+                {/* <label className="mr-3 text-xl font-semibold">
                   Maximum Price:
                 </label>
                 <input
@@ -232,16 +246,21 @@ const MentorExPg = () => {
                   value={maximumPrice}
                   onChange={(e) => setMaximumPrice(e.target.value)}
                   className="w-24 rounded-md border-[1px] border-solid border-gray-500 py-2 pl-2 focus:outline-none"
-                />
+                /> */}
+
+                <PriceRangePicker min={0} max={1000} step={10} />
               </div>
 
-              <button type="submit">
-                <FaArrowCircleRight className="cursor-pointer text-4xl" />
+              <button
+                type="submit"
+                className="mt-2 rounded-md bg-slate-800 px-3 py-2 font-medium leading-5 text-white hover:bg-slate-900"
+              >
+                Filter
               </button>
             </form>
           </div>
 
-          <div className="list grid gap-6 pt-5">
+          <div className="list grid gap-6">
             {details.map((ele, index) => {
               return (
                 <MentorCard
@@ -263,3 +282,146 @@ const MentorExPg = () => {
 };
 
 export default MentorExPg;
+
+interface PriceRangePickerProps {
+  min: number;
+  max: number;
+  step: number;
+}
+
+function PriceRangePicker({ min, max, step }: PriceRangePickerProps) {
+  const [minValue, setMinValue] = useState(min);
+  const [maxValue, setMaxValue] = useState(max);
+  const [isDragging, setIsDragging] = useState<"min" | "max" | null>(null);
+  const rangeRef = useRef<HTMLDivElement>(null);
+  const minHandleRef = useRef<HTMLDivElement>(null);
+  const maxHandleRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const getPercent = (value: number) =>
+    Math.round(((value - min) / (max - min)) * 100);
+
+  useEffect(() => {
+    const minPercent = getPercent(minValue);
+    const maxPercent = getPercent(maxValue);
+
+    if (rangeRef.current) {
+      rangeRef.current.style.left = `${minPercent}%`;
+      rangeRef.current.style.width = `${maxPercent - minPercent}%`;
+    }
+
+    if (minHandleRef.current) {
+      minHandleRef.current.style.left = `${minPercent}%`;
+    }
+
+    if (maxHandleRef.current) {
+      maxHandleRef.current.style.left = `${maxPercent}%`;
+    }
+  }, [minValue, maxValue]);
+
+  const handlePriceInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    boundary: "min" | "max",
+  ) => {
+    const value = Math.min(Math.max(Number(e.target.value), min), max);
+    if (boundary === "min") {
+      setMinValue(Math.min(value, maxValue - step));
+    } else {
+      setMaxValue(Math.max(value, minValue + step));
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent, handle: "min" | "max") => {
+    e.preventDefault();
+    setIsDragging(handle);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(null);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !containerRef.current) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const newX = e.clientX - containerRect.left;
+    const newPercent = Math.min(
+      Math.max((newX / containerRect.width) * 100, 0),
+      100,
+    );
+    const newValue =
+      Math.round(((newPercent / 100) * (max - min)) / step) * step + min;
+
+    if (isDragging === "min") {
+      setMinValue(Math.min(newValue, maxValue - step));
+    } else {
+      setMaxValue(Math.max(newValue, minValue + step));
+    }
+  };
+
+  useEffect(() => {
+    const handleMouseUpGlobal = () => setIsDragging(null);
+    document.addEventListener("mouseup", handleMouseUpGlobal);
+    return () => {
+      document.removeEventListener("mouseup", handleMouseUpGlobal);
+    };
+  }, []);
+
+  return (
+    <div className="mx-auto w-full max-w-[330px] rounded-lg bg-white">
+      <h2 className="mb-4 px-px font-semibold text-gray-800">Price Range</h2>
+      <div
+        ref={containerRef}
+        className="relative mx-2 mb-4 h-2 rounded-full bg-gray-200"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseUp}
+      >
+        <div
+          ref={rangeRef}
+          className="absolute h-full rounded-full bg-slate-800"
+        ></div>
+        <div
+          ref={minHandleRef}
+          className="absolute -ml-3 -mt-2 flex h-6 w-6 cursor-grab items-center justify-center rounded-full border-2 border-slate-800 bg-white shadow active:cursor-grabbing"
+          onMouseDown={(e) => handleMouseDown(e, "min")}
+        >
+          <div className="h-2 w-2 rounded-full bg-slate-800"></div>
+        </div>
+        <div
+          ref={maxHandleRef}
+          className="absolute -ml-3 -mt-2 flex h-6 w-6 cursor-grab items-center justify-center rounded-full border-2 border-slate-800 bg-white shadow active:cursor-grabbing"
+          onMouseDown={(e) => handleMouseDown(e, "max")}
+        >
+          <div className="h-2 w-2 rounded-full bg-slate-800"></div>
+        </div>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="relative mt-1 rounded-md shadow-sm">
+          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+            $
+          </span>
+          <input
+            type="number"
+            value={minValue}
+            onChange={(e) => handlePriceInputChange(e, "min")}
+            className="block w-full rounded-md border-gray-300 py-2 pl-7 pr-3 focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
+            placeholder="Min price"
+          />
+        </div>
+        <span className="mx-4 text-gray-500">to</span>
+        <div className="relative mt-1 rounded-md shadow-sm">
+          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+            $
+          </span>
+          <input
+            type="number"
+            value={maxValue}
+            onChange={(e) => handlePriceInputChange(e, "max")}
+            className="block w-full rounded-md border-gray-300 py-2 pl-7 pr-3 focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
+            placeholder="Max price"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
