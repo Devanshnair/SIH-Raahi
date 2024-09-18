@@ -36,13 +36,13 @@ import { FaArrowCircleRight } from "react-icons/fa";
 //   },
 // ];
 
-const MentorExplorePage = () => {
+const MentorExPg = () => {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
     const request = async () => {
       const response = await fetch(
-        "https://live-merely-drum.ngrok-free.app/api/mentors/",
+        "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app/api/mentors/",
         {
           method: "GET",
           headers: {
@@ -70,7 +70,8 @@ const MentorExplorePage = () => {
   const handleForm = async (e: any) => {
     e.preventDefault();
 
-    let Url = "https://live-merely-drum.ngrok-free.app/api/mentors/?";
+    let Url =
+      "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app/api/mentors/?";
     let flag = false;
 
     if (roles !== "") {
@@ -123,7 +124,6 @@ const MentorExplorePage = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true",
       },
     });
 
@@ -159,7 +159,7 @@ const MentorExplorePage = () => {
         </div>
 
         <div className="container grid grid-cols-[2fr_7fr] gap-20 px-9">
-          <div className="sticky top-0 mt-5 flex h-[450px] w-[20rem] flex-col items-center gap-5 rounded-3xl bg-[#fefefe] pt-5 filter">
+          <div className="sticky top-0 mt-5 flex h-[430px] flex-col items-center gap-5 rounded-3xl bg-[#fefefe] pt-5 filter">
             <p className="text-center text-3xl font-bold text-[#222222]">
               Filters
             </p>
@@ -172,7 +172,7 @@ const MentorExplorePage = () => {
                 <label className="mr-3 text-xl font-semibold">Sort By</label>
                 <select
                   id="sort"
-                  className="w-40 rounded-md border-[1px] border-solid border-gray-500 bg-white py-2 pl-2 focus:outline-none"
+                  className="rounded-md border-[1px] border-solid border-gray-500 bg-white py-2 pl-2 focus:outline-none"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                 >
@@ -187,7 +187,7 @@ const MentorExplorePage = () => {
                 <label className="mr-3 text-xl font-semibold">Roles:</label>
                 <select
                   id="sort"
-                  className="w-40 rounded-md border-[1px] border-solid border-gray-500 bg-white py-2 pl-2 focus:outline-none"
+                  className="rounded-md border-[1px] border-solid border-gray-500 bg-white py-2 pl-2 focus:outline-none"
                   value={roles}
                   onChange={(e) => setRoles(e.target.value)}
                 >
@@ -205,7 +205,7 @@ const MentorExplorePage = () => {
                   placeholder="Hindi , English "
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="w-[120px] rounded-md border-[1px] border-solid border-gray-500 py-2 pl-2 focus:outline-none"
+                  className="max-w-[120px] rounded-md border-[1px] border-solid border-gray-500 py-2 pl-2 focus:outline-none"
                 />
               </div>
 
@@ -250,7 +250,7 @@ const MentorExplorePage = () => {
                   name={ele.name}
                   desc={ele.description}
                   bio={ele.bio}
-                  imgSrc={`${ele.profile_picture || "../../../src/assets/explore2.png"}`}
+                  imgSrc={ele.profile_picture}
                   price={ele.price}
                 />
               );
@@ -262,4 +262,4 @@ const MentorExplorePage = () => {
   );
 };
 
-export default MentorExplorePage;
+export default MentorExPg;
