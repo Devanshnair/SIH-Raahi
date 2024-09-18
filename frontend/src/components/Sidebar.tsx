@@ -42,7 +42,7 @@ const Sidebar = () => {
   return (
     <>
       {/* useless div below*/}
-      <div
+      {/* <div
         className={`sticky top-20 z-50 ml-[228px] ${location.pathname == "/dashboard/home" ? "block" : "hidden"}`}
       >
         <p className="absolute w-[65ch] rounded-lg bg-white p-3 shadow-[0px_0px_2px_rgba(0,0,0,0.15)]">
@@ -56,7 +56,7 @@ const Sidebar = () => {
           </span>
         </p>
         <div className="absolute -left-[22px] top-6 -rotate-90 border-[.7rem] border-transparent border-b-white drop-shadow-[0px_-1px_1px_rgba(0,0,0,0.08)]"></div>
-      </div>
+      </div> */}
       <div className="sticky top-4 h-[calc(100vh-32px)] overflow-y-auto px-4">
         <div className="mb-4 mt-2 border-b border-slate-300 pb-4">
           <Link to={"/dashboard/edit-profile"}>

@@ -34,7 +34,7 @@ const queryClient = new QueryClient();
 
 export const baseURL = "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app";
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NTA5ODU5LCJpYXQiOjE3MjY0NjY2NTksImp0aSI6IjFhMDVhNzY1NDBhNjQ0MGM4MTM1YzAzYmMxNDM5NTcwIiwidXNlcl9pZCI6MX0.fZ00mdNAHRDQcwHRCBK4Gkv0Th7Iu_8yNMVm1m-YZdw";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NjQzNDUzLCJpYXQiOjE3MjY2MDAyNTMsImp0aSI6IjZkM2Q5NTkwOWQwMzQ0YmQ5MDM2ZGUwZTA5MzU1Nzc1IiwidXNlcl9pZCI6MX0.XxcC3b2LyR4CbINSwC5-XmvzV3QKdy2j6hQpETzv0Wc";
 
 function App() {
   const router = createBrowserRouter(
