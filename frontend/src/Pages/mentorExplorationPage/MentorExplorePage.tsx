@@ -66,8 +66,8 @@ const MentorExPg = () => {
   const [sortBy, setSortBy] = useState("");
   const [roles, setRoles] = useState("");
   const [language, setLanguage] = useState("");
-  const [minimumPrice, setMinimumPrice] = useState("");
-  const [maximumPrice, setMaximumPrice] = useState("");
+  const [minimumPrice, setMinimumPrice] = useState<number>(0);
+  const [maximumPrice, setMaximumPrice] = useState<number>(10000);
 
   const handleForm = async (e: any) => {
     e.preventDefault();
@@ -92,7 +92,7 @@ const MentorExPg = () => {
     //   }
     // }
 
-    if (maximumPrice !== "") {
+    if (maximumPrice <= 10000) {
       if (flag) {
         Url = `${Url}&`;
         Url = `${Url}max_price=${maximumPrice}`;
@@ -102,7 +102,7 @@ const MentorExPg = () => {
       }
     }
 
-    if (minimumPrice !== "") {
+    if (minimumPrice >= 0) {
       if (flag) {
         Url = `${Url}&`;
         Url = `${Url}min_price=${minimumPrice}`;
@@ -248,7 +248,13 @@ const MentorExPg = () => {
                   className="w-24 rounded-md border-[1px] border-solid border-gray-500 py-2 pl-2 focus:outline-none"
                 /> */}
 
-                <PriceRangePicker min={0} max={1000} step={10} />
+                <PriceRangePicker
+                  min={minimumPrice}
+                  max={maximumPrice}
+                  setMinValue={setMinimumPrice}
+                  setMaxValue={setMaximumPrice}
+                  step={100}
+                />
               </div>
 
               <button
@@ -286,12 +292,20 @@ export default MentorExPg;
 interface PriceRangePickerProps {
   min: number;
   max: number;
+  setMinValue: React.Dispatch<React.SetStateAction<number>>;
+  setMaxValue: React.Dispatch<React.SetStateAction<number>>;
   step: number;
 }
 
-function PriceRangePicker({ min, max, step }: PriceRangePickerProps) {
-  const [minValue, setMinValue] = useState(min);
-  const [maxValue, setMaxValue] = useState(max);
+function PriceRangePicker({
+  min: minValue,
+  max: maxValue,
+  step,
+  setMaxValue,
+  setMinValue,
+}: PriceRangePickerProps) {
+  const min = 0;
+  const max = 10000;
   const [isDragging, setIsDragging] = useState<"min" | "max" | null>(null);
   const rangeRef = useRef<HTMLDivElement>(null);
   const minHandleRef = useRef<HTMLDivElement>(null);
@@ -398,7 +412,7 @@ function PriceRangePicker({ min, max, step }: PriceRangePickerProps) {
       <div className="flex items-center justify-between">
         <div className="relative mt-1 rounded-md shadow-sm">
           <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-            $
+            ₹
           </span>
           <input
             type="number"
@@ -411,7 +425,7 @@ function PriceRangePicker({ min, max, step }: PriceRangePickerProps) {
         <span className="mx-4 text-gray-500">to</span>
         <div className="relative mt-1 rounded-md shadow-sm">
           <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-            $
+            ₹
           </span>
           <input
             type="number"
