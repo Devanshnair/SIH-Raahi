@@ -3,6 +3,7 @@ import imgSrc from '../../assets/freelancer-working-laptop-her-house.png'
 import { Link, useNavigate } from 'react-router-dom';
 import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
 import { useLogin } from '../../LoginContext/LoginContext';
+import { baseURL } from '../../App';
 
 
 
@@ -38,7 +39,7 @@ const LoginPage = () => {
     };
 
     const response = await fetch(
-      "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app/api/token/",
+      baseURL,
       {
         method: "POST",
         headers: {

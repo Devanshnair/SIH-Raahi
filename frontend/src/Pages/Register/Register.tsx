@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import imgSrc from "../../assets/freelancer-working-laptop-her-house.png";
 import { useState, useTransition } from "react";
 import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
+import { baseURL } from "../../App";
 
 const Register = () => {
 
@@ -27,7 +28,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app/api/register/mentor/",
+       baseURL,
         {
           method: "POST",
           headers: {

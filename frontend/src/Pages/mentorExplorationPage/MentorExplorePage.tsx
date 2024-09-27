@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { FaArrowCircleRight } from "react-icons/fa";
 import ImgSrc from "../../assets/DummyImg.jpg"
+import { baseURL } from "../../App";
 
 import CustomSelect from "../../components/custom-select/CustomSelect";
 
@@ -45,7 +46,7 @@ const MentorExPg = () => {
   useEffect(() => {
     const request = async () => {
       const response = await fetch(
-        "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app/api/mentors/",
+        `${baseURL}/api/mentors/`,
         {
           method: "GET",
           headers: {
@@ -73,8 +74,7 @@ const MentorExPg = () => {
   const handleForm = async (e: any) => {
     e.preventDefault();
 
-    let Url =
-      "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app/api/mentors/?";
+    let Url =`${baseURL}/?`;
     let flag = false;
 
     if (roles !== "") {
@@ -284,7 +284,11 @@ const MentorExPg = () => {
                   name={ele.name}
                   desc={ele.description}
                   bio={ele.bio}
-                  imgSrc={ele.profile_picture? ele.profile_picture:ImgSrc}
+                  imgSrc={
+                    ele.profile_picture
+                      ? `${baseURL}${ele.profile_picture}`
+                      : ImgSrc
+                  }
                   price={ele.price}
                 />
               );
