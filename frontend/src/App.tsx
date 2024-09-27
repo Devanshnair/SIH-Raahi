@@ -1,6 +1,6 @@
 import "./index.css";
 
-import Dashboard from "./Pages/AdminPanel/Dashboard/Dashboard";
+import Dashboard from "./Pages/AdminPanel/Home/Home";
 import Chatbot from "./Pages/Chatbot";
 import {
   createBrowserRouter,
@@ -61,6 +61,7 @@ function App() {
         </Route>
         ,
         <Route path="dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
           <Route path="/dashboard/home" element={<Dashboard />} />
           <Route path="/dashboard/bookings" element={<Bookings />} />
           <Route path="/dashboard/edit-profile" element={<EditProfile />} />
@@ -76,7 +77,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </>
   );

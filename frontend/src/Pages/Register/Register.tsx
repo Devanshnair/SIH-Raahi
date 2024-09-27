@@ -58,8 +58,8 @@ const Register = () => {
   return (
     <>
       <div className="main flex h-screen items-center justify-center gap-36">
-        <div className="signIn flex w-96 flex-col">
-          <h1 className="mb-7 text-4xl font-bold text-[#1f1f1f]">Register</h1>
+        <div className="signIn flex w-96 flex-col text-balance pt-4">
+          <h1 className="mb-11 text-4xl font-bold text-[#1f1f1f]">Start your mentoring journey!</h1>
 
           <div className="form">
             <form onSubmit={handleForm}>
@@ -126,7 +126,7 @@ const Register = () => {
                 
               </button>
               <p>
-                Not a member?
+                Already a member?
                 <Link to={"/login"}>
                   {" "}
                   <span className="text-lg text-blue-500 underline">Login</span>
