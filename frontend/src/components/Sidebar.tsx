@@ -56,7 +56,7 @@ const Sidebar = () => {
       <div
         className={`sticky top-20 z-50 ml-[228px] ${location.pathname == "/dashboard/home" ? "block" : "hidden"}`}
       >
-        <p className="absolute w-[65ch] rounded-lg bg-white p-3 shadow-[0px_0px_2px_rgba(0,0,0,0.15)]">
+        {/* <p className="absolute w-[65ch] rounded-lg bg-white p-3 shadow-[0px_0px_2px_rgba(0,0,0,0.15)]">
           <strong>For Devansh:</strong> DashBoard is everything here isko home
           karna hai idhar ke components nikalke availabilty mai daal diyo,{" "}
           <br /> <strong>NOT-IMPORTANT:</strong> tune yaha pe div's pe onClick
@@ -65,7 +65,7 @@ const Sidebar = () => {
             yaha matlab ye iska parent div nai iska arrow jisko point karra hai
             woh
           </span>
-        </p>
+        </p> */}
         <div className="absolute -left-[22px] top-6 -rotate-90 border-[.7rem] border-transparent border-b-white drop-shadow-[0px_-1px_1px_rgba(0,0,0,0.08)]"></div>
       </div>
       <div className="sticky top-4 h-[calc(100vh-32px)] overflow-y-auto px-4">
