@@ -15,6 +15,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const handleForm = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = {
       password,
@@ -86,7 +87,7 @@ const LoginPage = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Username/Email"
+                  placeholder="Password"
                   className="border-[#cdcdcd] rounded-md placeholder:text-[#cccccc] pl-3 py-2 border-solid w-96 border-[1px] my-2 "
                 />
               </div>
