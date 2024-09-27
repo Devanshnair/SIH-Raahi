@@ -51,6 +51,7 @@ function App() {
           <Route path="/room/:roomId" element={<RoomPage />} />
           <Route path="/add-post" element={<AddPost />} />
           <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
 
           <Route path="forum">
             <Route index element={<Forum />} />
@@ -69,7 +70,6 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="/dashboard/home" element={<Dashboard />} />
           <Route path="/dashboard/bookings" element={<Bookings />} />
-          <Route path="/dashboard/edit-profile" element={<EditProfile />} />
           <Route path="/dashboard/testimonials" element={<Testimonials />} />
           <Route path="/dashboard/availability" element={<Availability />} />
           <Route path="/dashboard/calendar" element={<CalendarView />} />
