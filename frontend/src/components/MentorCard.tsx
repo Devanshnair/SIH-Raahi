@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 const MentorCard = ({ mentorId, name, desc, bio, imgSrc, price }) => {
   return (
     <>
-      <div className="card flex items-center justify-between rounded-xl bg-white px-6 pb-3 shadow-md shadow-slate-200">
-        <div className="img flex w-[200px] flex-col items-center justify-center gap-3">
+      <div className="card flex items-center gap-10 justify-between rounded-xl bg-white px-6 pb-3 shadow-md shadow-slate-200">
+        <div className="img flex w-[200px] flex-col items-center justify-center ">
           <div className="mb-14 flex items-center justify-center overflow-hidden rounded-xl object-cover">
-            <img src={imgSrc} alt="" className="rounded-xl" />
+            <img src={imgSrc} alt="" className="rounded-xl object-cover" />
           </div>
         </div>
 
