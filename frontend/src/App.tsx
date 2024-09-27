@@ -29,6 +29,7 @@ import Availability from "./Pages/AdminPanel/availability/Availability";
 import Analytics from "./Pages/AdminPanel/Analytics/Analytics";
 import Forum from "./features/forums/Forums";
 import ThreadPage from "./features/forums/ThreadPage";
+import SuccessPage from "./features/bookslots/SuccessPage";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ function App() {
             <Route path="/mentors/explore" element={<MentorExplorePage />} />
             <Route path="/mentors/reels" element={<Insights />} />
             <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
+            <Route path="/mentors/success" element={<SuccessPage />} />
           </Route>
         </Route>
         ,

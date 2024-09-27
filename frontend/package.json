@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
+    "canvas-confetti": "^1.9.3",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.31",
     "jwt-decode": "^4.0.0",
