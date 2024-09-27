@@ -1,4 +1,3 @@
-
 import StatCards from "../../../components/StatCards";
 import Activity from "../Home/sections/Activity";
 import Domain from "../Home/sections/Domain";
@@ -10,7 +9,7 @@ const Analytics = () => {
       <h3 className="border-b p-6 px-8 text-3xl font-semibold text-slate-800">
         Analytics
       </h3>
-      <div className="ml-0 grid grid-rows-[1fr,2fr,2fr] items-center gap-6 rounded-lg bg-slate-50 px-10 py-8 shadow">
+      <div className="ml-0 grid grid-rows-[1fr,2fr,2fr] items-center gap-6 rounded-lg px-10 py-8 shadow">
         <div className="grid h-full w-full grid-cols-3 items-center justify-evenly gap-3">
           <StatCards
             title="Total Earnings"

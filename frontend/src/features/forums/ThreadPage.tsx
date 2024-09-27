@@ -223,7 +223,7 @@ export default function ThreadPage() {
         </Link>
         <div className="space-y-6">
           <ThreadContent thread={threads[0]} />
-          <h2 className="text-2xl font-bold text-slate-800">
+          <h2 className="pl-2 text-2xl font-bold text-slate-800">
             Comments ({comments.length})
           </h2>
           <CommentForm setComments={setComments} />
