@@ -10,9 +10,14 @@ import {
   ChevronUp,
   ChevronDown,
   Award,
+  PlusCircle,
+  Bell,
+  Home,
+  Activity,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ThreadType, threads } from "./data";
+import CreateThreadModal from "./CreateThreadModal";
 
 type Category = {
   id: string;
@@ -56,17 +61,6 @@ const topContributors: Contributor[] = [
   },
 ];
 
-const SearchBar: React.FC = () => (
-  <div className="relative mb-6">
-    <input
-      type="text"
-      placeholder="Search forums..."
-      className="w-full rounded-full border border-gray-300 bg-white px-4 py-3 pl-12 text-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
-    />
-    <Search className="absolute left-4 top-4 h-5 w-5 text-gray-400" />
-  </div>
-);
-
 function CategoryList({
   activeCategory,
   setActiveCategory,
@@ -84,8 +78,8 @@ function CategoryList({
             onClick={() => setActiveCategory(category)}
             className={`flex items-center justify-center rounded-lg p-3 text-sm font-medium transition-colors duration-200 ${
               activeCategory.id === category.id
-                ? "bg-indigo-100 text-indigo-700"
-                : "text-slatet]-700 bg-gray-100 hover:bg-gray-200"
+                ? "bg-blue-100 text-blue-700"
+                : "bg-gray-100 text-slate-700 hover:bg-gray-200"
             }`}
           >
             <span className="mr-2">{category.icon}</span>
@@ -107,7 +101,7 @@ function Thread({ thread }: { thread: ThreadType }) {
     <div className="overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:shadow-lg">
       <div className="p-6">
         <div className="mb-4 flex items-center justify-between">
-          <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">
+          <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
             {thread.category}
           </span>
           <div className="flex items-center space-x-2">
@@ -128,12 +122,12 @@ function Thread({ thread }: { thread: ThreadType }) {
         </div>
         <Link
           to={`/forum/thread/${thread.id}`}
-          className="mb-2 text-xl font-bold text-slate-800 transition-colors duration-200 hover:text-indigo-600"
+          className="mb-2 block text-xl font-bold text-slate-800 transition-colors duration-200 hover:text-blue-600"
         >
           {thread.title}
         </Link>
         <p className="mb-4 line-clamp-2 text-slate-600">{thread.content}</p>
-        <div className="mb-4 flex -translate-x-0.5 flex-wrap gap-2">
+        <div className="mb-4 flex flex-wrap gap-2">
           {thread.tags.map((tag) => (
             <span
               key={tag}
@@ -163,7 +157,7 @@ function Thread({ thread }: { thread: ThreadType }) {
               <Eye className="mr-1 h-4 w-4" />
               {thread.views}
             </span>
-            <button className="flex items-center transition-colors duration-200 hover:text-indigo-600">
+            <button className="flex items-center transition-colors duration-200 hover:text-blue-600">
               <Share2 className="mr-1 h-4 w-4" />
               Share
             </button>
@@ -185,20 +179,20 @@ function ThreadList({ threads }: { threads: ThreadType[] }) {
 }
 
 const Sidebar: React.FC = () => (
-  <div className="space-y-6">
+  <div className="space-y-5">
     <div className="rounded-xl bg-white p-5 shadow-md">
-      <h3 className="mb-4 flex items-center text-lg font-semibold text-slate-800">
+      <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-900">
         <TrendingUp className="mr-2 h-5 w-5 text-green-500" />
         Trending Topics
       </h3>
       <ul className="space-y-2 text-slate-600">
-        <li className="cursor-pointer text-sm hover:text-indigo-600">
+        <li className="cursor-pointer text-sm hover:text-blue-600">
           #ReactHooks
         </li>
-        <li className="cursor-pointer text-sm hover:text-indigo-600">
+        <li className="cursor-pointer text-sm hover:text-blue-600">
           #StartupFunding
         </li>
-        <li className="cursor-pointer text-sm hover:text-indigo-600">
+        <li className="cursor-pointer text-sm hover:text-blue-600">
           #HealthTech
         </li>
       </ul>
@@ -212,9 +206,7 @@ const Sidebar: React.FC = () => (
         {topContributors.map((contributor) => (
           <li key={contributor.id} className="flex items-center">
             <img
-              src={
-                "https://st4.depositphotos.com/9998432/24360/v/450/depositphotos_243600690-stock-illustration-person-gray-photo-placeholder-girl.jpg"
-              }
+              src={contributor.avatar}
               alt={contributor.name}
               className="mr-3 h-10 w-10 rounded-full"
             />
@@ -233,35 +225,155 @@ const Sidebar: React.FC = () => (
   </div>
 );
 
-// const CreateThreadButton: React.FC = () => (
-//   <button className="fixed bottom-8 right-8 rounded-full bg-indigo-600 p-4 text-white shadow-lg transition-colors duration-200 hover:bg-indigo-700">
-//     <MessageSquare className="h-6 w-6" />
-//   </button>
-// );
-
 export default function Forum() {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
-  const filteredThreads = threads.filter(
+  const [isCreateThreadModalOpen, setIsCreateThreadModalOpen] = useState(false);
+  const [notifications, setNotifications] = useState(3);
+  const [isActivityOpen, setIsActivityOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [forumThreads, setForumThreads] = useState(threads);
+
+  const filteredThreads = forumThreads.filter(
     (thread) => thread.category === activeCategory.name,
   );
+
+  const userThreads = forumThreads.filter(
+    (thread) => thread.author === "currentUser",
+  );
+
+  const clearNotifications = () => {
+    setNotifications(0);
+  };
+
+  const toggleActivity = () => {
+    setIsActivityOpen(!isActivityOpen);
+    setActiveSection(null);
+  };
+
+  const handleCreateThread = (newThread: ThreadType) => {
+    setForumThreads([newThread, ...forumThreads]);
+    setIsCreateThreadModalOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-slate-100">
       <div className="container mx-auto px-4 py-8">
-        <SearchBar />
-        <div className="flex flex-col gap-8 lg:flex-row">
-          <div className="lg:w-3/4">
-            <CategoryList
-              activeCategory={activeCategory}
-              setActiveCategory={setActiveCategory}
-            />
-            <ThreadList threads={filteredThreads} />
+        <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
+          <div className="mb-4 flex items-center sm:mb-0">
+            <Home className="mr-2 h-8 w-8 text-blue-600" />
+            <h1 className="text-3xl font-bold text-slate-800">Raahi</h1>
           </div>
-          <div className="lg:w-1/4">
-            <Sidebar />
+          <div className="flex items-center space-x-4">
+            <button
+              className="relative text-gray-600 transition-colors duration-200 hover:text-blue-600"
+              onClick={clearNotifications}
+            >
+              <Bell className="h-6 w-6" />
+              {notifications > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                  {notifications}
+                </span>
+              )}
+            </button>
+            <button
+              className="relative text-gray-600 transition-colors duration-200 hover:text-blue-600"
+              onClick={toggleActivity}
+            >
+              <Activity className="h-6 w-6" />
+            </button>
           </div>
         </div>
+
+        {isActivityOpen && (
+          <div className="mb-8 rounded-xl bg-white p-6 shadow-md">
+            <h2 className="mb-4 text-xl font-semibold text-slate-800">
+              Your Activity
+            </h2>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => setActiveSection("threads")}
+                className={`rounded-md px-4 py-2 ${
+                  activeSection === "threads"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                Your Threads
+              </button>
+              <button
+                onClick={() => setActiveSection("comments")}
+                className={`rounded-md px-4 py-2 ${
+                  activeSection === "comments"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                Your Comments
+              </button>
+              <button
+                onClick={() => setActiveSection("saved")}
+                className={`rounded-md px-4 py-2 ${
+                  activeSection === "saved"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                Saved Threads
+              </button>
+            </div>
+          </div>
+        )}
+
+        {activeSection === "threads" && (
+          <div className="mb-8">
+            <h3 className="mb-4 text-lg font-semibold text-slate-800">
+              Your Threads
+            </h3>
+            <ThreadList threads={userThreads} />
+          </div>
+        )}
+
+        {!isActivityOpen && (
+          <>
+            <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
+              <div className="relative mb-4 w-full sm:mb-0 sm:w-96">
+                <input
+                  type="text"
+                  placeholder="Search forums..."
+                  className="w-full rounded-full border border-gray-300 bg-white px-4 py-2 pl-10 text-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              </div>
+              <button
+                onClick={() => setIsCreateThreadModalOpen(true)}
+                className="flex items-center rounded-full bg-blue-600 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-700"
+              >
+                <PlusCircle className="mr-2 h-5 w-5" />
+                New Thread
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-8 lg:flex-row">
+              <div className="lg:w-3/4">
+                <CategoryList
+                  activeCategory={activeCategory}
+                  setActiveCategory={setActiveCategory}
+                />
+                <ThreadList threads={filteredThreads} />
+              </div>
+              <div className="lg:w-1/4">
+                <Sidebar />
+              </div>
+            </div>
+          </>
+        )}
       </div>
-      {/* <CreateThreadButton /> */}
+      <CreateThreadModal
+        isOpen={isCreateThreadModalOpen}
+        onClose={() => setIsCreateThreadModalOpen(false)}
+        onCreateThread={handleCreateThread}
+        categories={categories}
+      />
     </div>
   );
 }
