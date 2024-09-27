@@ -34,7 +34,7 @@ import { useState } from "react";
 
 const queryClient = new QueryClient();
 
-export const baseURL = "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app";
+export const baseURL = "https://sudormrf.pythonanywhere.com";
 export const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njk3NTYxLCJpYXQiOjE3MjY2NTQzNjEsImp0aSI6IjRkMmFkODJiMjBkMjQyY2E5NDYxYTU2YmYwMTI0Y2Y4IiwidXNlcl9pZCI6MX0.8LwiZXCPZaUInyXrGztS8iM7A_KU0I03pkUkmVDXjcs";
 

@@ -48,7 +48,7 @@ const Navbar = () => {
 
       {isLoggedIn ? (
         <Link to={"/dashboard"}>
-          <IoPersonCircleSharp className="cursor-pointer text-[3rem]" />
+          <IoPersonCircleSharp className="cursor-pointer text-[3rem] text-slate-300" />
         </Link>
       ) : (
         <Link to={"/register"}>
