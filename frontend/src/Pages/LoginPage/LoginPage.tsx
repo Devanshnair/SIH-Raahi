@@ -2,11 +2,14 @@ import { useState } from 'react';
 import imgSrc from '../../assets/freelancer-working-laptop-her-house.png'
 import { Link, useNavigate } from 'react-router-dom';
 import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
+import { useLogin } from '../../LoginContext/LoginContext';
 
 
 
 
 const LoginPage = () => {
+   const { isLoggedIn, setIsLoggedIn } = useLogin();
+  console.log(isLoggedIn);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +19,8 @@ const LoginPage = () => {
   const handleForm = async (e: any) => {
     e.preventDefault();
     setLoading(true);
+    setIsLoggedIn(true);
+    
 
     const formData = {
       password,
