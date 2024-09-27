@@ -5,6 +5,7 @@ import { MdOutlineReviews } from "react-icons/md";
 import { PiPhoneCall } from "react-icons/pi";
 import { TbBrandGoogleAnalytics, TbClockCheck } from "react-icons/tb";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const navItems = [
   {
@@ -40,7 +41,17 @@ const navItems = [
 ];
 
 const Sidebar = () => {
-  // const location = useLocation();
+  const location = useLocation();
+  const accessToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    ?.split("=")[1];
+    
+  const decoded = jwtDecode(accessToken);
+
+  console.log(decoded);
+  
+    
   return (
     <>
       {/* useless div below*/}
@@ -59,8 +70,69 @@ const Sidebar = () => {
         </p>
         <div className="absolute -left-[22px] top-6 -rotate-90 border-[.7rem] border-transparent border-b-white drop-shadow-[0px_-1px_1px_rgba(0,0,0,0.08)]"></div>
       </div> */}
-      <div className="sticky top-4 h-[calc(100vh-32px)] overflow-y-auto px-4">
-        <div className="mb-4 mt-2 border-b border-slate-300 pb-4">
+      <div className="sticky top-4 h-[calc(100vh-32px)] overflow-y-auto px-4 flex flex-col justify-between">
+        <div>
+          <div className='h-[3.2rem] pl-5 mt-2 mb-4 pb-3 cursor-pointer border-b border-slate-300'>
+              <img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' />
+          </div>
+          <div className="relative flex flex-col gap-2">
+            {navItems.map((item, index) => (
+              <NavLink
+                key={index}
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex w-full cursor-pointer items-center justify-start gap-4 rounded-md px-4 py-2 transition-[box-shadow,_background-color,_color] ${
+                    isActive
+                      ? "bg-white font-medium text-neutral-950 ring-1 ring-slate-300/20"
+                      : "bg-transparent text-slate-700 shadow-none hover:bg-slate-200"
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                  {item.label === 'Analytics' && (
+                    <>
+                      <span
+                        className={`flex h-[1.4rem] w-[1.4rem] items-center justify-center rounded-sm border-b-[2.3px] border-l-[2.3px] ${isActive ? "border-blue-500" : "border-slate-600"}`}
+                      >
+                        <item.icon
+                          className={`m-[1px] h-[1.35rem] w-[1.35rem] ${isActive ? "text-blue-500" : ""}`}
+                        />
+                      </span>
+                      <span>{item.label}</span>
+                    </>
+                  )}
+                  {item.label === 'Calendar' && (
+                    <>
+                      <span
+                        className={`flex items-center justify-center rounded-sm`}
+                      >
+                        <item.icon
+                          className={`m-[1px] h-[1.45rem] w-[1.45rem] ${isActive ? "text-blue-500" : ""}`}
+                        />
+                      </span>
+                      <span>{item.label}</span>
+                    </>
+                  )}
+                  {item.label !== 'Analytics' && item.label !== 'Calendar' && (
+                    <>
+                      <span
+                        className={`flex items-center justify-center rounded-sm`}
+                      >
+                        <item.icon
+                          className={`m-[1px] h-[1.55rem] w-[1.55rem] ${isActive ? "text-blue-500" : ""}`}
+                        />
+                      </span>
+                      <span>{item.label}</span>
+                    </>
+                  )}
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+        <div className="mt-2 pb-4">
           <Link to={"/dashboard/edit-profile"}>
             <button className="relative flex w-full items-center gap-2 rounded p-0.5 transition-colors hover:bg-slate-200">
               <img
@@ -69,69 +141,13 @@ const Sidebar = () => {
                 className="size-8 shrink-0 rounded bg-blue-400 shadow"
               />
               <div className="text-start">
-                <span className="block text-sm font-bold">Raunita</span>
+                <span className="block text-sm font-bold">{decoded.name}</span>
                 <span className="block text-xs text-slate-500">
-                  raunita313@gmail.com
+                  {decoded.email}
                 </span>
               </div>
             </button>
           </Link>
-        </div>
-        <div className="relative flex flex-col gap-2">
-          {navItems.map((item, index) => (
-            <NavLink
-              key={index}
-              to={item.path}
-              className={({ isActive }) =>
-                `flex w-full cursor-pointer items-center justify-start gap-4 rounded-md px-4 py-2 transition-[box-shadow,_background-color,_color] ${
-                  isActive
-                    ? "bg-white font-medium text-neutral-950 ring-1 ring-slate-300/20"
-                    : "bg-transparent text-slate-700 shadow-none hover:bg-slate-200"
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                 {item.label === 'Analytics' && (
-                  <>
-                    <span
-                      className={`flex h-[1.4rem] w-[1.4rem] items-center justify-center rounded-sm border-b-[2.3px] border-l-[2.3px] ${isActive ? "border-blue-500" : "border-slate-600"}`}
-                    >
-                      <item.icon
-                        className={`m-[1px] h-[1.35rem] w-[1.35rem] ${isActive ? "text-blue-500" : ""}`}
-                      />
-                    </span>
-                    <span>{item.label}</span>
-                  </>
-                 )}
-                 {item.label === 'Calendar' && (
-                  <>
-                    <span
-                      className={`flex items-center justify-center rounded-sm`}
-                    >
-                      <item.icon
-                        className={`m-[1px] h-[1.45rem] w-[1.45rem] ${isActive ? "text-blue-500" : ""}`}
-                      />
-                    </span>
-                    <span>{item.label}</span>
-                  </>
-                 )}
-                 {item.label !== 'Analytics' && item.label !== 'Calendar' && (
-                  <>
-                    <span
-                      className={`flex items-center justify-center rounded-sm`}
-                    >
-                      <item.icon
-                        className={`m-[1px] h-[1.55rem] w-[1.55rem] ${isActive ? "text-blue-500" : ""}`}
-                      />
-                    </span>
-                    <span>{item.label}</span>
-                  </>
-                 )}
-                </>
-              )}
-            </NavLink>
-          ))}
         </div>
       </div>
     </>

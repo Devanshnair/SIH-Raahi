@@ -115,9 +115,17 @@ const MentorExPg = () => {
     if (sortBy !== "") {
       if (flag) {
         Url = `${Url}&`;
-        Url = Url + sortBy;
+        Url =
+          Url +
+          (sortBy == "Price: Low to High"
+            ? "order_by=price"
+            : "order_by=-price");
       } else {
-        Url = Url + sortBy;
+        Url =
+          Url +
+          (sortBy == "Price: Low to High"
+            ? "order_by=price"
+            : "order_by=-price");
         flag = true;
       }
     }
@@ -162,7 +170,7 @@ const MentorExPg = () => {
         </div>
 
         <div className="flex gap-20 px-4">
-          <div className="sticky top-[5.85rem] flex max-h-[520px] flex-col gap-5 rounded-2xl bg-white pt-5 shadow-md shadow-slate-200 filter">
+          <div className="sticky top-[5.85rem] flex h-[530px] flex-col gap-5 rounded-2xl bg-white pt-5 shadow-md shadow-slate-200 filter">
             <p className="text-center text-2xl font-bold text-slate-800">
               Filters
             </p>
@@ -192,7 +200,7 @@ const MentorExPg = () => {
                 />
               </div>
 
-              <div className="grid">
+              <div className="grid gap-0.5">
                 <label className="px-px font-medium">Roles</label>
                 {/* <select
                   id="sort"
@@ -212,7 +220,7 @@ const MentorExPg = () => {
                 />
               </div>
 
-              <div className="grid">
+              <div className="grid gap-0.5">
                 <label className="px-px font-medium">Language</label>
                 <input
                   type="text"
@@ -259,7 +267,7 @@ const MentorExPg = () => {
 
               <button
                 type="submit"
-                className="mt-2 rounded-md bg-slate-800 px-3 py-2 font-medium leading-5 text-white hover:bg-slate-900"
+                className="mt-2 rounded-md bg-slate-800 px-3 py-2 font-medium leading-5 text-white shadow-md hover:bg-slate-900"
               >
                 Filter
               </button>

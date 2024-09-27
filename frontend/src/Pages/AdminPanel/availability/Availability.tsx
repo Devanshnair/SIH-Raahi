@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { postAvailability } from "./methods/postAvailability";
+// import { postAvailability } from "./methods/postAvailability";
 import CustomSelect from "../../../components/custom-select/CustomSelect";
 import NoticePeriodSelect from "../../../components/custom-select/NoticePeriodSelect";
+import { useMutation, useQueryClient } from "react-query";
+import { postAvailability } from "./methods/postAvailability";
 
 export type Availability = {
   day: string;
@@ -26,6 +28,7 @@ const unitOptions = [
 ];
 
 const Availability = () => {
+  const [posted, setPosted] = useState(false);
   const [availability, setAvailability] = useState<Availability[]>([
     { day: "Monday", checked: false, startTime: "", endTime: "" },
     { day: "Tuesday", checked: false, startTime: "", endTime: "" },
@@ -42,7 +45,7 @@ const Availability = () => {
     unit: "hours",
   });
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const fields = document.querySelectorAll("input[type=time]");
     const data: Availability[] = availability;
 
@@ -63,7 +66,9 @@ const Availability = () => {
     }
 
     setAvailability(data);
-    postAvailability(data);
+    await postAvailability(data);
+    console.log("hehr");
+    setPosted(true);
   }
 
   return (
@@ -117,7 +122,7 @@ const Availability = () => {
                 className="ml-auto block w-28 rounded-lg bg-slate-800 p-2 px-4 font-medium text-white shadow-sm"
                 onClick={handleSubmit}
               >
-                Save
+                {posted ? "Update" : "Save"}
               </button>
             </div>
           </div>
@@ -235,8 +240,9 @@ function TimeRangeSelect({ day }: { day: string }) {
           <button
             className="ml-3 flex items-center fill-slate-800"
             onClick={(e) => {
-              console.log(e.target.closest("button").parentElement);
-              e.target.closest("button").parentElement?.remove();
+              (
+                (e.target as HTMLElement).closest("button") as HTMLButtonElement
+              ).parentElement?.remove();
             }}
           >
             <span className="sr-only">remove</span>
