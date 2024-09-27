@@ -42,7 +42,7 @@ const activitydata = [
 
 const Activity = () => {
   return (
-    <div className='flex flex-col gap-8'>
+    <div className='flex flex-col gap-8 border border-slate-300 rounded p-6 pl-2'>
         <div className='flex justify-between items-center'>
             <div className={`flex items-center justify-start gap-4 w-full rounded px-4 cursor-pointer`}>
                 <LuUser  className={`h-6 w-6`} />

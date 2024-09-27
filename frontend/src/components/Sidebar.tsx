@@ -1,29 +1,26 @@
 import { IconBaseProps } from "react-icons";
+import { GoHome } from "react-icons/go";
 import { IoCalendarClearOutline } from "react-icons/io5";
-import { TbBrandGoogleAnalytics } from "react-icons/tb";
+import { MdOutlineReviews } from "react-icons/md";
+import { PiPhoneCall } from "react-icons/pi";
+import { TbBrandGoogleAnalytics, TbClockCheck } from "react-icons/tb";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 const navItems = [
   {
     path: "/dashboard/home",
     label: "Home",
-    icon: (props: IconBaseProps) => <TbBrandGoogleAnalytics {...props} />,
+    icon: (props: IconBaseProps) => <GoHome {...props} />,
   },
   {
     path: "/dashboard/bookings",
     label: "Bookings",
-    icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
+    icon: (props: IconBaseProps) => <PiPhoneCall {...props} />,
   },
-  {
-    path: "/dashboard/testimonials",
-    label: "Testimonials",
-    icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
-  },
-
   {
     path: "/dashboard/availability",
     label: "Availability",
-    icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
+    icon: (props: IconBaseProps) => <TbClockCheck  {...props} />,
   },
   {
     path: "/dashboard/calendar",
@@ -33,12 +30,17 @@ const navItems = [
   {
     path: "/dashboard/analytics",
     label: "Analytics",
-    icon: (props: IconBaseProps) => <IoCalendarClearOutline {...props} />,
+    icon: (props: IconBaseProps) => <TbBrandGoogleAnalytics {...props} />,
+  },
+  {
+    path: "/dashboard/testimonials",
+    label: "Testimonials",
+    icon: (props: IconBaseProps) => <MdOutlineReviews {...props} />,
   },
 ];
 
 const Sidebar = () => {
-  const location = useLocation();
+  // const location = useLocation();
   return (
     <>
       {/* useless div below*/}
@@ -90,14 +92,42 @@ const Sidebar = () => {
             >
               {({ isActive }) => (
                 <>
-                  <span
-                    className={`flex h-[1.4rem] w-[1.4rem] items-center justify-center rounded-sm border-b-[2.3px] border-l-[2.3px] ${isActive ? "border-blue-500" : "border-slate-600"}`}
-                  >
-                    <item.icon
-                      className={`m-[1px] h-[1.35rem] w-[1.35rem] ${isActive ? "text-blue-500" : ""}`}
-                    />
-                  </span>
-                  <span>{item.label}</span>
+                 {item.label === 'Analytics' && (
+                  <>
+                    <span
+                      className={`flex h-[1.4rem] w-[1.4rem] items-center justify-center rounded-sm border-b-[2.3px] border-l-[2.3px] ${isActive ? "border-blue-500" : "border-slate-600"}`}
+                    >
+                      <item.icon
+                        className={`m-[1px] h-[1.35rem] w-[1.35rem] ${isActive ? "text-blue-500" : ""}`}
+                      />
+                    </span>
+                    <span>{item.label}</span>
+                  </>
+                 )}
+                 {item.label === 'Calendar' && (
+                  <>
+                    <span
+                      className={`flex items-center justify-center rounded-sm`}
+                    >
+                      <item.icon
+                        className={`m-[1px] h-[1.45rem] w-[1.45rem] ${isActive ? "text-blue-500" : ""}`}
+                      />
+                    </span>
+                    <span>{item.label}</span>
+                  </>
+                 )}
+                 {item.label !== 'Analytics' && item.label !== 'Calendar' && (
+                  <>
+                    <span
+                      className={`flex items-center justify-center rounded-sm`}
+                    >
+                      <item.icon
+                        className={`m-[1px] h-[1.55rem] w-[1.55rem] ${isActive ? "text-blue-500" : ""}`}
+                      />
+                    </span>
+                    <span>{item.label}</span>
+                  </>
+                 )}
                 </>
               )}
             </NavLink>

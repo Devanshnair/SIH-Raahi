@@ -22,7 +22,7 @@ type Comment = {
   createdAt: string;
 };
 
-const comments: Comment[] = [
+const commentsArr: Comment[] = [
   {
     id: "1",
     content:
@@ -124,9 +124,9 @@ const Comment: React.FC<{ comment: Comment }> = ({ comment }) => {
   const handleDownvote = () => setVotes(votes - 1);
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-md">
+    <div className="rounded-lg bg-white p-5 py-6 shadow-md">
       <div className="flex items-start">
-        <div className="mr-4 flex flex-col items-center">
+        <div className="mr-5 flex flex-col items-center">
           <button
             onClick={handleUpvote}
             className="text-gray-500 transition-colors duration-200 hover:text-indigo-600"
@@ -158,11 +158,27 @@ const Comment: React.FC<{ comment: Comment }> = ({ comment }) => {
   );
 };
 
-const CommentForm: React.FC = () => {
+function CommentForm({
+  setComments,
+}: {
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+}) {
   const [comment, setComment] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!comment.trim()) return;
+    setComments((comments) => [
+      ...comments,
+      {
+        id: String(comments.length + 1),
+        content: comment,
+        author: "User",
+        upvotes: 0,
+        downvotes: 0,
+        createdAt: new Date().toISOString(),
+      },
+    ]);
     // Here you would typically send the comment to your backend
     console.log("Submitting comment:", comment);
     setComment("");
@@ -191,9 +207,10 @@ const CommentForm: React.FC = () => {
       </button>
     </form>
   );
-};
+}
 
 export default function ThreadPage() {
+  const [comments, setComments] = useState(commentsArr);
   return (
     <div className="min-h-screen bg-slate-100">
       <div className="container mx-auto px-4 py-8">
@@ -209,7 +226,7 @@ export default function ThreadPage() {
           <h2 className="text-2xl font-bold text-slate-800">
             Comments ({comments.length})
           </h2>
-          <CommentForm />
+          <CommentForm setComments={setComments} />
           <div className="space-y-4">
             {comments.map((comment) => (
               <Comment key={comment.id} comment={comment} />

@@ -26,7 +26,22 @@ const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   const { mutateAsync: addCalendarEvent, isLoading } = useMutation({
     mutationFn: (event: Omit<Events[0], "id">) => addEvent(event),
     onSuccess: () => {
-      queryClient.invalidateQueries("calendarEvents");
+      // queryClient.invalidateQueries("calendarEvents");
+      queryClient.setQueriesData("calendarEvents", (old: Events) => [
+        ...old,
+        {
+          id: `${old.length + 1}`,
+          name: modalTitleInputRef.current?.value ?? "",
+          startDateTime: modalStartInputRef.current?.value ?? "",
+          endDateTime: modalEndInputRef.current?.value ?? "",
+          description: modalDescriptionInputRef.current?.value ?? "",
+          theme:
+            modalThemeInputRef.current?.value === ""
+              ? "Personal"
+              : (modalThemeInputRef.current?.value ?? ""),
+        },
+      ]);
+      console.log(queryClient.getQueryData("calendarEvents"));
     },
   });
 

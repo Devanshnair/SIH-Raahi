@@ -1,6 +1,6 @@
 import "./index.css";
 
-import Dashboard from "./Pages/AdminPanel/Dashboard/Dashboard";
+import Dashboard from "./Pages/AdminPanel/Home/Home";
 import Chatbot from "./Pages/Chatbot";
 import {
   createBrowserRouter,
@@ -34,7 +34,7 @@ const queryClient = new QueryClient();
 
 export const baseURL = "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app";
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NjQzNDUzLCJpYXQiOjE3MjY2MDAyNTMsImp0aSI6IjZkM2Q5NTkwOWQwMzQ0YmQ5MDM2ZGUwZTA5MzU1Nzc1IiwidXNlcl9pZCI6MX0.XxcC3b2LyR4CbINSwC5-XmvzV3QKdy2j6hQpETzv0Wc";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njk3NTYxLCJpYXQiOjE3MjY2NTQzNjEsImp0aSI6IjRkMmFkODJiMjBkMjQyY2E5NDYxYTU2YmYwMTI0Y2Y4IiwidXNlcl9pZCI6MX0.8LwiZXCPZaUInyXrGztS8iM7A_KU0I03pkUkmVDXjcs";
 
 function App() {
   const router = createBrowserRouter(
@@ -61,6 +61,7 @@ function App() {
         </Route>
         ,
         <Route path="dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
           <Route path="/dashboard/home" element={<Dashboard />} />
           <Route path="/dashboard/bookings" element={<Bookings />} />
           <Route path="/dashboard/edit-profile" element={<EditProfile />} />
@@ -76,7 +77,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </>
   );

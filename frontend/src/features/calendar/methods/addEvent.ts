@@ -2,7 +2,6 @@ import { baseURL, TOKEN } from "../../../App";
 import { Events } from "../modifyEvents";
 
 export async function addEvent(event: Omit<Events[0], "id">) {
-  console.log(event);
   const data = {
     name: event.name,
     startDateTime: new Date(event.startDateTime).toISOString(),

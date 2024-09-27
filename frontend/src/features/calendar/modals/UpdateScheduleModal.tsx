@@ -18,7 +18,7 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   const modalEndInputRef = useRef<HTMLInputElement>(null);
   const modalThemeInputRef = useRef<HTMLSelectElement>(null);
 
-  const [theme, setTheme] = useState();
+  const [theme, setTheme] = useState<undefined | string>();
   const [error, setError] = useState("");
 
   const queryClient = useQueryClient();
@@ -26,7 +26,26 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   const { mutateAsync: updateCalendarEvent, isLoading } = useMutation({
     mutationFn: (event: Events[0]) => updateEvent(event),
     onSuccess: () => {
-      queryClient.invalidateQueries("calendarEvents");
+      // queryClient.invalidateQueries("calendarEvents");
+      queryClient.setQueryData("calendarEvents", (old: Events) => {
+        return old.map((event) => {
+          console.log(event.id, dialogRef.current?.dataset.eventid);
+          if (event.id === dialogRef.current?.dataset.eventid) {
+            return {
+              id: dialogRef.current?.dataset.eventid ?? "",
+              name: modalTitleInputRef.current?.value ?? "",
+              startDateTime: modalStartInputRef.current?.value ?? "",
+              endDateTime: modalEndInputRef.current?.value ?? "",
+              description: modalDescriptionInputRef.current?.value ?? "",
+              theme:
+                modalThemeInputRef.current?.value === ""
+                  ? "Personal"
+                  : (modalThemeInputRef.current?.value ?? ""),
+            };
+          }
+          return event;
+        });
+      });
     },
   });
 
@@ -205,7 +224,7 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
               ref={modalThemeInputRef}
               id="update-modal-theme"
               value={theme}
-              onChange={(e) => setTheme(e.target.value)}
+              onChange={(e) => setTheme((e.target as HTMLSelectElement).value)}
               className="w-full rounded-md border border-gray-300 px-1 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500"
             >
               <option value="">Select a theme</option>

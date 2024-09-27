@@ -1,23 +1,28 @@
 import { useState } from 'react';
 import imgSrc from '../../assets/freelancer-working-laptop-her-house.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
+
 
 
 
 const LoginPage = () => {
 
-  const [username , setUsername] = useState("");
-  const [password , setPassword] = useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  
+  const navigate = useNavigate();
   const handleForm = async (e: any) => {
     e.preventDefault();
+    setLoading(!loading);
 
     const formData = {
       password,
       username,
     };
 
-
-    const setCookie = (name:any, value:any, days:any) => {
+    const setCookie = (name: any, value: any, days: any) => {
       let expires = "";
       if (days) {
         const date = new Date();
@@ -28,28 +33,28 @@ const LoginPage = () => {
     };
 
     const response = await fetch(
-      "https://live-merely-drum.ngrok-free.app/api/token/",
+      "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app/api/token/",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      }
+      },
     );
 
-    const data = await response.json();
-    console.log(data.access);
     
+      const data = await response.json();
+      console.log(data.access);
+      console.log(data.refresh);
+      
 
+      setCookie("accessToken", data.access, 7);
+      setCookie("refreshToken", data.refresh, 90);
+      navigate("/dashboard/home");
 
-     
-
-     setCookie("accessToken", data.access, 7);
-     setCookie("refreshToken", data.refresh , 90);
-
+    
   };
-
 
   
 
@@ -89,9 +94,13 @@ const LoginPage = () => {
 
               <button
                 type="submit"
-                className="text-center w-96 bg-black text-white py-2 mb-5 rounded-lg"
+                className="text-center w-96 bg-black text-white h-10 mb-5 rounded-lg"
               >
-                Sign-In
+                {loading? (<video src={loadingAnimation}
+                autoPlay
+                loop
+                className='h-10 mx-auto'
+                ></video>): "Sign-In"}
               </button>
               <p>
                 Not a member? 

@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const MentorCard = ({ mentorId, name, desc, bio, imgSrc, price }) => {
   return (
     <>
-      <div className="card flex h-[350px] w-[800px] items-center justify-between rounded-xl bg-white px-6 pb-3">
+      <div className="card flex items-center justify-between rounded-xl bg-white px-6 pb-3 shadow-md shadow-slate-200">
         <div className="img flex w-[200px] flex-col items-center justify-center gap-3">
-          <div className="mb-14 flex max-h-[200px] max-w-[200px] items-center justify-center overflow-hidden rounded-xl object-cover">
+          <div className="mb-14 flex items-center justify-center overflow-hidden rounded-xl object-cover">
             <img src={imgSrc} alt="" className="rounded-xl" />
           </div>
         </div>
@@ -31,15 +31,15 @@ const MentorCard = ({ mentorId, name, desc, bio, imgSrc, price }) => {
 
           <div className="btn flex items-center justify-evenly">
             <div className="leading-3">
-              <p className="text-base font-semibold text-[#7e8490]">
+              <p className="text-sm font-semibold text-[#7e8490]">
                 Starting from
               </p>
-              <p className="text-2xl font-semibold">
+              <p className="text-xl font-semibold">
                 ₹{price}
                 <span className="text-xl font-semibold">/month</span>
               </p>
             </div>
-            <button className="h-10 w-40 rounded-xl bg-[#1570ef] text-lg font-bold text-white">
+            <button className="h-10 w-40 rounded-md bg-slate-800 text-lg font-medium text-white hover:bg-slate-900">
               <Link to={`/mentors/book/${mentorId}`}>Book Now</Link>
             </button>
           </div>
