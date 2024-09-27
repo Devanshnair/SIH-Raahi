@@ -73,7 +73,7 @@ const Sidebar = () => {
       <div className="sticky top-4 h-[calc(100vh-32px)] overflow-y-auto px-4 flex flex-col justify-between">
         <div>
           <div className='h-[3.2rem] pl-5 mt-2 mb-4 pb-3 cursor-pointer border-b border-slate-300'>
-              <img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' />
+              <Link to={"/"}><img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' /></Link>
           </div>
           <div className="relative flex flex-col gap-2">
             {navItems.map((item, index) => (
