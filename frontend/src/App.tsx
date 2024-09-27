@@ -1,5 +1,5 @@
 import "./index.css";
-import { LoginProvider } from "./LoginContext/LoginContext"
+import { LoginProvider } from "./LoginContext/LoginContext";
 
 import Dashboard from "./Pages/AdminPanel/Home/Home";
 import Chatbot from "./Pages/Chatbot";
@@ -31,6 +31,7 @@ import Analytics from "./Pages/AdminPanel/Analytics/Analytics";
 import Forum from "./features/forums/Forums";
 import ThreadPage from "./features/forums/ThreadPage";
 import { useState } from "react";
+import SuccessPage from "./features/bookslots/SuccessPage";
 
 const queryClient = new QueryClient();
 
@@ -39,8 +40,7 @@ export const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njk3NTYxLCJpYXQiOjE3MjY2NTQzNjEsImp0aSI6IjRkMmFkODJiMjBkMjQyY2E5NDYxYTU2YmYwMTI0Y2Y4IiwidXNlcl9pZCI6MX0.8LwiZXCPZaUInyXrGztS8iM7A_KU0I03pkUkmVDXjcs";
 
 function App() {
-
-   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -51,6 +51,7 @@ function App() {
           <Route path="/room/:roomId" element={<RoomPage />} />
           <Route path="/add-post" element={<AddPost />} />
           <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
 
           <Route path="forum">
             <Route index element={<Forum />} />
@@ -61,6 +62,7 @@ function App() {
             <Route path="/mentors/explore" element={<MentorExplorePage />} />
             <Route path="/mentors/reels" element={<Insights />} />
             <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
+            <Route path="/mentors/success" element={<SuccessPage />} />
           </Route>
         </Route>
         ,
@@ -68,7 +70,6 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="/dashboard/home" element={<Dashboard />} />
           <Route path="/dashboard/bookings" element={<Bookings />} />
-          <Route path="/dashboard/edit-profile" element={<EditProfile />} />
           <Route path="/dashboard/testimonials" element={<Testimonials />} />
           <Route path="/dashboard/availability" element={<Availability />} />
           <Route path="/dashboard/calendar" element={<CalendarView />} />
@@ -78,7 +79,6 @@ function App() {
     ),
   );
 
-  
   return (
     <>
       <LoginProvider value={{ isLoggedIn, setIsLoggedIn }}>

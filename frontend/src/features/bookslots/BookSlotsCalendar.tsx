@@ -7,6 +7,7 @@ import {
 } from "date-fns";
 import { useRef, useState } from "react";
 import { weekSlotsType } from "./methods/fetchWeeklySlots";
+import { Link } from "react-router-dom";
 
 type slot = {
   start: string;
@@ -60,7 +61,7 @@ export default function BookSlotsCalendar({
   return (
     <>
       <div className="mx-auto h-full w-full max-w-xl self-center rounded-3xl bg-white p-1 shadow-sm">
-        <div className="max-xs:px-3 flex items-center justify-between p-6 pb-4">
+        <div className="flex items-center justify-between p-6 pb-4 max-xs:px-3">
           <h2 className="text-xl font-semibold text-slate-900">
             {format(currentWeek[0], "MMMM yyyy")}
           </h2>
@@ -146,7 +147,7 @@ export default function BookSlotsCalendar({
           ))}
         </div>
         <div className="@container">
-          <div className="@md:grid-cols-3 mx-auto grid h-[270px] max-w-full grid-cols-2 place-content-start justify-center gap-3 overflow-y-auto px-6 py-8">
+          <div className="mx-auto grid h-[270px] max-w-full grid-cols-2 place-content-start justify-center gap-3 overflow-y-auto px-6 py-8 @md:grid-cols-3">
             {(weekSlots?.find((d) => d.day == format(selectedDay, "EEEE"))
               ?.slots ?? false) ? (
               weekSlots
@@ -181,11 +182,27 @@ export default function BookSlotsCalendar({
           </div>
         </div>
         <div className="mx-6 flex max-w-[530px] justify-center pb-6 max-md:mx-6">
-          <button className="w-full rounded-full bg-slate-900 p-2 font-medium text-white">
+          <Link
+            className="w-full rounded-full bg-slate-900 p-2 text-center font-medium text-white"
+            to="/mentor/success"
+          >
             Book
-          </button>
+          </Link>
         </div>
       </div>
+      {/* {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="scale-100 transform rounded-lg bg-white p-8 opacity-100 shadow-lg transition-all duration-300 ease-in-out">
+            <div className="mb-4 text-2xl font-bold text-green-600">
+              Booked Successfully! 🎉
+            </div>
+            <p className="text-gray-600">Your slot has been reserved.</p>
+            <div className="mt-4 text-sm text-gray-500">
+              This message will disappear in a few seconds...
+            </div>
+          </div>
+        </div>
+      )} */}
     </>
   );
 }
