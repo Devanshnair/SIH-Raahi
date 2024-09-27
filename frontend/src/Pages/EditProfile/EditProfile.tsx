@@ -1,152 +1,308 @@
 import { useState } from "react";
-
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Briefcase,
+  DollarSign,
+  Save,
+} from "lucide-react";
 
 const EditProfile = () => {
-    const [description, setDescription] = useState("");
-    const [bio , setBio] = useState("");
-    const [price , setPrice] = useState("");
-    const [picture, setPicture] = useState(null);
+  const [profile, setProfile] = useState({
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+1 (555) 123-4567",
+    location: "New York, NY",
+    profession: "Software Engineer",
+    bio: "I'm a passionate software engineer with 5 years of experience in web development.",
+    hourlyRate: 100,
+    profilePicture: "/api/placeholder/150/150",
+  });
 
-    const handleSubmit = async (e: any) => {
-      e.preventDefault();
+  const [activeTab, setActiveTab] = useState("personal");
 
-      if (!description || !picture) {
-        alert("Please provide both a description and a image file.");
-        return;
-      }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfile((prev) => ({ ...prev, [name]: value }));
+  };
 
-      const formData = new FormData();
-     
-      formData.append("description", description);
-      formData.append("bio", bio);
-      formData.append("price", price);
-      formData.append("picture", picture);
-     
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile((prev) => ({ ...prev, profilePicture: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-      try {
-        const response = await fetch(
-          "https://live-merely-drum.ngrok-free.app/api/posts/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          }
-        );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you would typically send the updated profile data to your backend
+    console.log("Updated profile:", profile);
+    alert("Profile updated successfully!");
+  };
 
-        if (response.ok) {
-          alert("picture uploaded successfully!");
-          setDescription("");
-          setPicture(null);
-        } else {
-          alert("Failed to upload video. Please try again.");
-        }
-      } catch (error) {
-        console.error("Error uploading video:", error);
-        alert("An error occurred while uploading the video.");
-      }
-    };
   return (
-    <>
-    <div className="min-h-[calc(100vh-1rem)] bg-slate-50 pb-4 m-4 shadow rounded-lg">
-      <div className="border-b p-6 px-8 flex flex-col gap-4">
-        <h3 className="pl-1 text-3xl font-semibold text-slate-800">
-          Profile
-        </h3>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <button className="p-2 px-4 border border-black rounded-3xl">Profile</button>
-            <button className="p-2 px-4 border border-black rounded-3xl">Profile</button>
+    <div className="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-3xl overflow-hidden rounded-lg bg-white shadow-xl">
+        <div className="md:flex">
+          <div className="md:shrink-0">
+            <div className="h-48 w-full bg-gray-300 md:h-full md:w-48">
+              <img
+                className="h-full w-full object-cover"
+                src={profile.profilePicture}
+                alt="Profile"
+              />
+            </div>
           </div>
-          <button className="bg-slate-900 text-slate-50 p-2 px-6 rounded-3xl tracking-wider font-medium">Save</button>
+          <div className="w-full p-8">
+            <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-500">
+              Edit Your Profile
+            </div>
+            <h1 className="mb-4 text-3xl font-bold text-gray-900">
+              {profile.name}
+            </h1>
+            <p className="text-gray-600">{profile.profession}</p>
+          </div>
         </div>
-      </div>
-      <div className="main grid grid-cols-[1fr,3fr] justify-center items-center px-10 py-10 ">
-          <form onSubmit={handleSubmit} className="">
-            <div className="mb-3">
-              <label
-                htmlFor="title"
-                className="block text-lg text-[#1f1f1f] font-semibold "
-              >
-                Title
+
+        <div className="border-b border-gray-200">
+          <nav className="-mb-px flex">
+            <button
+              onClick={() => setActiveTab("personal")}
+              className={`${
+                activeTab === "personal"
+                  ? "border-blue-500 text-blue-600"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              } whitespace-nowrap border-b-2 px-6 py-4 text-sm font-medium`}
+            >
+              Personal Information
+            </button>
+            <button
+              onClick={() => setActiveTab("professional")}
+              className={`${
+                activeTab === "professional"
+                  ? "border-blue-500 text-blue-600"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              } whitespace-nowrap border-b-2 px-6 py-4 text-sm font-medium`}
+            >
+              Professional Details
+            </button>
+          </nav>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-8">
+          {activeTab === "personal" && (
+            <div className="space-y-6">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Full Name
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <User className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="John Doe"
+                    value={profile.name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <Mail className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="you@example.com"
+                    value={profile.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Phone Number
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <Phone className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="+1 (555) 987-6543"
+                    value={profile.phone}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="location"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Location
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <MapPin className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="text"
+                    name="location"
+                    id="location"
+                    className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="New York, NY"
+                    value={profile.location}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "professional" && (
+            <div className="space-y-6">
+              <div>
+                <label
+                  htmlFor="profession"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Profession
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <Briefcase className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="text"
+                    name="profession"
+                    id="profession"
+                    className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="Software Engineer"
+                    value={profile.profession}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="bio"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Bio
+                </label>
+                <div className="mt-1">
+                  <textarea
+                    id="bio"
+                    name="bio"
+                    rows={3}
+                    className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="Tell us about yourself"
+                    value={profile.bio}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="hourlyRate"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Hourly Rate ($)
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <DollarSign className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="number"
+                    name="hourlyRate"
+                    id="hourlyRate"
+                    className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="100"
+                    value={profile.hourlyRate}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="mt-8 space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Profile Picture
               </label>
-              <input
-                type="text"
-                id="title"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="border-[#cdcdcd] rounded-md placeholder:text-[#cccccc] pl-3 py-2 border-solid w-96 border-[1px] my-2"
-                placeholder="Title"
-                required
-              />
+              <div className="mt-1 flex items-center space-x-5">
+                <img
+                  className="h-16 w-16 rounded-full"
+                  src={profile.profilePicture}
+                  alt="Profile"
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                  <span>Change</span>
+                  <input
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    className="sr-only"
+                    onChange={handleFileChange}
+                    accept="image/*"
+                  />
+                </label>
+              </div>
             </div>
 
-            <div className="mb-3">
-              <label
-                htmlFor="title"
-                className="block text-lg text-[#1f1f1f] font-semibold "
-              >
-                Bio
-              </label>
-           
-              <textarea
-                
-                id="title"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                className="border-[#cdcdcd] rounded-md placeholder:text-[#cccccc] pl-3 py-2 border-solid w-96 border-[1px] my-2"
-                placeholder="Describe Yourself"
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label
-                htmlFor="title"
-                className="block text-lg text-[#1f1f1f] font-semibold "
-              >
-                Price of Session
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                className="border-[#cdcdcd] rounded-md placeholder:text-[#cccccc] pl-3 py-2 border-solid w-96 border-[1px] my-2"
-                placeholder="Price of Session"
-                required
-              />
-            </div>
-
-            <div className="mb-6">
-              <label
-                htmlFor="video"
-                className="block text-lg text-[#1f1f1f] font-semibold   "
-              >
-                Upload Profile Picture
-              </label>
-              <input
-                type="file"
-                id="picture"
-                accept="picture/*"
-                onChange={(e) => setPicture(e.target.files[0])}
-                className="  border-[#cdcdcd] rounded-md placeholder:text-[#cccccc] pl-3 py-2 border-solid w-96 border-[1px] my-2 "
-                required
-              />
-            </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-end">
               <button
                 type="submit"
-                className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
-                Add Details
+                <Save className="mr-2 h-4 w-4" />
+                Save Changes
               </button>
             </div>
-          </form>
+          </div>
+        </form>
       </div>
     </div>
-    </>
   );
 };
 
