@@ -16,7 +16,7 @@ const Register = () => {
 
   const handleForm = async (e: any) => {
     e.preventDefault();
-    setLoading(!loading);
+    setLoading(true);
 
     const formData = {
       name,
@@ -97,7 +97,7 @@ const Register = () => {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Username/Email"
+                  placeholder="Email"
                   className="my-2 w-96 rounded-md border-[1px] border-solid border-[#cdcdcd] py-2 pl-3 placeholder:text-[#cccccc]"
                 />
               </div>
@@ -109,7 +109,7 @@ const Register = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Username/Email"
+                  placeholder="Password"
                   className="my-2 w-96 rounded-md border-[1px] border-solid border-[#cdcdcd] py-2 pl-3 placeholder:text-[#cccccc]"
                 />
               </div>
