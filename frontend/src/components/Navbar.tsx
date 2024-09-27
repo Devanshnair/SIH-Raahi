@@ -1,30 +1,65 @@
 import React from 'react'
 import { BiRightArrow } from 'react-icons/bi'
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi'
+import { IoPersonCircleSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom'
+import { useLogin } from '../LoginContext/LoginContext'
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Navbar = () => {
+  let {isLoggedIn } = useLogin();
+  console.log(isLoggedIn);
+
+  const ChangeLogin = ()=>{
+    isLoggedIn= !isLoggedIn
+    console.log(isLoggedIn);
+    
+
+  }
+  
+  
   return (
-    <div className='flex justify-between items-center px-52 bg-slate-100'>
-        <div className='h-[4.5rem] p-3 mt-2 cursor-pointer'>
-              <img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' />
-        </div>
-        <div>
-            <ul className='flex gap-10 justify-center items-center'>
-                <li className='text-lg tracking-wide cursor-pointer relative Homenav '>Home</li>
-                <li className='text-lg tracking-wide cursor-pointer relative Explorenav'><Link to={"/mentors/explore"}>Explore</Link></li>
-                <li className='text-lg tracking-wide cursor-pointer relative Insightsnav'><Link to={"/mentors/reels"}>Insights</Link></li>
-                <li className='text-lg tracking-wide cursor-pointer relative Insightsnav'><Link to={"/forum"}>Forum</Link></li>
-            </ul>
-        </div>
+    
+    <div className="flex items-center justify-between bg-slate-100 px-52">
+      {/* <button onClick={()=>ChangeLogin()}>hi</button> */}
+      <div className="mt-2 h-[4.5rem] cursor-pointer p-3">
+        <img
+          src="../../src/assets/Logo1.png"
+          alt="Logo"
+          className="h-[100%] object-cover"
+        />
+      </div>
+      <div>
+        <ul className="flex items-center justify-center gap-10">
+          <li className="Homenav relative cursor-pointer text-lg tracking-wide">
+            Home
+          </li>
+          <li className="Explorenav relative cursor-pointer text-lg tracking-wide">
+            <Link to={"/mentors/explore"}>Explore</Link>
+          </li>
+          <li className="Insightsnav relative cursor-pointer text-lg tracking-wide">
+            <Link to={"/mentors/reels"}>Insights</Link>
+          </li>
+          <li className="Insightsnav relative cursor-pointer text-lg tracking-wide">
+            <Link to={"/forum"}>Forum</Link>
+          </li>
+        </ul>
+      </div>
+
+      {isLoggedIn ? (
+        <Link to={"/dashboard"}>
+          <IoPersonCircleSharp className="cursor-pointer text-[3rem]" />
+        </Link>
+      ) : (
         <Link to={"/register"}>
-          <button className='px-4 py-[5px] border-[1.5px] border-slate-900 font-medium rounded-full flex justify-center items-center gap-2 shadow-md overflow-hidden relative Loginnav'>
-            <p className='z-20'>Sign Up</p>
-            <HiOutlineArrowNarrowRight className='iconarrowright z-20 h-[1.4rem] w-[1.4rem]'/>
+          <button className="Loginnav relative flex items-center justify-center gap-2 overflow-hidden rounded-full border-[1.5px] border-slate-900 px-4 py-[5px] font-medium shadow-md">
+            <p className="z-20">Sign Up</p>
+            <HiOutlineArrowNarrowRight className="iconarrowright z-20 h-[1.4rem] w-[1.4rem]" />
           </button>
         </Link>
+      )}
     </div>
-  )
+  );
 }
 
 export default Navbar

@@ -68,9 +68,9 @@ const Sidebar = () => {
             woh
           </span>
         </p> */}
-        <div className="absolute -left-[22px] top-6 -rotate-90 border-[.7rem] border-transparent border-b-white drop-shadow-[0px_-1px_1px_rgba(0,0,0,0.08)]"></div>
-      {/* </div> */} 
-      <div className="sticky top-4 h-[calc(100vh-32px)] overflow-y-auto px-4 flex flex-col justify-between">
+      <div className="absolute -left-[22px] top-6 -rotate-90 border-[.7rem] border-transparent border-b-white drop-shadow-[0px_-1px_1px_rgba(0,0,0,0.08)]"></div>
+      {/* </div> */}
+      <div className="sticky top-4 flex h-[calc(100vh-32px)] flex-col justify-between overflow-y-auto px-4">
         <div>
           <div className='h-[3.2rem] pl-5 mt-2 mb-4 pb-3 cursor-pointer border-b border-slate-300'>
               <Link to={"/"}><img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' /></Link>
@@ -90,42 +90,43 @@ const Sidebar = () => {
               >
                 {({ isActive }) => (
                   <>
-                  {item.label === 'Analytics' && (
-                    <>
-                      <span
-                        className={`flex h-[1.4rem] w-[1.4rem] items-center justify-center rounded-sm border-b-[2.3px] border-l-[2.3px] ${isActive ? "border-blue-500" : "border-slate-600"}`}
-                      >
-                        <item.icon
-                          className={`m-[1px] h-[1.35rem] w-[1.35rem] ${isActive ? "text-blue-500" : ""}`}
-                        />
-                      </span>
-                      <span>{item.label}</span>
-                    </>
-                  )}
-                  {item.label === 'Calendar' && (
-                    <>
-                      <span
-                        className={`flex items-center justify-center rounded-sm`}
-                      >
-                        <item.icon
-                          className={`m-[1px] h-[1.45rem] w-[1.45rem] ${isActive ? "text-blue-500" : ""}`}
-                        />
-                      </span>
-                      <span>{item.label}</span>
-                    </>
-                  )}
-                  {item.label !== 'Analytics' && item.label !== 'Calendar' && (
-                    <>
-                      <span
-                        className={`flex items-center justify-center rounded-sm`}
-                      >
-                        <item.icon
-                          className={`m-[1px] h-[1.55rem] w-[1.55rem] ${isActive ? "text-blue-500" : ""}`}
-                        />
-                      </span>
-                      <span>{item.label}</span>
-                    </>
-                  )}
+                    {item.label === "Analytics" && (
+                      <>
+                        <span
+                          className={`flex h-[1.4rem] w-[1.4rem] items-center justify-center rounded-sm border-b-[2.3px] border-l-[2.3px] ${isActive ? "border-blue-500" : "border-slate-600"}`}
+                        >
+                          <item.icon
+                            className={`m-[1px] h-[1.35rem] w-[1.35rem] ${isActive ? "text-blue-500" : ""}`}
+                          />
+                        </span>
+                        <span>{item.label}</span>
+                      </>
+                    )}
+                    {item.label === "Calendar" && (
+                      <>
+                        <span
+                          className={`flex items-center justify-center rounded-sm`}
+                        >
+                          <item.icon
+                            className={`m-[1px] h-[1.45rem] w-[1.45rem] ${isActive ? "text-blue-500" : ""}`}
+                          />
+                        </span>
+                        <span>{item.label}</span>
+                      </>
+                    )}
+                    {item.label !== "Analytics" &&
+                      item.label !== "Calendar" && (
+                        <>
+                          <span
+                            className={`flex items-center justify-center rounded-sm`}
+                          >
+                            <item.icon
+                              className={`m-[1px] h-[1.55rem] w-[1.55rem] ${isActive ? "text-blue-500" : ""}`}
+                            />
+                          </span>
+                          <span>{item.label}</span>
+                        </>
+                      )}
                   </>
                 )}
               </NavLink>

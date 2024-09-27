@@ -1,4 +1,5 @@
 import "./index.css";
+import { LoginProvider } from "./LoginContext/LoginContext"
 
 import Dashboard from "./Pages/AdminPanel/Home/Home";
 import Chatbot from "./Pages/Chatbot";
@@ -29,6 +30,7 @@ import Availability from "./Pages/AdminPanel/availability/Availability";
 import Analytics from "./Pages/AdminPanel/Analytics/Analytics";
 import Forum from "./features/forums/Forums";
 import ThreadPage from "./features/forums/ThreadPage";
+import { useState } from "react";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,8 @@ export const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njk3NTYxLCJpYXQiOjE3MjY2NTQzNjEsImp0aSI6IjRkMmFkODJiMjBkMjQyY2E5NDYxYTU2YmYwMTI0Y2Y4IiwidXNlcl9pZCI6MX0.8LwiZXCPZaUInyXrGztS8iM7A_KU0I03pkUkmVDXjcs";
 
 function App() {
+
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -73,12 +77,16 @@ function App() {
       </>,
     ),
   );
+
+  
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        {/* <ReactQueryDevtools /> */}
-      </QueryClientProvider>
+      <LoginProvider value={{ isLoggedIn, setIsLoggedIn }}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          {/* <ReactQueryDevtools /> */}
+        </QueryClientProvider>
+      </LoginProvider>
     </>
   );
 }

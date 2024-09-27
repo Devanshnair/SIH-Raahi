@@ -2,6 +2,7 @@ import MentorCard from "../../components/MentorCard";
 import { useEffect, useRef, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { FaArrowCircleRight } from "react-icons/fa";
+import ImgSrc from "../../assets/DummyImg.jpg"
 
 import CustomSelect from "../../components/custom-select/CustomSelect";
 
@@ -283,7 +284,7 @@ const MentorExPg = () => {
                   name={ele.name}
                   desc={ele.description}
                   bio={ele.bio}
-                  imgSrc={ele.profile_picture}
+                  imgSrc={ele.profile_picture? ele.profile_picture:ImgSrc}
                   price={ele.price}
                 />
               );
