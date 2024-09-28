@@ -21,7 +21,7 @@ const navItems = [
   {
     path: "/dashboard/availability",
     label: "Availability",
-    icon: (props: IconBaseProps) => <TbClockCheck  {...props} />,
+    icon: (props: IconBaseProps) => <TbClockCheck {...props} />,
   },
   {
     path: "/dashboard/calendar",
@@ -46,12 +46,11 @@ const Sidebar = () => {
     .split("; ")
     .find((row) => row.startsWith("accessToken="))
     ?.split("=")[1];
-    
+
   const decoded = jwtDecode(accessToken);
 
   console.log(decoded);
-  
-    
+
   return (
     <>
       {/* useless div below*/}

@@ -1,5 +1,13 @@
-import { useState } from "react";
-import { User, Mail, Phone, MapPin, Briefcase, Save } from "lucide-react";
+import React, { useState } from "react";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Briefcase,
+  Save,
+  Camera,
+} from "lucide-react";
 
 const EditProfile = () => {
   const [profile, setProfile] = useState({
@@ -16,205 +24,202 @@ const EditProfile = () => {
 
   const [activeTab, setActiveTab] = useState("personal");
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfile((prev) => ({ ...prev, profilePicture: reader.result }));
+        setProfile((prev) => ({
+          ...prev,
+          profilePicture: reader.result as string,
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Updated profile:", profile);
-    alert("Profile updated successfully!");
+    // Implement your update logic here
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 px-8 py-4 sm:px-6 lg:px-8">
-      <div className="mx-auto p-12 overflow-hidden rounded-lg bg-white shadow">
-        <div className="md:flex">
-          <div className="md:shrink-0">
-            <div className="w-full overflow-hidden bg-gray-300 md:h-36 md:w-48">
+    <div className="my-2 mr-2 min-h-[calc(100vh-1rem)] rounded-lg bg-white pb-4 shadow-sm">
+      <h3 className="border-b p-6 px-8 text-3xl font-semibold text-slate-800">
+        Profile
+      </h3>
+      <div className="mx-4 max-w-5xl py-6 sm:px-6 lg:px-8">
+        <div className="mb-10 overflow-hidden rounded-lg bg-white shadow">
+          <div className="relative h-24 bg-gradient-to-r from-blue-500 to-violet-500">
+            <div className="absolute -bottom-16 left-4 h-32 w-32">
               <img
-                className="h-full w-full object-cover object-[0%_10%]"
                 src={profile.profilePicture}
                 alt="Profile"
+                className="h-full w-full rounded-full object-cover object-[0%_10%] ring-4 ring-white"
               />
+              <label
+                htmlFor="file-upload"
+                className="absolute bottom-0 right-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-gray-600 shadow-md transition-colors hover:bg-gray-100"
+              >
+                <Camera className="h-5 w-5" />
+                <input
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                />
+              </label>
             </div>
           </div>
-          <div className="w-full p-8">
-            <h1 className="mb-4 text-3xl font-bold text-gray-900">
-              {profile.name}
-            </h1>
-            <p className="text-gray-600">{profile.profession}</p>
+          <div className="px-4 py-5 sm:p-6">
+            <div className="mt-16 sm:ml-36 sm:mt-0">
+              <h2 className="text-2xl font-bold text-gray-900">
+                {profile.name}
+              </h2>
+              <p className="mt-1 text-sm text-gray-500">{profile.profession}</p>
+            </div>
           </div>
         </div>
 
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex">
-            <button
-              onClick={() => setActiveTab("personal")}
-              className={`${
-                activeTab === "personal"
-                  ? "border-blue-500 text-blue-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-              } whitespace-nowrap border-b-2 px-6 py-4 text-sm font-medium`}
-            >
-              Personal Information
-            </button>
-            <button
-              onClick={() => setActiveTab("professional")}
-              className={`${
-                activeTab === "professional"
-                  ? "border-blue-500 text-blue-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-              } whitespace-nowrap border-b-2 px-6 py-4 text-sm font-medium`}
-            >
-              Professional Details
-            </button>
-          </nav>
-        </div>
+        <div className="mt-10">
+          <div className="border-b border-gray-200">
+            <nav className="-mb-px flex space-x-8">
+              <button
+                onClick={() => setActiveTab("personal")}
+                className={`${
+                  activeTab === "personal"
+                    ? "border-slate-800 text-slate-800"
+                    : "border-transparent text-slate-500 hover:border-slate-400 hover:text-slate-500"
+                } whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`}
+              >
+                Personal Information
+              </button>
+              <button
+                onClick={() => setActiveTab("professional")}
+                className={`${
+                  activeTab === "professional"
+                    ? "border-slate-800 text-slate-800"
+                    : "border-transparent text-slate-500 hover:border-slate-400 hover:text-slate-400"
+                } whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`}
+              >
+                Professional Details
+              </button>
+            </nav>
+          </div>
 
-        <form onSubmit={handleSubmit} className="p-6">
-          {activeTab === "personal" && (
-            <div className="space-y-6">
-              {[
-                {
-                  name: "name",
-                  label: "Full Name",
-                  icon: <User className="h-5 w-5 text-gray-400" />,
-                },
-                {
-                  name: "email",
-                  label: "Email",
-                  icon: <Mail className="h-5 w-5 text-gray-400" />,
-                },
-                {
-                  name: "phone",
-                  label: "Phone Number",
-                  icon: <Phone className="h-5 w-5 text-gray-400" />,
-                },
-                {
-                  name: "location",
-                  label: "Location",
-                  icon: <MapPin className="h-5 w-5 text-gray-400" />,
-                },
-              ].map(({ name, label, icon }) => (
-                <div key={name}>
+          <form onSubmit={handleSubmit} className="mt-10 space-y-8">
+            {activeTab === "personal" && (
+              <div className="grid gap-6 sm:grid-cols-2">
+                {[
+                  { name: "name", label: "Full Name", icon: User },
+                  { name: "email", label: "Email", icon: Mail },
+                  { name: "phone", label: "Phone Number", icon: Phone },
+                  { name: "location", label: "Location", icon: MapPin },
+                ].map(({ name, label, icon: Icon }) => (
+                  <div key={name} className="relative">
+                    <label
+                      htmlFor={name}
+                      className="mb-1 block text-sm font-medium text-gray-700"
+                    >
+                      {label}
+                    </label>
+                    <div className="mt-1 flex border-b">
+                      <span className="inline-flex items-center rounded-l-md px-1 py-2 text-gray-500 sm:text-sm">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <input
+                        type={name === "email" ? "email" : "text"}
+                        name={name}
+                        id={name}
+                        className="block w-full flex-1 rounded-none rounded-r-md border-gray-300 px-2 outline-none sm:text-sm"
+                        value={profile[name as keyof typeof profile]}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === "professional" && (
+              <div className="space-y-6">
+                <div>
                   <label
-                    htmlFor={name}
-                    className="ml-1 flex items-center text-sm font-medium text-gray-700"
+                    htmlFor="profession"
+                    className="mb-1 block text-sm font-medium text-gray-700"
                   >
-                    {icon}
-                    <span className="ml-2">{label}</span>
+                    Profession
                   </label>
-                  <input
-                    type={name === "email" ? "email" : "text"}
-                    name={name}
-                    id={name}
-                    className="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 transition duration-150 ease-in-out focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    placeholder={`Enter your ${label.toLowerCase()}`}
-                    value={profile[name]}
+                  <div className="mt-1 flex border-b">
+                    <span className="inline-flex items-center rounded-l-md px-1 py-2 text-gray-500 sm:text-sm">
+                      <Briefcase className="h-4 w-4" />
+                    </span>
+                    <input
+                      type="text"
+                      name="profession"
+                      id="profession"
+                      className="block w-full flex-1 rounded-none rounded-r-md border-gray-300 px-2 outline-none sm:text-sm"
+                      value={profile.profession}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="bio"
+                    className="mb-1 block text-sm font-medium text-gray-700"
+                  >
+                    Bio
+                  </label>
+                  <textarea
+                    id="bio"
+                    name="bio"
+                    rows={4}
+                    className="block w-full rounded-md border border-gray-300 p-1 px-2 sm:text-sm"
+                    value={profile.bio}
                     onChange={handleInputChange}
                   />
                 </div>
-              ))}
-            </div>
-          )}
-
-          {activeTab === "professional" && (
-            <div className="space-y-6">
-              {[
-                {
-                  name: "profession",
-                  label: "Profession",
-                  icon: <Briefcase className="h-5 w-5 text-gray-400" />,
-                },
-                { name: "bio", label: "Bio", icon: null },
-                { name: "hourlyRate", label: "Hourly Rate (₹)", icon: null },
-              ].map(({ name, label, icon }) => (
-                <div key={name}>
+                <div>
                   <label
-                    htmlFor={name}
-                    className="flex items-center text-sm font-medium text-gray-700"
+                    htmlFor="hourlyRate"
+                    className="mb-1 block text-sm font-medium text-gray-700"
                   >
-                    {icon}
-                    {icon && <span className="ml-2">{label}</span>}
+                    Hourly Rate (₹)
                   </label>
-                  {name === "bio" ? (
-                    <textarea
-                      id={name}
-                      name={name}
-                      rows={3}
-                      className="mt-1 block w-full rounded-md border border-gray-300 p-2 transition duration-150 ease-in-out focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      placeholder="Tell us about yourself"
-                      value={profile[name]}
-                      onChange={handleInputChange}
-                    />
-                  ) : (
-                    <input
-                      type={name === "hourlyRate" ? "number" : "text"}
-                      name={name}
-                      id={name}
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 transition duration-150 ease-in-out focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      placeholder={`Enter your ${label.toLowerCase()}`}
-                      value={profile[name]}
-                      onChange={handleInputChange}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="mt-8 space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Profile Picture
-              </label>
-              <div className="mt-1 flex items-center space-x-5">
-                <img
-                  className="h-16 w-16 rounded-full border-2 border-gray-300"
-                  src={profile.profilePicture}
-                  alt="Profile"
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  <span>Change</span>
                   <input
-                    id="file-upload"
-                    name="file-upload"
-                    type="file"
-                    className="sr-only"
-                    onChange={handleFileChange}
-                    accept="image/*"
+                    type="number"
+                    name="hourlyRate"
+                    id="hourlyRate"
+                    className="block rounded-md border border-gray-300 px-2 py-2 sm:text-sm"
+                    value={profile.hourlyRate}
+                    onChange={handleInputChange}
                   />
-                </label>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className="flex items-center justify-end">
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="inline-flex items-center rounded-md border border-transparent bg-slate-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition duration-150 ease-in-out hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="inline-flex items-center rounded-md border border-transparent bg-slate-800 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2"
               >
                 <Save className="mr-2 h-4 w-4" />
                 Save Changes
               </button>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

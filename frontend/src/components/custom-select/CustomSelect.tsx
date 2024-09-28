@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from "react";
 type Option = string;
 
 type CustomSelectProps = {
+  selectRef?: React.RefObject<HTMLDivElement>;
+  id?: string;
   options: Option[];
   value?: string;
   onChange: (value: string) => void;
@@ -11,6 +13,8 @@ type CustomSelectProps = {
 };
 
 export default function CustomSelect({
+  selectRef,
+  id,
   options,
   value = "",
   onChange,
@@ -29,8 +33,8 @@ export default function CustomSelect({
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        (selectRef ?? dropdownRef).current &&
+        !(selectRef ?? dropdownRef).current?.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
@@ -50,7 +54,11 @@ export default function CustomSelect({
   const selectedOption = options.find((option) => option === value);
 
   return (
-    <div className={`relative w-full ${className}`} ref={dropdownRef}>
+    <div
+      className={`relative w-full ${className}`}
+      ref={selectRef ?? dropdownRef}
+      id={id}
+    >
       <button
         type="button"
         className="flex w-full items-center justify-between rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2"
@@ -63,7 +71,9 @@ export default function CustomSelect({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        {selectedOption ? selectedOption : placeholder}
+        <div className="text">
+          {selectedOption ? selectedOption : placeholder}
+        </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

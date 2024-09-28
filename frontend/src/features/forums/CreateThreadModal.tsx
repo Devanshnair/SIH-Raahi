@@ -1,6 +1,7 @@
 import { Minus, Plus, X } from "lucide-react";
 import { useState } from "react";
 import { threads, ThreadType } from "./data";
+import { jwtDecode } from "jwt-decode";
 
 interface CreateThreadModalProps {
   isOpen: boolean;
@@ -15,6 +16,13 @@ export default function CreateThreadModal({
   onCreateThread,
   categories,
 }: CreateThreadModalProps) {
+  const accessToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    ?.split("=")[1];
+
+  const decoded = jwtDecode(accessToken);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState(categories[0].name);
@@ -32,7 +40,7 @@ export default function CreateThreadModal({
       category,
       tags,
       createdAt: new Date().toISOString(),
-      author: "User",
+      author: decoded.name,
       upvotes: 0,
       downvotes: 0,
       replies: 0,

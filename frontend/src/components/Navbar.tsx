@@ -38,7 +38,7 @@ const Navbar = () => {
             <Link to={"/mentors/explore"}>Explore</Link>
           </li>
           <li className="Insightsnav relative cursor-pointer text-lg tracking-wide">
-            <Link to={"/mentors/reels"}>Insights</Link>
+            <Link to={"/mentors/reels"}>Snippets</Link>
           </li>
           <li className="Insightsnav relative cursor-pointer text-lg tracking-wide">
             <Link to={"/forum"}>Forum</Link>

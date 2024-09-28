@@ -16,12 +16,12 @@ import MainLayout from "./layout/MainLayout";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import CalendarView from "./features/calendar/CalendarView";
 import BookSlots from "./features/bookslots/BookSlots";
-import MentorExplorePage, { MentorDetails } from "./Pages/mentorExplorationPage/MentorExplorePage";
+import MentorExplorePage, {
+  MentorDetails,
+} from "./Pages/mentorExplorationPage/MentorExplorePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Register from "./Pages/Register/Register";
-import Insights from "./Pages/Insights/Insights";
 import AddPost from "./Pages/AddPost/AddPost";
-import EditProfile from "./Pages/EditProfile/EditProfile";
 import RoomPage from "./Pages/Videocalling/RoomPage";
 import DashboardLayout from "./layout/DashboardLayout";
 import Testimonials from "./Pages/AdminPanel/Testimonials/Testimonials";
@@ -32,12 +32,14 @@ import Forum from "./features/forums/Forums";
 import ThreadPage from "./features/forums/ThreadPage";
 import { useState } from "react";
 import SuccessPage from "./features/bookslots/SuccessPage";
+import EditProfile from "./Pages/EditProfile/EditProfile";
+import Snippets from "./Pages/Snippets/Snippets";
 
 const queryClient = new QueryClient();
 
 export const baseURL = "https://sudormrf.pythonanywhere.com";
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NTI4NTAwLCJpYXQiOjE3Mjc1MjQ5MDAsImp0aSI6ImUyNTA4ZjUzM2NkNDQ3ODk4YWUxNTBmMWUyYzBmMzQxIiwidXNlcl9pZCI6MSwiZW1haWwiOiJ2aW5heWFrOTc2OTZAZ21haWwuY29tIiwibmFtZSI6IkpvaG4gRG9lIn0.tCUkklD4sFDHG5aBx4SyyKS9pYxO2dxyaRbxo2v2k28";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NTQ0MTk0LCJpYXQiOjE3Mjc1NDA1OTQsImp0aSI6ImExZWZjZGM1OTc5ZjQ4NzI4ZDYyMGRkYWJlOTkxNTVkIiwidXNlcl9pZCI6MSwiZW1haWwiOiJ2aW5heWFrOTc2OTZAZ21haWwuY29tIiwibmFtZSI6IkpvaG4gRG9lIn0.DJFX02cdm5Lxyckbht76JOWdcYuPqoPF-MdwimbKsOs";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,9 +61,11 @@ function App() {
 
           <Route path="mentors">
             <Route
-            loader={MentorDetails}
-            path="/mentors/explore" element={<MentorExplorePage />} />
-            <Route path="/mentors/reels" element={<Insights />} />
+              loader={MentorDetails}
+              path="/mentors/explore"
+              element={<MentorExplorePage />}
+            />
+            <Route path="/mentors/reels" element={<Snippets />} />
             <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
             <Route path="/mentors/success" element={<SuccessPage />} />
           </Route>

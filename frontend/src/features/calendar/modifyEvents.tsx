@@ -4,7 +4,7 @@ export type Events = {
   startDateTime: string;
   endDateTime: string;
   description?: string;
-  event_status?: string;
+  status?: string;
   theme: string;
 }[];
 
