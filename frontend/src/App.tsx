@@ -1,5 +1,5 @@
 import "./index.css";
-import { LoginProvider } from "./LoginContext/LoginContext";
+import { LoginProvider } from "./context/LoginContext";
 
 import Dashboard from "./Pages/AdminPanel/Home/Home";
 import Chatbot from "./Pages/Chatbot";
@@ -37,7 +37,7 @@ const queryClient = new QueryClient();
 
 export const baseURL = "https://sudormrf.pythonanywhere.com";
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njk3NTYxLCJpYXQiOjE3MjY2NTQzNjEsImp0aSI6IjRkMmFkODJiMjBkMjQyY2E5NDYxYTU2YmYwMTI0Y2Y4IiwidXNlcl9pZCI6MX0.8LwiZXCPZaUInyXrGztS8iM7A_KU0I03pkUkmVDXjcs";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NTI0NTg4LCJpYXQiOjE3Mjc1MjA5ODgsImp0aSI6IjM5MWU4OWE3YjI2NDRjN2U5YTc5ZDAyNWRjMWNkOWIyIiwidXNlcl9pZCI6MSwiZW1haWwiOiJ2aW5heWFrOTc2OTZAZ21haWwuY29tIiwibmFtZSI6IkpvaG4gRG9lIn0.egKtmjEHNPj-ynBQu4BwkU357i3xGr7H6yB4q50wNpk";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

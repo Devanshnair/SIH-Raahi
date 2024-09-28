@@ -6,6 +6,7 @@ import ImgSrc from "../../assets/DummyImg.jpg"
 import { baseURL } from "../../App";
 
 import CustomSelect from "../../components/custom-select/CustomSelect";
+import Navbar from "../../components/Navbar";
 
 // const details = [
 //   {
@@ -145,6 +146,7 @@ const MentorExPg = () => {
 
   return (
     <>
+      <Navbar />
       <div className="flex min-h-screen w-full flex-col items-center justify-center bg-slate-100">
         <div className="main sticky top-0 w-full bg-slate-100 pb-8">
           <div className="search mx-auto mt-4 flex max-w-3xl items-center justify-center overflow-hidden rounded-full border border-gray-300 bg-white pl-4 pr-2">

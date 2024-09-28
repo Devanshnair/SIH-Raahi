@@ -3,7 +3,7 @@ import { BiRightArrow } from 'react-icons/bi'
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi'
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom'
-import { useLogin } from '../LoginContext/LoginContext'
+import { useLogin } from '../context/LoginContext'
 import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Navbar = () => {
@@ -20,9 +20,9 @@ const Navbar = () => {
   
   return (
     
-    <div className="flex items-center justify-between bg-slate-100 px-52">
+    <div className="flex items-center justify-between bg-slate-100 px-52 pt-3">
       {/* <button onClick={()=>ChangeLogin()}>hi</button> */}
-      <div className="mt-2 h-[4.5rem] cursor-pointer p-3">
+      <div className="h-[4.5rem] cursor-pointer p-3">
         <img
           src="../../src/assets/Logo1.png"
           alt="Logo"

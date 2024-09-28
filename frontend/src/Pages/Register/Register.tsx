@@ -28,7 +28,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-       baseURL,
+       `${baseURL}/api/register/mentor/`,
         {
           method: "POST",
           headers: {

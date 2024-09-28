@@ -2,7 +2,7 @@ import { useState } from 'react';
 import imgSrc from '../../assets/freelancer-working-laptop-her-house.png'
 import { Link, useNavigate } from 'react-router-dom';
 import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
-import { useLogin } from '../../LoginContext/LoginContext';
+import { useLogin } from '../../context/LoginContext';
 import { baseURL } from '../../App';
 
 
@@ -39,7 +39,7 @@ const LoginPage = () => {
     };
 
     const response = await fetch(
-      baseURL,
+      `${baseURL}/api/token/`,
       {
         method: "POST",
         headers: {
@@ -69,7 +69,7 @@ const LoginPage = () => {
     <>
       <div className="main h-screen gap-36 justify-center items-center flex">
         <div className="signIn w-96 flex flex-col  ">
-          <h1 className="font-bold text-[#1f1f1f] text-4xl mb-7">Sign in</h1>
+          <h1 className="font-bold text-[#1f1f1f] text-4xl mb-7">Login</h1>
 
           <div className="form">
             <form onSubmit={handleForm}>
@@ -106,7 +106,7 @@ const LoginPage = () => {
                 autoPlay
                 loop
                 className='h-10 mx-auto'
-                ></video>): "Sign-In"}
+                ></video>): "Login"}
               </button>
               <p>
                 Not a member? 
