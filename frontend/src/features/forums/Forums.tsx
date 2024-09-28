@@ -20,6 +20,7 @@ import CreateThreadModal from "./CreateThreadModal";
 import { Comment } from "./ThreadPage";
 import { TbClock } from "react-icons/tb";
 import { jwtDecode } from "jwt-decode";
+import ChatbotButton from "../../components/ChatbotButton";
 
 type Category = {
   id: string;
@@ -271,8 +272,14 @@ export default function Forum() {
     <div className="min-h-screen bg-slate-100">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
-          <div className='h-[3.2rem] p-1 ml-1 cursor-pointer'>
-              <Link to={"/"}><img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' /></Link>
+          <div className="ml-1 h-[3.2rem] cursor-pointer p-1">
+            <Link to={"/"}>
+              <img
+                src="../../src/assets/Logo1.png"
+                alt="Logo"
+                className="h-[100%] object-cover"
+              />
+            </Link>
           </div>
           <div className="flex items-center space-x-4">
             <button
@@ -398,6 +405,7 @@ export default function Forum() {
         onCreateThread={handleCreateThread}
         categories={categories}
       />
+      <ChatbotButton />
     </div>
   );
 }
