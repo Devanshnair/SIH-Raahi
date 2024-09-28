@@ -11,37 +11,7 @@ import {
   Send,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ThreadType, threads } from "./data";
-
-type Comment = {
-  id: string;
-  content: string;
-  author: string;
-  upvotes: number;
-  downvotes: number;
-  createdAt: string;
-};
-
-const commentsArr: Comment[] = [
-  {
-    id: "1",
-    content:
-      "Always use functional components and hooks. They're more efficient and easier to read. For state management, I recommend using Redux Toolkit if you need a global state, or React Query for managing server state.",
-    author: "hooksfan",
-    upvotes: 45,
-    downvotes: 2,
-    createdAt: "2023-06-10T15:00:00Z",
-  },
-  {
-    id: "2",
-    content:
-      "Don't forget to optimize your builds for production! Use code splitting and lazy loading for better performance. Also, consider using React.memo() for preventing unnecessary re-renders of functional components.",
-    author: "perfmatters",
-    upvotes: 38,
-    downvotes: 1,
-    createdAt: "2023-06-10T15:15:00Z",
-  },
-];
+import { CommentType, ThreadType, commentsArr, threads } from "./data";
 
 const ThreadContent: React.FC<{ thread: ThreadType }> = ({ thread }) => {
   const [votes, setVotes] = useState(thread.upvotes - thread.downvotes);
@@ -117,7 +87,7 @@ const ThreadContent: React.FC<{ thread: ThreadType }> = ({ thread }) => {
   );
 };
 
-const Comment: React.FC<{ comment: Comment }> = ({ comment }) => {
+export const Comment: React.FC<{ comment: CommentType }> = ({ comment }) => {
   const [votes, setVotes] = useState(comment.upvotes - comment.downvotes);
 
   const handleUpvote = () => setVotes(votes + 1);
@@ -161,7 +131,7 @@ const Comment: React.FC<{ comment: Comment }> = ({ comment }) => {
 function CommentForm({
   setComments,
 }: {
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  setComments: React.Dispatch<React.SetStateAction<CommentType[]>>;
 }) {
   const [comment, setComment] = useState("");
 
