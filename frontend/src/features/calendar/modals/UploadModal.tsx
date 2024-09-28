@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
-import { TOKEN } from "../../../App";
+import { baseURL, TOKEN } from "../../../App";
 import { useMutation, useQueryClient } from "react-query";
 
-function uploadEvents(fileData: FormData) {
+async function uploadEvents(fileData: FormData) {
   const headers = {
     Authorization: `Bearer ${TOKEN}`,
     "ngrok-skip-browser-warning": "true",
   };
 
-  fetch("https://live-merely-drum.ngrok-free.app/api/upload-ics/", {
+  fetch(`${baseURL}/api/upload-ics/`, {
     method: "POST",
     body: fileData,
     headers: headers,
@@ -16,6 +16,7 @@ function uploadEvents(fileData: FormData) {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+    return response.json();
   });
 }
 
@@ -30,8 +31,8 @@ const UploadModal = ({
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: updateCalendarEvents, isLoading } = useMutation({
-    mutationFn: async (fileData: FormData) => uploadEvents(fileData),
+  const { mutate: updateCalendarEvents, isLoading } = useMutation({
+    mutationFn: (fileData: FormData) => uploadEvents(fileData),
     onSuccess: () => {
       queryClient.invalidateQueries("calendarEvents");
     },
