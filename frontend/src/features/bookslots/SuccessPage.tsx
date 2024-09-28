@@ -156,7 +156,7 @@ const SuccessPage = () => {
         <div className="flex space-x-4">
           <Button
             onClick={handleCopy}
-            className="flex-1 bg-slate-800 hover:bg-slate-900 focus:ring-slate-700"
+            className="flex-1 bg-slate-900 hover:bg-slate-900 focus:ring-slate-700"
           >
             <div className="flex items-center justify-center">
               {copied ? (
@@ -169,7 +169,7 @@ const SuccessPage = () => {
           </Button>
           <Button
             onClick={handleDownload}
-            className="flex-1 bg-slate-800 hover:bg-slate-900 focus:ring-slate-700"
+            className="flex-1 bg-slate-900 hover:bg-slate-900 focus:ring-slate-700"
           >
             <div className="flex items-center justify-center">
               <Download className="mr-2 h-4 w-4" />

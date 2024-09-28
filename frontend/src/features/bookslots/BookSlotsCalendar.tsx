@@ -184,7 +184,7 @@ export default function BookSlotsCalendar({
         <div className="mx-6 flex max-w-[530px] justify-center pb-6 max-md:mx-6">
           <Link
             className="w-full rounded-full bg-slate-900 p-2 text-center font-medium text-white"
-            to="/mentor/success"
+            to="/mentors/success"
           >
             Book
           </Link>

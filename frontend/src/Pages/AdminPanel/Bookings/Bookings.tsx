@@ -1,36 +1,32 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { meetings } from "../../../features/calendar/modifyEvents";
+// import { meetings } from "../../../features/calendar/modifyEvents";
 import { format } from "date-fns";
+import { useEvents } from "../../../features/calendar/methods/fetchEvents";
+import { Events } from "../../../features/calendar/modifyEvents";
 
-const filter = ["Upcoming", "Past"];
+const filter = ["Scheduled", "Completed"];
 
 const Bookings = () => {
-  const [selected, setSelected] = useState("Upcoming");
+  const [selected, setSelected] = useState("Scheduled");
 
-  type d = { [key: string]: (typeof meetings)[0][] };
+  const { data: meetings } = useEvents();
+
+  type d = { [key: string]: Events[0][] };
 
   console.table(meetings);
 
   const fileredMeetings = (() => {
-    if (selected === "Upcoming") {
-      return meetings.filter(
-        (meeting) =>
-          meeting.startDateTime >
-          new Date(meetings[0].startDateTime).toISOString(),
-      );
+    if (selected === "Scheduled") {
+      return meetings?.filter((meeting) => meeting.status === "Scheduled");
     }
-    if (selected === "Past") {
-      return meetings.filter(
-        (meeting) =>
-          meeting.startDateTime <
-          new Date(meetings[0].startDateTime).toISOString(),
-      );
+    if (selected === "Completed") {
+      return meetings?.filter((meeting) => meeting.status === "Completed");
     }
     return meetings;
   })();
 
-  const meetingsReimagined = fileredMeetings.reduce((acc: d[], meeting) => {
+  const meetingsReimagined = fileredMeetings?.reduce((acc: d[], meeting) => {
     const date = format(meeting.startDateTime, "yyyy-MM-dd");
     if (!acc.find((d: d) => Object.hasOwn(d, date))) {
       const obj = {
@@ -62,7 +58,7 @@ const Bookings = () => {
           ))}
         </div>
         <div className="mt-8 grid gap-6">
-          {meetingsReimagined.map((date, i) => (
+          {meetingsReimagined?.map((date, i) => (
             <div key={i} className="">
               <h4 className="px-2 font-medium text-slate-800">
                 {format(Object.keys(date)[0], "E, dd MMM")}
