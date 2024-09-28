@@ -19,7 +19,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="group relative flex flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl"
+      className="group relative flex flex-col items-center justify-between h-64 overflow-hidden rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl"
       whileHover={{ y: -5 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -27,8 +27,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
     >
       <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-transparent" />
 
-      <motion.div className="relative z-10 flex size-48 items-center justify-center rounded-full bg-slate-100">
-        <img src={icon} alt={title} className="h-32 w-32 object-contain" />
+      <motion.div className="relative z-10 flex size-fit items-center justify-center rounded-full bg-slate-100">
+        <img src={icon} alt={title} className="h-32 w-32 object-cover" />
       </motion.div>
 
       <div className="relative z-10 mb-2 mt-5 text-center">

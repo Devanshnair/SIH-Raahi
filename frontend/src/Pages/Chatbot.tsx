@@ -196,7 +196,7 @@ export default function Chatbot() {
 
   return (
     <div className="flex flex-col h-screen bg-slate-100">
-      <header className="bg-slate-50 shadow-sm py-4 px-6">
+      <header className="bg-slate-50 shadow-sm  px-6">
       <Link to={"/"}>
       <div className="h-[4.5rem] cursor-pointer p-3">
         <img
@@ -208,7 +208,7 @@ export default function Chatbot() {
       </Link>
       </header>
       <main className="flex-1 overflow-hidden p-6">
-        <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg h-full flex flex-col">
+        <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg h-full flex flex-col">
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <AnimatePresence initial={false}>
               {messages.map((message) => (
