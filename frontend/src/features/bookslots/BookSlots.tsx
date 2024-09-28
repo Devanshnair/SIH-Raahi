@@ -122,7 +122,7 @@ const BookSlots = () => {
               </div>
               <div>
                 <p className="text-lg font-semibold text-slate-700">
-                  ${mentorDetails?.price}
+                ₹{mentorDetails?.price}
                 </p>
                 <p className="text-sm font-medium text-slate-500">
                   Consultation fee

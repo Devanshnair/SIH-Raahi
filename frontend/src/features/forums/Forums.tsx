@@ -46,19 +46,19 @@ const topContributors: Contributor[] = [
   {
     id: "1",
     name: "Devansh Nair",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/src/assets/Logoicon.png",
     score: 1250,
   },
   {
     id: "2",
     name: "Vaibhav Pai",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/src/assets/Logoicon.png",
     score: 1100,
   },
   {
     id: "3",
     name: "Vedang Kulkarni",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/src/assets/Logoicon.png",
     score: 950,
   },
 ];
@@ -210,7 +210,7 @@ const Sidebar: React.FC = () => (
             <img
               src={contributor.avatar}
               alt={contributor.name}
-              className="mr-3 h-10 w-10 rounded-full"
+              className="mr-3 h-10 w-10 p-2 rounded-full object-cover"
             />
             <div>
               <div className="font-medium text-gray-700">
@@ -271,9 +271,8 @@ export default function Forum() {
     <div className="min-h-screen bg-slate-100">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
-          <div className="mb-4 flex items-center sm:mb-0">
-            <Home className="mr-2 h-8 w-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-slate-800">Raahi</h1>
+          <div className='h-[3.2rem] p-1 ml-1 cursor-pointer'>
+              <Link to={"/"}><img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' /></Link>
           </div>
           <div className="flex items-center space-x-4">
             <button

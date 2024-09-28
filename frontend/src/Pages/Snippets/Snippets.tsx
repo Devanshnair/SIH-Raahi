@@ -6,7 +6,7 @@ import videoSrc2 from "../../assets/3 Daily Habits To Become Mentally Strong _ R
 import videoSrc3 from "../../assets/95in10.mp4";
 
 
-const Insights = () => {
+const Snippets = () => {
 
   //  useEffect(() => {
   //    const request = async () => {
@@ -58,4 +58,4 @@ const Insights = () => {
   );
 };
 
-export default Insights;
+export default Snippets;

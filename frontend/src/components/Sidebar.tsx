@@ -71,14 +71,8 @@ const Sidebar = () => {
       {/* </div> */}
       <div className="sticky top-4 flex h-[calc(100vh-32px)] flex-col justify-between overflow-y-auto px-4">
         <div>
-          <div className="mb-4 mt-2 h-[3.2rem] cursor-pointer border-b border-slate-300 pb-3 pl-5">
-            <Link to={"/"}>
-              <img
-                src="../../src/assets/Logo1.png"
-                alt="Logo"
-                className="h-[100%] object-cover"
-              />
-            </Link>
+          <div className='h-[3.2rem] pl-5 mt-[1.6rem] mb-4 pb-3 cursor-pointer border-b border-slate-300'>
+              <Link to={"/"}><img src='../../src/assets/Logo1.png' alt='Logo' className='h-[100%] object-cover' /></Link>
           </div>
           <div className="relative flex flex-col gap-2">
             {navItems.map((item, index) => (

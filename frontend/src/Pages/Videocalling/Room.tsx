@@ -12,7 +12,7 @@ import {
   IoVideocamOffOutline,
   IoVideocamOutline,
 } from "react-icons/io5";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 type Stream = MediaStream | null;
 type SocketId = string | null;
@@ -350,12 +350,14 @@ const Room: React.FC = () => {
                 </div>
               )}
             </button>
+            <Link to={"/"}>
             <button
               className="flex items-center justify-center rounded-lg bg-[#ff0035] px-3 py-[0.3rem] font-mono text-[1.3rem] tracking-tight text-white"
               onClick={handleEndCall}
             >
               Leave
             </button>
+            </Link>
           </div>
         </>
       )}

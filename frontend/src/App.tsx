@@ -21,9 +21,7 @@ import MentorExplorePage, {
 } from "./Pages/mentorExplorationPage/MentorExplorePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Register from "./Pages/Register/Register";
-import Insights from "./Pages/Insights/Insights";
 import AddPost from "./Pages/AddPost/AddPost";
-import EditProfile from "./Pages/EditProfile/EditProfile";
 import RoomPage from "./Pages/Videocalling/RoomPage";
 import DashboardLayout from "./layout/DashboardLayout";
 import Testimonials from "./Pages/AdminPanel/Testimonials/Testimonials";
@@ -34,6 +32,8 @@ import Forum from "./features/forums/Forums";
 import ThreadPage from "./features/forums/ThreadPage";
 import { useState } from "react";
 import SuccessPage from "./features/bookslots/SuccessPage";
+import EditProfile from "./Pages/EditProfile/EditProfile";
+import Snippets from "./Pages/Snippets/Snippets";
 
 const queryClient = new QueryClient();
 
@@ -65,7 +65,7 @@ function App() {
               path="/mentors/explore"
               element={<MentorExplorePage />}
             />
-            <Route path="/mentors/reels" element={<Insights />} />
+            <Route path="/mentors/reels" element={<Snippets />} />
             <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
             <Route path="/mentors/success" element={<SuccessPage />} />
           </Route>
