@@ -4,6 +4,7 @@ import videoSrc from "../../../src/assets/WhatsApp Video 2024-09-03 at 11.18.40.
 import videoSrc1 from "../../assets/How to master javascript.mp4";
 import videoSrc2 from "../../assets/3 Daily Habits To Become Mentally Strong _ Raj Shamani shorts.mp4";
 import videoSrc3 from "../../assets/95in10.mp4";
+import ChatbotButton from "../../components/ChatbotButton";
 
 
 const Snippets = () => {
@@ -54,6 +55,7 @@ const Snippets = () => {
           name="Vaibhav Sharma"
         />
       </div>
+      <ChatbotButton />
     </>
   );
 };

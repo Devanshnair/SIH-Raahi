@@ -8,6 +8,7 @@ import { useLoaderData } from "react-router-dom";
 
 import CustomSelect from "../../components/custom-select/CustomSelect";
 import Navbar from "../../components/Navbar";
+import ChatbotButton from "../../components/ChatbotButton";
 
 // const details = [
 //   {
@@ -305,6 +306,7 @@ const MentorExPg = () => {
           </div>
         </div>
       </div>
+      <ChatbotButton/>
     </>
   );
 };
