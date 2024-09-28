@@ -13,7 +13,7 @@ const EditProfile = () => {
   const [profile, setProfile] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567",
+    phone: "+91 99999 99999",
     location: "New York, NY",
     profession: "Software Engineer",
     bio: "I'm a passionate software engineer with 5 years of experience in web development.",
