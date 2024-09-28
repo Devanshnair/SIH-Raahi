@@ -1,63 +1,75 @@
-import CategoryComponent from "../../../components/CategoryComponent";
-import softwareImgSrc from "../../../assets/advanced-computer-skills-abstract-concept-illustration.png"
-import studyAbroad from "../../../assets/study-abroad-concept-illustration.png"
-import careerGuide from "../../../assets/team-leader-teamwork-concept.png"
-import jeeneet from "../../../assets/flat-university-concept-background.png" 
-import marketing from "../../../assets/mobile-marketing-concept-illustration.png"
-import mental from "../../../assets/mental-health-concept-illustration.png"
-
-
+import studyAbroad from "../../../assets/study-abroad-concept-illustration.png";
+import careerGuide from "../../../assets/team-leader-teamwork-concept.png";
+import jeeneet from "../../../assets/flat-university-concept-background.png";
+import marketing from "../../../assets/mobile-marketing-concept-illustration.png";
+import mental from "../../../assets/mental-health-concept-illustration.png";
+import { CategoryCard } from "../../../components/CategoryComponent";
 
 const CategorySection = () => {
   return (
     <>
-      <div className="main text-slate-900 bg-slate-100 rounded-t-[10%] py-20 flex flex-col justify-center ">
-        <div className="w-full flex flex-col justify-start pl-[7.5rem] pb-12">
-          <div className="catcon ml-28 w-40 py-2 rounded-3xl font-semibold text-center border-slate-700 border-[1px] border-solid px-3  mt-6 mb-3 ">
+      <div className="main flex flex-col justify-center rounded-t-[10%] bg-slate-100 py-20 text-slate-900">
+        <div className="flex w-full flex-col justify-start pb-12 pl-[7.5rem]">
+          <div className="catcon mb-3 ml-24 mt-6 w-40 rounded-3xl border-[1px] border-solid border-slate-700 px-3 py-2 text-center font-semibold">
             <h1 className="text-sm tracking-tight">TOP CATEGORY</h1>
           </div>
-          <h2 className="text-4xl ml-28 mb-6 text-slate-900 font-bold">
+          <h2 className="mb-2 ml-24 text-4xl font-bold text-slate-900">
             Category You Must Know
           </h2>
         </div>
 
-        <div className="flex justify-center items-center w-full">
+        <div className="flex w-full items-center justify-center">
           <div
             style={{
               gridTemplateColumns: "320px 320px 320px ",
             }}
-            className="container w-screen grid gap-11  justify-center"
+            className="container grid w-screen justify-center gap-11"
           >
-            <CategoryComponent
-              imgSrc={softwareImgSrc}
-              Category="Software Engineering"
-              mentor="200"
-            />
-            <CategoryComponent
-              Category="Study Abroad"
-              imgSrc={studyAbroad}
-              mentor="100"
-            />
-            <CategoryComponent
-              Category="Career Guidance"
-              imgSrc={careerGuide}
-              mentor="70"
-            />
-            <CategoryComponent
-              Category="JEE/NEET Guidance"
-              imgSrc={jeeneet}
-              mentor="110"
-            />
-            <CategoryComponent
-              Category="Marketing"
-              imgSrc={marketing}
-              mentor="100"
-            />
-            <CategoryComponent
-              Category="Mental Health"
-              imgSrc={mental}
-              mentor="100"
-            />
+            {[
+              {
+                title: "Software Engineering",
+                mentors: 200,
+                icon: careerGuide,
+                color: "#BFDBFE", // bg-blue-100
+              },
+              {
+                title: "Study Abroad",
+                mentors: 100,
+                icon: studyAbroad,
+                color: "#BBF7D0", // bg-green-100
+              },
+              {
+                title: "Career Guidance",
+                mentors: 70,
+                icon: careerGuide,
+                color: "#FEF9C3", // bg-yellow-100
+              },
+              {
+                title: "JEE/NEET Guidance",
+                mentors: 110,
+                icon: jeeneet,
+                color: "#E9D5FF", // bg-purple-100
+              },
+              {
+                title: "Marketing",
+                mentors: 100,
+                icon: marketing,
+                color: "#FBCFE8", // bg-pink-100
+              },
+              {
+                title: "Mental Health",
+                mentors: 100,
+                icon: mental,
+                color: "#C7D2FE", // bg-indigo-100
+              },
+            ].map((category, index) => (
+              <CategoryCard
+                title={category.title}
+                mentors={category.mentors}
+                icon={category.icon}
+                color={category.color}
+              />
+            ))}
           </div>
         </div>
       </div>
