@@ -47,6 +47,7 @@ export default function CreateThreadModal({
       views: 0,
     };
     onCreateThread(newThread);
+    threads.push(newThread);
     onClose();
   };
 
