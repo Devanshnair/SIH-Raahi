@@ -4,6 +4,8 @@ import { Events } from "../modifyEvents";
 import { format } from "date-fns";
 import { updateEvent } from "../methods/updateEvent";
 import { useMutation, useQueryClient } from "react-query";
+import CustomSelect from "../../../components/custom-select/CustomSelect";
+import { Updater } from "react-query/types/core/utils";
 
 type ScheduleModalProps = {
   isOpen: boolean;
@@ -16,7 +18,7 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   const modalDescriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const modalStartInputRef = useRef<HTMLInputElement>(null);
   const modalEndInputRef = useRef<HTMLInputElement>(null);
-  const modalThemeInputRef = useRef<HTMLSelectElement>(null);
+  const modalThemeInputRef = useRef<HTMLDivElement>(null);
 
   const [theme, setTheme] = useState<undefined | string>();
   const [error, setError] = useState("");
@@ -27,7 +29,7 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
     mutationFn: (event: Events[0]) => updateEvent(event),
     onSuccess: () => {
       // queryClient.invalidateQueries("calendarEvents");
-      queryClient.setQueryData("calendarEvents", (old: Events) => {
+      queryClient.setQueryData("calendarEvents", (old: Updater<Events>) => {
         return old.map((event) => {
           console.log(event.id, dialogRef.current?.dataset.eventid);
           if (event.id === dialogRef.current?.dataset.eventid) {
@@ -38,9 +40,9 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
               endDateTime: modalEndInputRef.current?.value ?? "",
               description: modalDescriptionInputRef.current?.value ?? "",
               theme:
-                modalThemeInputRef.current?.value === ""
+                modalThemeInputRef.current?.textContent === ""
                   ? "Personal"
-                  : (modalThemeInputRef.current?.value ?? ""),
+                  : (modalThemeInputRef.current?.textContent ?? ""),
             };
           }
           return event;
@@ -101,9 +103,9 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
       endDateTime: modalEndInputRef.current?.value ?? "",
       description: modalDescriptionInputRef.current?.value ?? "",
       theme:
-        modalThemeInputRef.current?.value === ""
+        modalThemeInputRef.current?.textContent === ""
           ? "Personal"
-          : (modalThemeInputRef.current?.value ?? ""),
+          : (modalThemeInputRef.current?.textContent ?? ""),
     };
 
     await updateCalendarEvent(data);
@@ -220,7 +222,7 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
             >
               Theme
             </label>
-            <select
+            {/* <select
               ref={modalThemeInputRef}
               id="update-modal-theme"
               value={theme}
@@ -232,7 +234,15 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
               <option value="Personal">Personal</option>
               <option value="Meeting">Meeting</option>
               <option value="Reminder">Reminder</option>
-            </select>
+            </select> */}
+            <CustomSelect
+              selectRef={modalThemeInputRef}
+              id="update-modal-theme"
+              value={theme}
+              onChange={(value) => setTheme(value)}
+              options={["Work", "Personal", "Meeting", "Reminder"]}
+              className="w-full rounded-md py-2"
+            />
           </div>
 
           <div>

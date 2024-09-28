@@ -12,8 +12,11 @@ export function setEventInUpadateModal(event: Events[0]) {
     document.querySelector("#update-modal-endDateTime")! as HTMLInputElement
   ).value = format(event?.endDateTime, "yyyy-MM-dd'T'HH:mm");
 
-  (document.querySelector("#update-modal-theme")! as HTMLSelectElement).value =
-    event?.theme;
+  (
+    document.querySelector(
+      "#update-modal-theme > button > .text",
+    )! as HTMLDivElement
+  ).textContent = event?.theme;
 
   (
     document.querySelector("#update-modal-description")! as HTMLTextAreaElement
