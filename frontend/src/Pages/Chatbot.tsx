@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, Phone, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Mentor {
   name: string;
