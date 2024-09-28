@@ -16,7 +16,7 @@ import MainLayout from "./layout/MainLayout";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import CalendarView from "./features/calendar/CalendarView";
 import BookSlots from "./features/bookslots/BookSlots";
-import MentorExplorePage from "./Pages/mentorExplorationPage/MentorExplorePage";
+import MentorExplorePage, { MentorDetails } from "./Pages/mentorExplorationPage/MentorExplorePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Register from "./Pages/Register/Register";
 import Insights from "./Pages/Insights/Insights";
@@ -59,7 +59,9 @@ function App() {
           </Route>
 
           <Route path="mentors">
-            <Route path="/mentors/explore" element={<MentorExplorePage />} />
+            <Route
+            loader={MentorDetails}
+            path="/mentors/explore" element={<MentorExplorePage />} />
             <Route path="/mentors/reels" element={<Insights />} />
             <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
             <Route path="/mentors/success" element={<SuccessPage />} />
