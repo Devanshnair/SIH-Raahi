@@ -9,12 +9,9 @@ const CategorySection = () => {
   return (
     <>
       <div className="main flex flex-col justify-center rounded-t-[10%] bg-slate-100 py-20 text-slate-900">
-        <div className="flex w-full flex-col justify-start pb-12 pl-[7.5rem]">
-          <div className="catcon mb-3 ml-24 mt-6 w-40 rounded-3xl border-[1px] border-solid border-slate-700 px-3 py-2 text-center font-semibold">
-            <h1 className="text-sm tracking-tight">TOP CATEGORY</h1>
-          </div>
+        <div className="flex w-full flex-col justify-start pb-12 pl-[9.8rem]">
           <h2 className="mb-2 ml-24 text-4xl font-bold text-slate-900">
-            Category You Must Know
+            Top Categories
           </h2>
         </div>
 
@@ -23,7 +20,7 @@ const CategorySection = () => {
             style={{
               gridTemplateColumns: "320px 320px 320px ",
             }}
-            className="container grid w-screen justify-center gap-11"
+            className="container grid w-screen justify-center gap-9 "
           >
             {[
               {
