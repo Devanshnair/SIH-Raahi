@@ -4,6 +4,7 @@ import { IoIosSearch } from "react-icons/io";
 import { FaArrowCircleRight } from "react-icons/fa";
 import ImgSrc from "../../assets/DummyImg.jpg"
 import { baseURL } from "../../App";
+import { useLoaderData } from "react-router-dom";
 
 import CustomSelect from "../../components/custom-select/CustomSelect";
 
@@ -41,28 +42,34 @@ import CustomSelect from "../../components/custom-select/CustomSelect";
 // ];
 
 const MentorExPg = () => {
+
+  
   const [details, setDetails] = useState([]);
+  const data = useLoaderData();
+   useEffect(() => {
+     setDetails(data);
+   }, [data]);
 
-  useEffect(() => {
-    const request = async () => {
-      const response = await fetch(
-        `${baseURL}/api/mentors/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
-          },
-        },
-      );
+  // useEffect(() => {
+  //   const request = async () => {
+  //     const response = await fetch(
+  //       `${baseURL}/api/mentors/`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "ngrok-skip-browser-warning": "true",
+  //         },
+  //       },
+  //     );
 
-      const data = await response.json();
-      setDetails(data);
-      console.log(data);
-    };
+  //     const data = await response.json();
+  //     setDetails(data);
+  //     console.log(data);
+  //   };
 
-    request();
-  }, []);
+  //   request();
+  // }, []);
 
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("");
@@ -74,7 +81,7 @@ const MentorExPg = () => {
   const handleForm = async (e: any) => {
     e.preventDefault();
 
-    let Url =`${baseURL}/?`;
+    let Url = `${baseURL}/api/mentors/?`;
     let flag = false;
 
     if (roles !== "") {
@@ -130,7 +137,7 @@ const MentorExPg = () => {
         flag = true;
       }
     }
-
+     console.log(Url);
     const response = await fetch(Url, {
       method: "GET",
       headers: {
@@ -452,3 +459,16 @@ function PriceRangePicker({
     </div>
   );
 }
+
+
+export  const MentorDetails = async () => {
+  const response = await fetch(`${baseURL}/api/mentors/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "true",
+    },
+  });
+
+  return response.json();
+};

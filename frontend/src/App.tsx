@@ -16,7 +16,7 @@ import MainLayout from "./layout/MainLayout";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import CalendarView from "./features/calendar/CalendarView";
 import BookSlots from "./features/bookslots/BookSlots";
-import MentorExplorePage from "./Pages/mentorExplorationPage/MentorExplorePage";
+import MentorExplorePage, { MentorDetails } from "./Pages/mentorExplorationPage/MentorExplorePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Register from "./Pages/Register/Register";
 import Insights from "./Pages/Insights/Insights";
@@ -35,7 +35,7 @@ import SuccessPage from "./features/bookslots/SuccessPage";
 
 const queryClient = new QueryClient();
 
-export const baseURL = "https://annoyed-mollee-sudo-rm-rf-83c225c7.koyeb.app";
+export const baseURL = "https://sudormrf.pythonanywhere.com";
 export const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2Njk3NTYxLCJpYXQiOjE3MjY2NTQzNjEsImp0aSI6IjRkMmFkODJiMjBkMjQyY2E5NDYxYTU2YmYwMTI0Y2Y4IiwidXNlcl9pZCI6MX0.8LwiZXCPZaUInyXrGztS8iM7A_KU0I03pkUkmVDXjcs";
 
@@ -59,7 +59,9 @@ function App() {
           </Route>
 
           <Route path="mentors">
-            <Route path="/mentors/explore" element={<MentorExplorePage />} />
+            <Route
+            loader={MentorDetails}
+            path="/mentors/explore" element={<MentorExplorePage />} />
             <Route path="/mentors/reels" element={<Insights />} />
             <Route path="/mentors/book/:mentorId" element={<BookSlots />} />
             <Route path="/mentors/success" element={<SuccessPage />} />
