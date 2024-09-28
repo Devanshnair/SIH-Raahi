@@ -122,7 +122,7 @@ const BookSlots = () => {
               </div>
               <div>
                 <p className="text-lg font-semibold text-slate-700">
-                ₹{mentorDetails?.price}
+                  ₹{mentorDetails?.price}
                 </p>
                 <p className="text-sm font-medium text-slate-500">
                   Consultation fee
@@ -132,9 +132,13 @@ const BookSlots = () => {
           </div>
         </div>
       </div>
-      <div className="max-xs:px-0 w-full max-w-xl rounded-xl max-md:mt-10 max-md:px-4 md:justify-self-start">
-        <h3 className="px-3 py-2 font-medium text-slate-800">Available Time</h3>
-        {weekSlots && <BookSlotsCalendar weekSlots={weekSlots} />}
+      <div className="w-full max-w-xl rounded-xl max-md:mt-10 max-md:px-4 max-xs:px-0 md:justify-self-start">
+        <h3 className="px-3 py-2 text-lg font-medium text-slate-800">
+          Available Time
+        </h3>
+        {weekSlots && (
+          <BookSlotsCalendar weekSlots={weekSlots} data={mentorDetails!} />
+        )}
       </div>
     </div>
   );

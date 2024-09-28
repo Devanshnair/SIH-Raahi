@@ -7,7 +7,10 @@ import {
 } from "date-fns";
 import { useRef, useState } from "react";
 import { weekSlotsType } from "./methods/fetchWeeklySlots";
-import { Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { EventDetails, postEventDetails } from "./methods/postEventDetails";
+import { jwtDecode } from "jwt-decode";
+import { MentorDetails } from "./methods/fetchMentorDetails";
 
 type slot = {
   start: string;
@@ -21,10 +24,14 @@ type selectedSlotsType = {
 
 export default function BookSlotsCalendar({
   weekSlots,
+  data,
 }: {
+  data: MentorDetails;
   weekSlots: weekSlotsType[];
 }) {
   const [selectedSlots, setSelectedSlots] = useState<selectedSlotsType>();
+  const { mentorId } = useParams();
+  const navigate = useNavigate();
   const today = startOfToday();
 
   const [selectedDay, setSelectedDay] = useState(today);
@@ -57,6 +64,32 @@ export default function BookSlotsCalendar({
   }
 
   const clickedCount = useRef(0);
+
+  const accessToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    ?.split("=")[1];
+
+  const decoded = jwtDecode(accessToken);
+
+  async function handleBook() {
+    if (!selectedSlots) return;
+    const newData: EventDetails = {
+      mentee: {
+        email: decoded.email,
+        name: decoded.name,
+        phone_number: "+1234567890",
+      },
+      event: {
+        description: `meeting with ${data.name}`,
+        startDateTime: new Date(selectedSlots?.slot.start).toISOString(),
+        endDateTime: new Date(selectedSlots?.slot.end).toISOString(),
+        mentor: mentorId ?? "1",
+      },
+    };
+    await postEventDetails(newData);
+    navigate("/mentors/success");
+  }
 
   return (
     <>
@@ -165,11 +198,11 @@ export default function BookSlotsCalendar({
                       className={`flex w-full min-w-max place-content-center items-center gap-2 rounded-xl border p-1 py-4 leading-6 ${selectedSlots?.slot == slot ? "border-slate-700 text-slate-700" : "border-slate-200 text-slate-400"} `}
                     >
                       <time dateTime={slot.start} className="font-medium">
-                        {format(slot.start, "hh:mm")}
+                        {format(slot.start, "HH:mm")}
                       </time>
                       <span>-</span>
                       <time dateTime={slot.end} className="font-medium">
-                        {format(slot.end, "hh:mm")}
+                        {format(slot.end, "HH:mm")}
                       </time>
                     </button>
                   );
@@ -182,12 +215,12 @@ export default function BookSlotsCalendar({
           </div>
         </div>
         <div className="mx-6 flex max-w-[530px] justify-center pb-6 max-md:mx-6">
-          <Link
+          <button
             className="w-full rounded-full bg-slate-900 p-2 text-center font-medium text-white"
-            to="/mentors/success"
+            onClick={handleBook}
           >
             Book
-          </Link>
+          </button>
         </div>
       </div>
       {/* {showPopup && (
