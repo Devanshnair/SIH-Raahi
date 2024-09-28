@@ -4,6 +4,7 @@ import MentorExplore from './sections/ExploreMentors'
 import CategorySection from './sections/CategorySection'
 import Testimonials from './sections/Testimonials'
 import Navbar from '../../components/Navbar'
+import ChatbotButton from '../../components/ChatbotButton'
 
 const LandingPage = () => {
   return (
@@ -13,6 +14,7 @@ const LandingPage = () => {
         <MentorExplore />
         <CategorySection />
         <Testimonials />
+        <ChatbotButton/>
     </div>
   )
 }
