@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 interface Mentor {
   name: string
@@ -194,9 +195,17 @@ export default function Chatbot() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
-      <header className="bg-white shadow-sm py-4 px-6">
-        <h1 className="text-2xl font-semibold text-blue-600">Raahi Chatbot</h1>
+    <div className="flex flex-col h-screen bg-slate-100">
+      <header className="bg-slate-50 shadow-sm py-4 px-6">
+      <Link to={"/"}>
+      <div className="h-[4.5rem] cursor-pointer p-3">
+        <img
+          src="../../src/assets/Logo1.png"
+          alt="Logo"
+          className="h-[100%] object-cover"
+        />
+      </div>
+      </Link>
       </header>
       <main className="flex-1 overflow-hidden p-6">
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg h-full flex flex-col">
