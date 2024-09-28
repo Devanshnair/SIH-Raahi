@@ -125,7 +125,7 @@ const ScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
   return (
     <dialog
       ref={dialogRef}
-      className="relative z-50 w-full max-w-md rounded-lg p-6 shadow-xl"
+      className="relative z-50 w-full max-w-[29rem] rounded-lg p-6 shadow-xl"
     >
       <div className="mb-6 flex items-center justify-between bg-slate-50">
         <h2 className="text-2xl font-bold text-gray-800">Schedule Event</h2>

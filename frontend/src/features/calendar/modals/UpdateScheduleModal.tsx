@@ -122,9 +122,9 @@ const UpdateScheduleModal = ({ isOpen, setIsOpen }: ScheduleModalProps) => {
       id="#update-schedule-modal"
       ref={dialogRef}
       data-eventid="1"
-      className="relative z-50 w-full max-w-md rounded-lg"
+      className="relative z-50 w-full max-w-[29rem] rounded-lg"
     >
-      <div className="bg-white p-5">
+      <div className="bg-white p-5 ">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-800">Update Event</h2>
           <button

@@ -40,7 +40,7 @@ const EditProfile = () => {
 
   return (
     <div className="min-h-screen bg-slate-100 px-8 py-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl overflow-hidden rounded-lg bg-white shadow">
+      <div className="mx-auto p-12 overflow-hidden rounded-lg bg-white shadow">
         <div className="md:flex">
           <div className="md:shrink-0">
             <div className="w-full overflow-hidden bg-gray-300 md:h-36 md:w-48">
