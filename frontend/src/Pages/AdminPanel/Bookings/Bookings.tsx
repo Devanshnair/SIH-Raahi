@@ -58,36 +58,40 @@ const Bookings = () => {
           ))}
         </div>
         <div className="mt-8 grid gap-6">
-          {meetingsReimagined?.map((date, i) => (
-            <div key={i} className="">
-              <h4 className="px-2 font-medium text-slate-800">
-                {format(Object.keys(date)[0], "E, dd MMM")}
-              </h4>
-              <div className="mt-4 grid gap-4">
-                {date[Object.keys(date)[0]].map((meeting, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between rounded-lg border bg-white p-4 shadow-sm"
-                  >
-                    <div>
-                      <h5 className="text-lg font-semibold text-slate-800">
-                        {meeting.name}
-                      </h5>
-                      <p className="text-sm text-slate-500">
-                        {format(meeting.startDateTime, "hh:mm a")} -{" "}
-                        {format(meeting.endDateTime, "hh:mm a")}
-                      </p>
+          {meetingsReimagined ? (
+            meetingsReimagined.map((date, i) => (
+              <div key={i} className="">
+                <h4 className="px-2 font-medium text-slate-800">
+                  {format(Object.keys(date)[0], "E, dd MMM")}
+                </h4>
+                <div className="mt-4 grid gap-4">
+                  {date[Object.keys(date)[0]].map((meeting, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between rounded-lg border bg-white p-4 shadow-sm"
+                    >
+                      <div>
+                        <h5 className="text-lg font-semibold text-slate-800">
+                          {meeting.name}
+                        </h5>
+                        <p className="text-sm text-slate-500">
+                          {format(meeting.startDateTime, "hh:mm a")} -{" "}
+                          {format(meeting.endDateTime, "hh:mm a")}
+                        </p>
+                      </div>
+                      <div>
+                        <button className="font-semibold text-slate-700">
+                          View Details
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <button className="font-semibold text-slate-700">
-                        View Details
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
       </div>
     </div>

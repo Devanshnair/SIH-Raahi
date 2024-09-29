@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { baseURL } from "../../../App";
 
-type MentorDetails = {
+export type MentorDetails = {
   id: number;
   name: string;
   profession: string;
@@ -33,5 +33,6 @@ export const useMentorDetails = (id: string) => {
   return useQuery({
     queryKey: ["mentorDetails"],
     queryFn: () => fetchMentorDetails(id),
+    refetchOnWindowFocus: false,
   });
 };
