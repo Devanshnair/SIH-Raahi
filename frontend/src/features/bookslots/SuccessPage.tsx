@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { Check, Calendar, Clock, Download, Copy, Sparkles } from "lucide-react";
+import { Check, Calendar, Download, Copy } from "lucide-react";
 import confetti from "canvas-confetti";
+import { BiRightArrow, BiRightArrowAlt } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const CustomAlert = ({ icon: Icon, title, description }) => (
   <div className="flex items-start space-x-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
@@ -27,7 +29,7 @@ const SuccessPage = () => {
   const [copied, setCopied] = React.useState(false);
 
   const transactionDetails = {
-    mentorName: "Dr. Jane Smith",
+    mentorName: "Vinayak Mohanty",
     date: "October 15, 2024",
     time: "2:00 PM - 3:00 PM",
     topic: "Career Advancement in Tech",
@@ -158,14 +160,17 @@ const SuccessPage = () => {
             onClick={handleCopy}
             className="flex-1 bg-slate-900 hover:bg-slate-900 focus:ring-slate-700"
           >
-            <div className="flex items-center justify-center">
-              {copied ? (
+            <Link to={"/"}>
+            <div className="flex items-center justify-center gap-2">
+              {/* {copied ? (
                 <Check className="mr-2 h-4 w-4" />
               ) : (
                 <Copy className="mr-2 h-4 w-4" />
               )}
-              {copied ? "Copied!" : "Copy Details"}
-            </div>
+              {copied ? "Copied!" : "Copy Details"} */} 
+              <p>Back to Home</p>
+              <BiRightArrowAlt className="text-white h-7 w-7 pt-1"/>
+            </div></Link>
           </Button>
           <Button
             onClick={handleDownload}

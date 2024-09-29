@@ -43,7 +43,7 @@ const Room: React.FC = () => {
       const { room } = data;
       navigate(`/room/${roomId}`);
     },
-    [navigate],
+    [navigate, roomId],
   );
 
   const handleUserJoined = useCallback(

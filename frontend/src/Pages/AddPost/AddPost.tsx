@@ -8,7 +8,7 @@ const AddPost = () => {
      const [username , setUsername] = useState("")
      const [video, setVideo] = useState(null);
 
-     const handleSubmit = async (e:any) => {
+     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
        e.preventDefault();
 
        if (!title || !video) {

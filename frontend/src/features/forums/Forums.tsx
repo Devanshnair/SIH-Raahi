@@ -12,7 +12,6 @@ import {
   Award,
   PlusCircle,
   Bell,
-  Home,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ThreadType, commentsArr, threads } from "./data";

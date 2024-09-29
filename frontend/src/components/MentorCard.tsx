@@ -7,8 +7,8 @@ const MentorCard = ({ mentorId, name, desc, bio, imgSrc, price }) => {
     <>
       <div className="card flex items-center gap-10 justify-between rounded-xl bg-white px-6 pb-3 shadow-md shadow-slate-200">
         <div className="img flex w-[200px] flex-col items-center justify-center ">
-          <div className="mb-14 flex items-center justify-center overflow-hidden rounded-xl object-cover">
-            <img src={imgSrc} alt="" className="rounded-xl object-cover" />
+          <div className="mb-14 flex items-center justify-center overflow-hidden rounded-xl object-cover h-48 w-48">
+            <img src={imgSrc} alt="" className="rounded-xl object-cover h-[100%] w-[100%]" />
           </div>
         </div>
 

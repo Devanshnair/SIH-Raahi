@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import imgSrc from "../../assets/freelancer-working-laptop-her-house.png";
-import { useState, useTransition } from "react";
+import { useState} from "react";
 import loadingAnimation from "../../assets/Animation - 1726660821372.webm"
 import { baseURL } from "../../App";
 
@@ -15,7 +15,7 @@ const Register = () => {
   
   const navigate = useNavigate();
 
-  const handleForm = async (e: any) => {
+  const handleForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 

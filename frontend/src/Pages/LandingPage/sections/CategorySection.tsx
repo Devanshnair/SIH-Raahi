@@ -59,7 +59,7 @@ const CategorySection = () => {
                 icon: mental,
                 color: "#C7D2FE", // bg-indigo-100
               },
-            ].map((category, index) => (
+            ].map((category) => (
               <CategoryCard
                 title={category.title}
                 mentors={category.mentors}

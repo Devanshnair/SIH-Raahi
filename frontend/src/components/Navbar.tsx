@@ -1,10 +1,8 @@
 import React from 'react'
-import { BiRightArrow } from 'react-icons/bi'
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi'
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom'
 import { useLogin } from '../context/LoginContext'
-import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Navbar = () => {
   let {isLoggedIn } = useLogin();
@@ -13,8 +11,6 @@ const Navbar = () => {
   const ChangeLogin = ()=>{
     isLoggedIn= !isLoggedIn
     console.log(isLoggedIn);
-    
-
   }
   
   
@@ -32,7 +28,7 @@ const Navbar = () => {
       <div>
         <ul className="flex items-center justify-center gap-10">
           <li className="Homenav relative cursor-pointer text-lg tracking-wide">
-            Home
+            <Link to={"/"}>Home</Link>
           </li>
           <li className="Explorenav relative cursor-pointer text-lg tracking-wide">
             <Link to={"/mentors/explore"}>Explore</Link>

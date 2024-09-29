@@ -1,0 +1,6 @@
+[build]
+  publish = "frontend/dist"  # or "frontend/build" depending on your build setup
+  command = "npm install --prefix frontend && npm run build --prefix frontend"
+
+[dev]
+  command = "npm run dev --prefix frontend"

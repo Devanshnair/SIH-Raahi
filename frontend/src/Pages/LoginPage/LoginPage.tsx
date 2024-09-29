@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
-  const handleForm = async (e: any) => {
+  const handleForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setIsLoggedIn(true);
@@ -28,7 +28,7 @@ const LoginPage = () => {
       username,
     };
 
-    const setCookie = (name: any, value: any, days: any) => {
+    const setCookie = (name: string, value: string, days: number) => {
       let expires = "";
       if (days) {
         const date = new Date();

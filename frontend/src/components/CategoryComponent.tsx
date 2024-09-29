@@ -1,8 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { IoMale, IoPersonSharp } from "react-icons/io5";
-import { PersonStanding, PersonStandingIcon } from "lucide-react";
-import { SiMentorcruise } from "react-icons/si";
+import { IoMale } from "react-icons/io5";
 
 interface CategoryCardProps {
   title: string;

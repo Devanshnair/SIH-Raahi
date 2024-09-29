@@ -2,7 +2,6 @@ import { useState } from "react";
 // import { postAvailability } from "./methods/postAvailability";
 import CustomSelect from "../../../components/custom-select/CustomSelect";
 import NoticePeriodSelect from "../../../components/custom-select/NoticePeriodSelect";
-import { useMutation, useQueryClient } from "react-query";
 import { postAvailability } from "./methods/postAvailability";
 
 export type Availability = {

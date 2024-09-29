@@ -10,7 +10,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 
 import MainLayout from "./layout/MainLayout";
 import LandingPage from "./Pages/LandingPage/LandingPage";

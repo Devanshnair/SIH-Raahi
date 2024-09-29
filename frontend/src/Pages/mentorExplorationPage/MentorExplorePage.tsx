@@ -1,7 +1,6 @@
 import MentorCard from "../../components/MentorCard";
 import { useEffect, useRef, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { FaArrowCircleRight } from "react-icons/fa";
 import ImgSrc from "../../assets/DummyImg.jpg"
 import { baseURL } from "../../App";
 import { useLoaderData } from "react-router-dom";
@@ -80,7 +79,7 @@ const MentorExPg = () => {
   const [minimumPrice, setMinimumPrice] = useState<number>(0);
   const [maximumPrice, setMaximumPrice] = useState<number>(10000);
 
-  const handleForm = async (e: any) => {
+  const handleForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let Url = `${baseURL}/api/mentors/?`;
@@ -296,7 +295,7 @@ const MentorExPg = () => {
                   bio={ele.bio}
                   imgSrc={
                     ele.profile_picture
-                      ? `${baseURL}${ele.profile_picture}`
+                      ? `${ele.profile_picture}`
                       : ImgSrc
                   }
                   price={ele.price}

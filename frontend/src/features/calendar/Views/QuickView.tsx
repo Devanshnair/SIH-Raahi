@@ -2,7 +2,6 @@ import { format, parseISO } from "date-fns";
 import {
   memo,
   MouseEvent,
-  MouseEventHandler,
   useEffect,
   useMemo,
   useRef,

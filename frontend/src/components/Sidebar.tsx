@@ -4,7 +4,8 @@ import { IoCalendarClearOutline } from "react-icons/io5";
 import { MdOutlineReviews } from "react-icons/md";
 import { PiPhoneCall } from "react-icons/pi";
 import { TbBrandGoogleAnalytics, TbClockCheck } from "react-icons/tb";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
+// import {useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 const navItems = [
@@ -41,7 +42,7 @@ const navItems = [
 ];
 
 const Sidebar = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const accessToken = document.cookie
     .split("; ")
     .find((row) => row.startsWith("accessToken="))
