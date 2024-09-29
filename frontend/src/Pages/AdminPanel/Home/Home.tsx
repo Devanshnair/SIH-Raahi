@@ -7,7 +7,7 @@ import { Events } from "../../../features/calendar/modifyEvents";
 const Header: React.FC = () => (
   <header className="mb-8">
     <h2 className="text-3xl font-bold text-slate-800">
-      Welcome back, Yanshuman!
+      Welcome back, Devansh!
     </h2>
     <p className="text-slate-500">
       Here's what's happening with your mentor profile today.
@@ -22,19 +22,23 @@ const StatsCard: React.FC<{
   trend: number;
 }> = ({ icon: Icon, value, label, trend }) => (
   <div className="rounded-xl border bg-white p-6 shadow shadow-slate-200">
-    <div className="mb-4 flex items-center justify-between">
-      <div className="rounded-full bg-indigo-100 p-3 text-indigo-600">
-        <Icon className="h-6 w-6" />
+    <div className="mb-4 flex items-start justify-between">
+      <div className="flex justify-center items-start gap-7">
+        <div className="rounded-full bg-blue-100 p-3 text-blue-600 mt-1">
+          <Icon className="h-5 w-5 " />
+        </div>
+        <div>
+          <h3 className="mb-1 text-3xl font-bold text-gray-800">{value}</h3>
+          <p className="text-sm text-gray-500">{label}</p>
+        </div>
       </div>
       <span
-        className={`text-sm font-medium ${trend > 0 ? "text-green-500" : "text-red-500"}`}
+        className={`text-sm font-medium ${trend > 0 ? "text-teal-500" : "text-red-500"}`}
       >
         {trend > 0 ? "+" : ""}
         {trend}%
       </span>
     </div>
-    <h3 className="mb-1 text-2xl font-bold text-gray-800">{value}</h3>
-    <p className="text-sm text-gray-500">{label}</p>
   </div>
 );
 
