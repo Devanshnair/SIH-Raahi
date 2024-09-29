@@ -110,7 +110,7 @@ export default function BookSlotsCalendar({
               className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-500 hover:text-gray-900 disabled:opacity-50 disabled:hover:text-gray-500"
             >
               <span className="sr-only">Previous month</span>
-              <div className="size-6" aria-hidden="true">
+              <div className="size-6">
                 <svg
                   viewBox="0 0 20 20"
                   fill="none"
