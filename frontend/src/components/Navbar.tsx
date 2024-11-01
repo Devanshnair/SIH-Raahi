@@ -20,7 +20,7 @@ const Navbar = () => {
       {/* <button onClick={()=>ChangeLogin()}>hi</button> */}
       <div className="h-[4.5rem] cursor-pointer p-3">
         <img
-          src="../../src/assets/Logo1.png"
+          src="../assets/Logo1.png"
           alt="Logo"
           className="h-[100%] object-cover"
         />

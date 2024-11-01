@@ -46,19 +46,19 @@ const topContributors: Contributor[] = [
   {
     id: "1",
     name: "Devansh Nair",
-    avatar: "/src/assets/Logoicon.png",
+    avatar: "../../assets/Logoicon.png",
     score: 1250,
   },
   {
     id: "2",
     name: "Vaibhav Pai",
-    avatar: "/src/assets/Logoicon.png",
+    avatar: "../../assets/Logoicon.png",
     score: 1100,
   },
   {
     id: "3",
     name: "Vedang Kulkarni",
-    avatar: "/src/assets/Logoicon.png",
+    avatar: "../../assets/Logoicon.png",
     score: 950,
   },
 ];
@@ -274,7 +274,7 @@ export default function Forum() {
           <div className="ml-1 h-[3.2rem] cursor-pointer p-1">
             <Link to={"/"}>
               <img
-                src="../../src/assets/Logo1.png"
+                src="../../assets/Logo1.png"
                 alt="Logo"
                 className="h-[100%] object-cover"
               />

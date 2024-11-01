@@ -75,7 +75,7 @@ const Sidebar = () => {
           <div className="mb-4 mt-2 h-[3.2rem] cursor-pointer border-b border-slate-300 pb-3 pl-5">
             <Link to={"/"}>
               <img
-                src="../../src/assets/Logo1.png"
+                src="../assets/Logo1.png"
                 alt="Logo"
                 className="h-[100%] object-cover"
               />

@@ -21,7 +21,7 @@ const Overview = () => {
           <div className='grid grid-cols-[1fr,2.7fr] justify-center items-center w-fit h-fit px-10 py-12 border border-slate-300 shado rounded-lg'>
               <div className=' flex flex-col'>
                   <div className='h-20 w-20 rounded-full overflow-hidden'>
-                      <img src='../../../src/assets/explore5.png' alt='userimage' className='h-[100%] object-cover'/>
+                      <img src='../../../../assets/explore5.png' alt='userimage' className='h-[100%] object-cover'/>
                   </div>
                   <div className='flex flex-col'>
                       <p className='text-lg'>{decoded.name}</p>
