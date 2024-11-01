@@ -22,7 +22,7 @@ const MainSection = () => {
                     <div className='mt-24 h-[40rem] w-[50rem] rounded-t-full bg-[#edafb8] bg-[559cad] absolute' />
                 </div>
                 <div className='h-[38rem] w-[49rem] flex justify-center items-center -translate-y-40 translate-x-7 absolute top-0'>
-                    <img src='/frontend/src/assets/LandingPageBanner.png' alt='Banner' className='h-[100%] object-cover relative' />
+                    <img src='/assets/LandingPageBanner.png' alt='Banner' className='h-[100%] object-cover relative' />
                 </div>
             </div>
             <div className='w-52'>
