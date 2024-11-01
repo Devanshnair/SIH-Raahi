@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { HiArrowTrendingUp } from "react-icons/hi2";
-import explore1 from "../../../src/assets/explore1.png"
-import explore2 from "../../../src/assets/explore2.png"
-import explore3 from "../../../src/assets/explore3.png"
-import explore4 from "../../../src/assets/explore4.png"
+import explore1 from "../../../assets/explore1.png"
+import explore2 from "../../../assets/explore2.png"
+import explore3 from "../../../assets/explore3.png"
+import explore4 from "../../../assets/explore4.png"
 
 const MentorExplore: React.FC = () => {
   const [active, setActive] = useState<number>(0);
