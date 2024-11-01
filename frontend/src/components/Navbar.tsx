@@ -3,6 +3,7 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi'
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom'
 import { useLogin } from '../context/LoginContext'
+import Logo1 from "../assets/Logo1.png"
 
 const Navbar = () => {
   let {isLoggedIn } = useLogin();
@@ -20,7 +21,7 @@ const Navbar = () => {
       {/* <button onClick={()=>ChangeLogin()}>hi</button> */}
       <div className="h-[4.5rem] cursor-pointer p-3">
         <img
-          src="../assets/Logo1.png"
+          src={Logo1}
           alt="Logo"
           className="h-[100%] object-cover"
         />

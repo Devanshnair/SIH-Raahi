@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from 'styled-components';
 import { GoArrowRight, GoArrowLeft } from 'react-icons/go';
+import explore5 from '../../../assets/explore5.png'
 
 const Testimonials = () => {
 
@@ -47,7 +48,7 @@ const Testimonials = () => {
                 </Carousel>
             </div>
             <div className='h-full overflow-hidden relative left-20 w-[18rem]' style={{borderTopRightRadius: '50%'}}>
-                <img src='../../../assets/explore5.png' alt='Picture' className='h-[100%] object-cover object-[30%]'/>
+                <img src={explore5} alt='Picture' className='h-[100%] object-cover object-[30%]'/>
             </div>
         </div>
     </div>

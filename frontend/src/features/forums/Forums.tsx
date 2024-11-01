@@ -20,6 +20,8 @@ import { Comment } from "./ThreadPage";
 import { TbClock } from "react-icons/tb";
 import { jwtDecode } from "jwt-decode";
 import ChatbotButton from "../../components/ChatbotButton";
+import logoicon from "../../assets/Logoicon.png"
+import Logo1 from "../../assets/Logo1.png"
 
 type Category = {
   id: string;
@@ -46,19 +48,19 @@ const topContributors: Contributor[] = [
   {
     id: "1",
     name: "Devansh Nair",
-    avatar: "../../assets/Logoicon.png",
+    avatar: logoicon,
     score: 1250,
   },
   {
     id: "2",
     name: "Vaibhav Pai",
-    avatar: "../../assets/Logoicon.png",
+    avatar: logoicon,
     score: 1100,
   },
   {
     id: "3",
     name: "Vedang Kulkarni",
-    avatar: "../../assets/Logoicon.png",
+    avatar: logoicon,
     score: 950,
   },
 ];
@@ -274,7 +276,7 @@ export default function Forum() {
           <div className="ml-1 h-[3.2rem] cursor-pointer p-1">
             <Link to={"/"}>
               <img
-                src="../../assets/Logo1.png"
+                src={Logo1}
                 alt="Logo"
                 className="h-[100%] object-cover"
               />

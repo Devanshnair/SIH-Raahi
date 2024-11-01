@@ -7,6 +7,7 @@ import { TbBrandGoogleAnalytics, TbClockCheck } from "react-icons/tb";
 import { Link, NavLink} from "react-router-dom";
 // import {useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import Logo1 from "../assets/Logo1.png"
 
 const navItems = [
   {
@@ -75,7 +76,7 @@ const Sidebar = () => {
           <div className="mb-4 mt-2 h-[3.2rem] cursor-pointer border-b border-slate-300 pb-3 pl-5">
             <Link to={"/"}>
               <img
-                src="../assets/Logo1.png"
+                src={Logo1}
                 alt="Logo"
                 className="h-[100%] object-cover"
               />
