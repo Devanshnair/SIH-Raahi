@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { HiArrowTrendingUp } from "react-icons/hi2";
+import explore1 from "../../../src/assets/explore1.png"
+import explore2 from "../../../src/assets/explore2.png"
+import explore3 from "../../../src/assets/explore3.png"
+import explore4 from "../../../src/assets/explore4.png"
 
 const MentorExplore: React.FC = () => {
   const [active, setActive] = useState<number>(0);
@@ -65,7 +69,7 @@ const MentorExplore: React.FC = () => {
             </motion.div>
           )}
           <img
-            src="../../../src/assets/explore2.png"
+            src={explore2}
             alt="Image 1"
             className="h-full w-full object-cover"
           />
@@ -97,7 +101,7 @@ const MentorExplore: React.FC = () => {
             </motion.div>
           )}
           <img
-            src="../../../src/assets/explore1.png"
+            src={explore1}
             alt="Image 2"
             className="h-full w-full object-cover"
           />
@@ -129,7 +133,7 @@ const MentorExplore: React.FC = () => {
             </motion.div>
           )}
           <img
-            src="../../../src/assets/explore3.png"
+            src={explore3}
             alt="Image 3"
             className="h-full w-full object-cover object-[78%]"
           />
@@ -161,7 +165,7 @@ const MentorExplore: React.FC = () => {
             </motion.div>
           )}
           <img
-            src="../../../src/assets/explore4.png"
+            src={explore4}
             alt="Image 2"
             className="h-full w-full object-cover object-[45%]"
           />
