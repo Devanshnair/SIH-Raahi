@@ -47,7 +47,7 @@ const Testimonials = () => {
                 </Carousel>
             </div>
             <div className='h-full overflow-hidden relative left-20 w-[18rem]' style={{borderTopRightRadius: '50%'}}>
-                <img src='../../../src/assets/explore5.png' alt='Picture' className='h-[100%] object-cover object-[30%]'/>
+                <img src='../../../assets/explore5.png' alt='Picture' className='h-[100%] object-cover object-[30%]'/>
             </div>
         </div>
     </div>
