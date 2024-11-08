@@ -1,6 +1,5 @@
 import "./index.css";
 import { LoginProvider } from "./context/LoginContext";
-
 import Dashboard from "./Pages/AdminPanel/Home/Home";
 import Chatbot from "./Pages/Chatbot";
 import {
@@ -34,11 +33,15 @@ import SuccessPage from "./features/bookslots/SuccessPage";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Snippets from "./Pages/Snippets/Snippets";
 
-const queryClient = new QueryClient();
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
 
+const queryClient = new QueryClient();
 export const baseURL = "https://sudormrf.pythonanywhere.com";
-export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NjI1ODAwLCJpYXQiOjE3Mjc2MjIyMDAsImp0aSI6ImY2MjEzZThhMDdjZDQ0ZDBiMGNhYmRlMjY3YjU2MDliIiwidXNlcl9pZCI6MSwiZW1haWwiOiJ2aW5heWFrOTc2OTZAZ21haWwuY29tIiwibmFtZSI6IlZpbmF5YWsgTW9oYW50eSJ9.cTKOe2RNzaDemITFatMWJHvmCVSn48RwtFJTbnx2Jb4";
+export const TOKEN = getCookie("accessToken"); 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
