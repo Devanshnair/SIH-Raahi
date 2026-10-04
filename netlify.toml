@@ -1,6 +1,13 @@
 [build]
-  publish = "frontend/dist"  # or "frontend/build" depending on your build setup
+  publish = "frontend/dist"
   command = "npm install --prefix frontend && npm run build --prefix frontend"
 
 [dev]
   command = "npm run dev --prefix frontend"
+
+# The frontend uses client-side routing (react-router). Without this,
+# reloading or deep-linking to a route like /mentors/explore returns a 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
