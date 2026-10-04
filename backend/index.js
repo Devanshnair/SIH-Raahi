@@ -1,6 +1,8 @@
 const { Server } = require("socket.io");
 
-const io = new Server(8000, {
+const PORT = process.env.PORT || 8000;
+
+const io = new Server(PORT, {
   cors: true,
 });
 
@@ -35,4 +37,17 @@ io.on("connection", (socket) => {
     console.log("peer:nego:done", ans);
     io.to(to).emit("peer:nego:final", { from: socket.id, ans });
   });
+
+  socket.on("disconnect", () => {
+    const email = socketidToEmailMap.get(socket.id);
+    socketidToEmailMap.delete(socket.id);
+    // Only drop the email mapping if it still points at this socket; the same
+    // user may have reconnected on a new socket before this one closed.
+    if (email !== undefined && emailToSocketIdMap.get(email) === socket.id) {
+      emailToSocketIdMap.delete(email);
+    }
+    console.log(`Socket Disconnected`, socket.id);
+  });
 });
+
+console.log(`Socket server listening on port ${PORT}`);
