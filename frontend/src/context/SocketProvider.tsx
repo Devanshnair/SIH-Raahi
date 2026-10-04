@@ -1,6 +1,9 @@
 import React, { createContext, useMemo, useContext, ReactNode } from "react";
 import { io, Socket } from "socket.io-client";
 
+const SOCKET_URL =
+  import.meta.env.VITE_SOCKET_URL ?? "https://raahi-socket.onrender.com/";
+
 const SocketContext = createContext<Socket | null>(null);
 
 export const useSocket = (): Socket => {
@@ -16,7 +19,7 @@ interface SocketProviderProps {
 }
 
 export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
-  const socket = useMemo(() => io("https://raahi-socket.onrender.com/"), []);
+  const socket = useMemo(() => io(SOCKET_URL), []);
 
   return (
     <SocketContext.Provider value={socket}>
