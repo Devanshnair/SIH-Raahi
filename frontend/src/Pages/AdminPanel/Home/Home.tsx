@@ -7,7 +7,7 @@ import { Events } from "../../../features/calendar/modifyEvents";
 const Header: React.FC = () => (
   <header className="mb-8">
     <h2 className="text-3xl font-bold text-slate-800">
-      Welcome back, Devansh!
+      Welcome back, Vinayak!
     </h2>
     <p className="text-slate-500">
       Here's what's happening with your mentor profile today.

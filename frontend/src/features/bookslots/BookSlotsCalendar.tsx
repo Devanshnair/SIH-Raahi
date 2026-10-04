@@ -76,7 +76,7 @@ export default function BookSlotsCalendar({
     if (!selectedSlots) return;
     const newData: EventDetails = {
       mentee: {
-        email: decoded.email,
+        email: "devanshnair.05@gmail.com",
         name: decoded.name,
         phone_number: "+1234567890",
       },

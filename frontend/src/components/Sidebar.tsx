@@ -6,7 +6,7 @@ import { PiPhoneCall } from "react-icons/pi";
 import { TbBrandGoogleAnalytics, TbClockCheck } from "react-icons/tb";
 import { Link, NavLink} from "react-router-dom";
 // import {useLocation } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import Logo1 from "../assets/Logo1.png"
 
 const navItems = [
@@ -49,9 +49,9 @@ const Sidebar = () => {
     .find((row) => row.startsWith("accessToken="))
     ?.split("=")[1];
 
-  const decoded = jwtDecode(accessToken);
+  // const decoded = jwtDecode(accessToken);
 
-  console.log(decoded);
+  // console.log(decoded);
 
   return (
     <>
@@ -149,9 +149,9 @@ const Sidebar = () => {
                 className="size-8 shrink-0 rounded bg-blue-400 shadow"
               />
               <div className="text-start">
-                <span className="block text-sm font-bold">{decoded.name}</span>
+                {/* <span className="block text-sm font-bold">{decoded.name}</span> */}
                 <span className="block text-xs text-slate-500">
-                  {decoded.email}
+                  {/* {decoded.email} */}
                 </span>
               </div>
             </button>

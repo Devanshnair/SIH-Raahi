@@ -36,9 +36,9 @@ import Snippets from "./Pages/Snippets/Snippets";
 
 const queryClient = new QueryClient();
 
-export const baseURL = "https://sudormrf.pythonanywhere.com";
+export const baseURL = "https://live-merely-drum.ngrok-free.app";
 export const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NjI1ODAwLCJpYXQiOjE3Mjc2MjIyMDAsImp0aSI6ImY2MjEzZThhMDdjZDQ0ZDBiMGNhYmRlMjY3YjU2MDliIiwidXNlcl9pZCI6MSwiZW1haWwiOiJ2aW5heWFrOTc2OTZAZ21haWwuY29tIiwibmFtZSI6IlZpbmF5YWsgTW9oYW50eSJ9.cTKOe2RNzaDemITFatMWJHvmCVSn48RwtFJTbnx2Jb4";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NjQ3MTY0LCJpYXQiOjE3Mjc2NDM1NjQsImp0aSI6IjE4ZTBkZmYyNDFiNDQ1YThhZDc5NTQxMTdmYjZhMzgyIiwidXNlcl9pZCI6MSwiZW1haWwiOiJ2aW5heWFrOTc2OTZAZ21haWwuY29tIiwibmFtZSI6IlZpbmF5YWsgTW9oYW50eSJ9.ZX70qG6HxVt_WHlqW9LERuxeAM4fvFDFsYNGw_xv-Ho";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

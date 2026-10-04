@@ -106,7 +106,7 @@ export default function Chatbot() {
 
   useEffect(() => {
     chatSocketRef.current = new WebSocket(
-      "ws://live-merely-drum.ngrok-free.app/ws/chat/",
+      "wss://live-merely-drum.ngrok-free.app/ws/chat/",
     );
 
     chatSocketRef.current.onmessage = (e) => {

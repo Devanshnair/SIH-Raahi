@@ -5,6 +5,7 @@ const SocketContext = createContext<Socket | null>(null);
 
 export const useSocket = (): Socket => {
   const socket = useContext(SocketContext);
+  
   if (!socket) {
     throw new Error("Socket must be used within a SocketProvider");
   }
@@ -16,7 +17,11 @@ interface SocketProviderProps {
 }
 
 export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
-  const socket = useMemo(() => io("localhost:8000"), []);
+  const socket = useMemo(() => io("https://plainly-modern-escargot.ngrok-free.app", {
+    extraHeaders: {
+      "ngrok-skip-browser-warning": "true", 
+    }
+  }), []);
 
   return (
     <SocketContext.Provider value={socket}>

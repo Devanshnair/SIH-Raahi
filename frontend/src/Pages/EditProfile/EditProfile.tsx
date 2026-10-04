@@ -11,10 +11,10 @@ import {
 
 const EditProfile = () => {
   const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+91 99999 99999",
-    location: "New York, NY",
+    name: "Vinayak Mohanty",
+    email: "vinayak97696@gmail.com",
+    phone: "+91 7278335447",
+    location: "Mumbai, India",
     profession: "Software Engineer",
     bio: "I'm a passionate software engineer with 5 years of experience in web development.",
     hourlyRate: 100,

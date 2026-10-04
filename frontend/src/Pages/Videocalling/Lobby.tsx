@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSocket } from "../context/SocketProvider";
+import { useSocket } from "../../context/SocketProvider";
 
 const LobbyScreen: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -9,7 +9,6 @@ const LobbyScreen: React.FC = () => {
   const socket = useSocket();
   const navigate = useNavigate();
 
-  // Handle form submission
   const handleSubmitForm = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
