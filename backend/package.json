@@ -1,19 +1,14 @@
 {
-    "name": "server",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node index.js",
-        "dev": "nodemon index.js"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "socket.io": "^4.7.5"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.22"
-    }
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "bun index.js",
+    "dev": "bun --watch index.js",
+    "test": "bun test"
+  },
+  "author": "",
+  "license": "ISC"
 }
