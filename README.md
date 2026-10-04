@@ -6,7 +6,7 @@ Raahi is a mentorship platform built for Smart India Hackathon (SIH). Students c
 
 - **Mentor discovery**: browse and filter mentors (`/mentors/explore`) and watch short video snippets (`/mentors/reels`)
 - **Slot booking**: pick a time from a mentor's weekly availability (`/mentors/book/:mentorId`)
-- **Video calling**: peer-to-peer WebRTC calls with Socket.IO signalling (`/room/:roomId`)
+- **Video calling**: peer-to-peer WebRTC calls with Bun native WebSocket signalling (`/room/:roomId`)
 - **Forums**: create threads and discuss (`/forum`)
 - **Chatbot**: an in-app assistant (`/chatbot`)
 - **Mentor dashboard**: bookings, availability, calendar with `.ics` upload, analytics, testimonials and profile editing (`/dashboard/*`)
@@ -16,14 +16,14 @@ Raahi is a mentorship platform built for Smart India Hackathon (SIH). Students c
 | Part | Stack |
 | --- | --- |
 | Frontend | React 18, TypeScript, Vite, Tailwind CSS, React Router, React Query, Recharts, Framer Motion |
-| Signalling server | Node.js, Socket.IO |
+| Signalling server | Bun, native WebSocket Pub/Sub |
 | REST API | Hosted separately (see `baseURL` in `frontend/src/App.tsx`) |
 
 ## Repository layout
 
 ```
 .
-├── backend/    # Socket.IO signalling server for video calls
+├── backend/    # Bun native WebSocket signalling server for video calls
 ├── frontend/   # React + Vite single-page app
 ├── netlify.toml
 └── vercel.json
@@ -31,7 +31,7 @@ Raahi is a mentorship platform built for Smart India Hackathon (SIH). Students c
 
 ## Getting started
 
-Prerequisites: Node.js 18+ and npm.
+Prerequisites: Node.js 18+ with npm (frontend) and Bun 1.0+ (signalling server).
 
 ### Frontend
 
@@ -54,11 +54,16 @@ npm run typecheck  # TypeScript type check
 
 ```bash
 cd backend
-npm install
-npm start          # listens on port 8000
+bun install
+bun run start      # listens on port 8000
 ```
 
-The frontend connects to the deployed signalling server by default (see `frontend/src/context/SocketProvider.tsx`). Point it at `http://localhost:8000` to test video calls locally.
+Environment variables:
+
+- `PORT` (default `8000`)
+- `ALLOWED_ORIGINS` (comma-separated origins, default `*`)
+
+The frontend connects to the deployed signalling server by default (see `frontend/src/context/SocketProvider.tsx`). Point it at `ws://localhost:8000` to test video calls locally.
 
 ## Deployment
 
