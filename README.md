@@ -1,4 +1,4 @@
-# Raahi
+# Raahi 
 
 Raahi is a mentorship platform built for Smart India Hackathon (SIH). Students can discover mentors, book one-on-one sessions, join video calls, and take part in community forums. Mentors get a dashboard to manage their availability, bookings and testimonials.
 
